@@ -1,0 +1,93 @@
+﻿
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>@ViewBag.Title - HRIS</title>
+    @Styles.Render("~/Content/css")
+    @Styles.Render("~/Content/jsmenu")
+    @Scripts.Render("~/bundles/modernizr")
+    @Styles.Render("~/Content/jqwidgets")
+
+
+
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @Scripts.Render("~/bundles/jsmenu")
+    @Scripts.Render("~/bundles/jqwidgets")
+</head>
+
+</head>
+<body>
+
+    <main class="cd-main-content">
+        <header class="cd-main-header">
+            <a href="#0" class="cd-logo"><img src="~/Content/bg/hollit-logo-small.png" alt="Logo" height="23px"></a>
+
+
+            <a href="#0" class="cd-nav-trigger">Menu<span></span></a>
+            <nav class="cd-nav">
+
+            </nav>
+        </header> <!-- .cd-main-header -->
+        <nav class="cd-side-nav">
+            <ul>
+                <li class="cd-label">Main</li>
+                <li class="has-children overview">
+                    @Html.ActionLink("Dashboard", "Index", "vEmployee")
+                </li>
+
+                <li class="has-children comments">
+                    @Html.ActionLink("Timesheet", "Index", "vTimesheets")
+                </li>
+            </ul>
+            <ul>
+                <li class="cd-label">Submit & Approval</li>
+                <li class="has-children overview">
+                    @Html.ActionLink("Leave", "Index", "vLeaves")</li>
+                <li class="has-children overview">
+                    @Html.ActionLink("Medical", "Index", "vMedicalClaim")
+                </li>
+                <li class="has-children overview">
+                    @Html.ActionLink("Approval", "Superior", "vApproval")
+                </li>
+             </ul>  
+            <ul>
+                <li class="cd-label">Organization </li>
+                <li class="has-children overview">
+                    @Html.ActionLink("Structure", "Index", "vOrganization")
+                </li>
+            </ul> 
+            <ul>
+                <li class="cd-label">Administration</li>
+                <li class="bookmarks">@Html.ActionLink("Approval", "HRApproval", "vApproval") </li>
+                <li class="bookmarks">@Html.ActionLink("Notification / News", "Index", "vNotifNews")</li>
+                <li class="has-children comments">
+                    @Html.ActionLink("Timesheet Manager", "HRTimesheets", "vTimesheets")
+                </li>
+                <li class="has-children users">
+                    @Html.ActionLink("Employee Management", "HREmployeeManagement", "vEmployee")
+                </li>
+            </ul>
+            <ul>
+                <li class="cd-label">System Admin</li>
+                <li class="bookmarks"><a href="#0">User Management</a> </li>
+                
+            </ul>
+
+        </nav>
+        <div class="content-wrapper">
+            <div>
+                @RenderBody()
+            </div>
+        </div> <!-- .content-wrapper -->
+        
+    </main>
+
+
+
+    @RenderSection("scripts", required: false)
+</body>
+</html>

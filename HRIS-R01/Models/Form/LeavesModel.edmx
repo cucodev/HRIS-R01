@@ -1,0 +1,105 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="HRISModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="leave">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="leaveCategory" Type="int" />
+          <Property Name="idvRequest" Type="int" />
+          <Property Name="idvApproval" Type="int" />
+          <Property Name="leaveStart" Type="datetime" />
+          <Property Name="leaveStop" Type="datetime" />
+          <Property Name="appliedDay" Type="int" />
+          <Property Name="appliedTime" Type="time" Precision="7" />
+          <Property Name="remainDay" Type="int" />
+          <Property Name="remainTime" Type="time" Precision="7" />
+          <Property Name="currBalance" Type="int" />
+          <Property Name="approvalID" Type="int" />
+          <Property Name="rowStatus" Type="nchar" MaxLength="10" />
+          <Property Name="rowDate" Type="datetime" StoreGeneratedPattern="Computed" />
+        </EntityType>
+        <EntityContainer Name="HRISModelStoreContainer">
+          <EntitySet Name="leave" EntityType="Self.leave" Schema="dbo" store:Type="Tables" />
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="HRISModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="leave">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="leaveCategory" Type="Int32" />
+          <Property Name="idvRequest" Type="Int32" />
+          <Property Name="idvApproval" Type="Int32" />
+          <Property Name="leaveStart" Type="DateTime" Precision="3" />
+          <Property Name="leaveStop" Type="DateTime" Precision="3" />
+          <Property Name="appliedDay" Type="Int32" />
+          <Property Name="appliedTime" Type="Time" Precision="7" />
+          <Property Name="remainDay" Type="Int32" />
+          <Property Name="remainTime" Type="Time" Precision="7" />
+          <Property Name="currBalance" Type="Int32" />
+          <Property Name="approvalID" Type="Int32" />
+          <Property Name="rowStatus" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="rowDate" Type="DateTime" annotation:StoreGeneratedPattern="Computed" Precision="3" />
+        </EntityType>
+        <EntityContainer Name="HRISEntities2" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="leaves" EntityType="Self.leave" />
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="HRISModelStoreContainer" CdmEntityContainer="HRISEntities2">
+          <EntitySetMapping Name="leaves">
+            <EntityTypeMapping TypeName="HRISModel.leave">
+              <MappingFragment StoreEntitySet="leave">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="leaveCategory" ColumnName="leaveCategory" />
+                <ScalarProperty Name="idvRequest" ColumnName="idvRequest" />
+                <ScalarProperty Name="idvApproval" ColumnName="idvApproval" />
+                <ScalarProperty Name="leaveStart" ColumnName="leaveStart" />
+                <ScalarProperty Name="leaveStop" ColumnName="leaveStop" />
+                <ScalarProperty Name="appliedDay" ColumnName="appliedDay" />
+                <ScalarProperty Name="appliedTime" ColumnName="appliedTime" />
+                <ScalarProperty Name="remainDay" ColumnName="remainDay" />
+                <ScalarProperty Name="remainTime" ColumnName="remainTime" />
+                <ScalarProperty Name="currBalance" ColumnName="currBalance" />
+                <ScalarProperty Name="approvalID" ColumnName="approvalID" />
+                <ScalarProperty Name="rowStatus" ColumnName="rowStatus" />
+                <ScalarProperty Name="rowDate" ColumnName="rowDate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

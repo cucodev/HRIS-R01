@@ -1,0 +1,330 @@
+﻿
+@{
+    ViewBag.Title = "Employee Profile";
+    Layout = "~/Views/Shared/_LayoutNavigation.cshtml";
+}
+
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title></title>
+
+    @section scripts
+    {
+        <script type="text/javascript" src="@Url.Content("~/Scripts/jsList.js")"></script>
+        
+    }
+
+
+
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            var vvid;
+            var themes = 'metro';
+            var source = {
+                datatype: "json",
+                dataFields: [
+                    { name: 'id', type: 'number' },
+                    { name: 'approvalIdvName', value: 'approvalIdv', values: { source: listEmployee.records, value: 'ID', name: 'Name' } },
+                    { name: 'approvalIdv', type: 'number' },                   
+                    { name: 'approvalTypeName', value: 'approvalType', values: { source: listCategory.records, value: 'id', name: 'uidname' } },
+                    { name: 'approvalType', type: 'string' },
+                    { name: 'approvalStatusName', value: 'approvalStatus', values: { source: listCategory.records, value: 'id', name: 'uidname' } },
+                    { name: 'approvalStatus', type: 'string' },
+                    { name: 'approvalbyName', value: 'approvalby', values: { source: listEmployee.records, value: 'ID', name: 'Name' } },
+                    { name: 'approvalby', type: 'number' },                   
+                    { name: 'approvalMail', type: 'string' },                   
+                    { name: 'approvalQ', type: 'number' }, 
+                    { name: 'approvalDate', type: 'datetime' },
+                    { name: 'rowDate', type: 'datetime' },
+                    { name: 'rowStatus', type: 'string' }
+                ],
+                addrow: function (rowdata, rowid, commit) {
+                    cleanForm();
+                    //console.log("Addrow rowid : " + rowid);
+                    console.log("Addrow : ", rowid);
+                    var uri = 'api/leaves'; //+ '&' + rowdata;
+                    $.ajax({
+                        type: "POST",
+                        cache: false,
+                        dataType: 'json',
+                        url: uri,
+                        contentType: 'application/json',
+                        data: JSON.stringify(rowid),
+                        success: function (data, status, xhr) {
+                            // insert command is executed.
+                            console.log("Add Success");
+                            //commit(true);
+                            $('#dataTable').jqxGrid('updatebounddata');
+
+                            // CALL APPROVAL CONTROLLER
+                        },
+                        error: function (jqXHR, textStatus, err) {
+                            //alert(errorThrown);
+                            console.log("Error " + err);
+                            console.log("Error " + uri);
+                            //commit(false);
+                        }
+                    });
+                },
+                deleterow: function (rowid, commit) {
+                    commit(true);
+                },
+                updaterow: function (rowid, rowdata, commit) {
+                    cleanForm();
+                    console.log("Updaterow : " + rowid);
+                    console.log("Updaterow : ", rowdata);
+                    var uri = '/api/leaves/' + rowid;
+                    $.ajax({
+                        type: "PUT",
+                        cache: false,
+                        dataType: 'json',
+                        url: uri,
+                        contentType: 'application/json',
+                        data: JSON.stringify(rowdata),
+                        success: function (data, status, xhr) {
+                            // insert command is executed.
+                            console.log("Update Success");
+                            commit(true);
+                            $('#dataTable').jqxGrid('updatebounddata');
+
+                            // THEN CALL APPROVAL CONTROLLER via API CONTROLLER
+                        },
+                        error: function (jqXHR, textStatus, err) {
+                            //alert(errorThrown);
+                            console.log("Error " + err);
+                            console.log("Error " + jqXHR.responseText);
+                            //commit(false);
+                        }
+                    });
+                },
+                id: 'id',
+                url: '/api/approvalsLeave'
+            };
+
+            var dataAdapter = new $.jqx.dataAdapter(source, {
+                downloadComplete: function (data) {
+                    source.totalrecords = data.TotalRows;
+                },
+                autoBind: true
+            });
+
+            
+            $("#dataTable").jqxGrid({
+                width: 520,
+                height: 500,
+                source: dataAdapter,
+                pageable: true,
+                rowdetails: true,
+                autoheight: true,
+                sortable: true,
+                altrows: true,
+                enabletooltips: true,
+                //editable: true,
+                selectionmode: 'singlerow',
+                theme: themes,
+                pagesize: 15,
+                groupable: true,
+                //showfilterrow: true,
+                filterable: true,
+                pageable: true,
+                //editable: true,
+                columns: [
+                { text: 'ID', dataField: 'id', width: 200, hidden: true },
+                { text: 'Type', displayField: 'approvalTypeName', dataField: 'approvalType', width: 100, hidden: true },
+                { text: 'Status', displayField: 'approvalStatusName', dataField: 'approvalStatus', width: 50 },
+                { text: 'Approved By', displayField: 'approvalbyName', dataField: 'approvalby', width: 200 },
+                { text: 'Mail', dataField: 'approvalMail', width: 200, hidden: true },
+                { text: 'Q', dataField: 'approvalQ', width: 20 },
+                { text: 'Approved', columngroup: 'Date', dataField: 'approvalDate', width: 70 },
+                { text: 'Apply', columngroup: 'Date', dataField: 'rowDate', width: 70 },
+                {
+                      text: 'Approve', datafield: 'Edit', columntype: 'button', theme: 'orange', filtertype: '', width: 75, cellsrenderer: function () {
+                          return "Approve";
+                      }, buttonclick: function (row) {
+                          editrow = row;
+                          
+                          // get the clicked row's data and initialize the input fields.
+                          var selectedrowindex = $("#dataTable").jqxGrid('getselectedrowindex');
+                          var rowscount = $("#dataTable").jqxGrid('getdatainformation').rowscount;
+                          if (editrow >= 0 && editrow < rowscount) {
+                              var id = $("#dataTable").jqxGrid('getrowid', selectedrowindex);
+                              
+                              //$("#jqxgrid").jqxGrid('updaterow', id, datarow);
+                              var dataRecord = $("#dataTable").jqxGrid('getrowdata', editrow);
+                              //console.log("dataRecord", dataRecord.idvApproval + " : " + dataRecord);
+                              clearForm();
+                              vvid = dataRecord.id;
+                              /*
+                              $("#ename").val(dataRecord.idvRequest);
+                              $("#sname").val(dataRecord.idvApproval);
+                              $("#typeLeave").jqxListBox('val', dataRecord.leaveCategory);
+                              $("#commDateFrom").val(dataRecord.leaveStart);
+                              $("#commDateTo").val(dataRecord.leaveStop);*/
+                              console.log("Current leaveType : ", dataRecord.leaveCategory);
+                              // show the popup window.
+                              $("#form").jqxWindow('open');
+                          }
+
+                      }
+                  }
+                ],
+                columngroups: [
+                    { text: "Date", align: 'center', name: "Date" }
+                    ]
+            });
+
+            function formatItem(item) {
+                return item.id + ': $' + item.idvRequest;
+            }
+
+            $("#detail").hide();
+            $("#dataTable").on("rowselect", function (event) {
+                clearForm();
+                var rowID = $("#dataTable").jqxGrid('getrowid', event.args.rowindex);
+                //var dataRecord = $("#dataTable").jqxGrid('getrowdata', rowid);
+                console.log('approvalID : ' + rowID + ' With Index : ' + event.args.rowindex);
+                if (rowID != null) {
+                    var uri = '/api/GetLeaveByApproval/' + rowID
+                    $.getJSON(uri)
+                      .done(function (data) {
+                          // On success, 'data' contains a list of products.
+                          $.each(data, function (key, item) {
+                              // Add a list item for the product.
+                              console.log(data.id + ' ' + data.leaveCategory + ' ' + data.appliedDay);
+                              $("#ename").jqxComboBox('val', data.id);
+                              $("#typeLeave").jqxComboBox('val', data.leaveCategory);
+                              $("#dayDuration").jqxNumberInput('val', data.appliedDay);
+                              var date1 = new Date(data.leaveStart);
+                              //date1.setFullYear(2013, 7, 7);
+                              var date2 = new Date(data.leaveStop);
+                              //date2.setFullYear(2013, 7, 15);
+                              $("#date").jqxDateTimeInput('setRange', date1, date2);
+                              $("#date").jqxDateTimeInput('open');
+                              $("#approveButton").jqxButton({ disabled: false });
+                              $('#editor').jqxEditor({ disabled: false });
+                              //$("#date").jqxDateTimeInput('focus');
+
+                              //$("#detail").show();
+                              //$('<li>', { text: formatItem(item) }).appendTo($('#products'));
+                          });
+                      });
+
+                    
+                    //console.log('data = ' + data.id);
+                    
+                    
+                } else {
+                    $("#detail").hide();
+                }
+                
+
+
+            });
+
+
+            var isDisable = true;
+            $("#ename").jqxComboBox({ disabled: isDisable, theme: 'orange', source: listEmployee, displayMember: "Name", valueMember: "ID", width: 200, height: 25 });
+            $("#typeLeave").jqxComboBox({ disabled: isDisable, theme: 'orange', width: 300, height: '25px', source: catParents(12), displayMember: "uidname", valueMember: "id", scrollBarSize: 0 });
+            $("#date").jqxDateTimeInput({ disabled: isDisable, theme: 'orange', width: 200, height: 25, selectionMode: 'range' });
+            $("#dayDuration").jqxNumberInput({ disabled: isDisable, theme: 'orange', width: '150px', height: '25px', spinButtons: true });
+            $("#approveButton").jqxButton({ disabled: isDisable, theme: 'orange', width: 120, height: 40 });
+            $("#reviseButton").jqxButton({ disabled: isDisable, theme: 'orange', width: 120, height: 40 });
+            $('#editor').jqxEditor({
+                disabled: isDisable, theme: themes,
+                tools: 'bold italic underline | left center right | ul ol',
+                height: 200, width: 400
+            });
+            //$("#date").jqxDateTimeInput('open');
+            clearForm();
+            function clearForm() {
+                $('#editor').jqxEditor({ disabled: true });
+                $("#approveButton").jqxButton({ disabled: true });
+                $("#ename").jqxComboBox('selectIndex', -1);
+                $("#typeLeave").jqxComboBox('selectIndex', -1);
+                $("#date").val(null, null);
+                $("#dayDuration").jqxNumberInput('val', null);
+            }
+
+        });
+
+    </script>
+
+
+</head>
+<body>
+    <h1 style="text-align:left; letter-spacing:-1px; line-height:1; font-family: Arial, Helvetica, sans-serif; font-size: 25px; font-weight: bold; padding-bottom:0; padding-top:15px;">LEAVE APPROVAL PAGE</h1>
+    <h2 style="padding-left:30px; font-size:14px; font-family:Calibri">Manage Your Employee Form, be wise and Approve</h2>
+    <hr />
+    <table width=800px>
+        <tr style="vertical-align: top; width:525px">
+            <td valign="top"><div id="dataTable"></div></td>
+            <td valign="top">
+                <div id="details">
+                    <div class="container-fluid" style="margin-left:50px">
+                        <div class="row">
+                            <div class="form-group">
+                                <label for="ename">Employee Name</label>
+                                <div id="ename"></div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="form-group">
+                                <label for="typeLeave">Type of Leave</label>
+                                <div id="typeLeave"></div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="form-group">
+                                <label for="typeLeave">Type of Leave</label>
+                                <div id="date"></div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="form-group">
+                                <label for="typeLeave">Applied Day</label>
+                                <div id="dayDuration"></div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="form-group">
+                                <label for="typeLeave">Note for Employee</label>
+                                <textarea id="editor"></textarea>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <hr />
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <div class="form-group">
+                                    <input type="button" value="Approve" id="approveButton" />
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="form-group">
+                                    <input type="button" value="Revise" id="reviseButton" />
+                                </div>
+                            </div>
+                            
+                        </div>
+                        
+
+
+                    </div>
+                </div>
+                    
+                
+                            
+
+
+            </td>
+        </tr>
+    </table>
+</body>
+</html>

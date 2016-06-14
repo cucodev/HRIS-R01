@@ -1,0 +1,172 @@
+﻿@{
+    ViewBag.Title = "Employee Profile";
+    Layout = "~/Views/Shared/_LayoutNavigation.cshtml";
+}
+
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title></title>
+
+    @section scripts
+    {
+        <script type="text/javascript" src="@Url.Content("~/Scripts/jsList.js")"></script>
+        <script type="text/javascript" src="@Url.Content("~/Scripts/jsChart.js")"></script>
+    }
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            var theme = 'ui-redmond';
+            var source = {
+                dataType: "json",
+                dataFields: [
+                    { name: 'ID', type: 'number' },
+                    { name: 'IDVNAME', value: 'IDV', values: { source: listEmployee.records, value: 'ID', name: 'Name' } },
+                    { name: 'IDV', type: 'number' },
+                    { name: 'IDVAPPROVALNAME', value: 'IDVAPPROVAL', values: { source: listEmployee.records, value: 'ID', name: 'Name' } },
+                    { name: 'IDVAPPROVAL', type: 'string' },
+                    { name: 'INADJUSTED', type: 'datetime' },
+                    { name: 'OUTADJUSTED', type: 'datetime' },
+                    { name: 'REASON', type: 'string' },
+                    { name: 'WORKDURATION', type: 'datetime' },
+                    { name: 'WORKIN', type: 'datetime' },
+                    { name: 'WORKOUT', type: 'datetime' },
+                    { name: 'DATEADJUSTED', type: 'datetime' },
+                    { name: 'DATEAPPROVED', type: 'datetime' }
+                ],
+                addrow: function (rowid, newdata, commit) {
+                    console.log("Addrow");
+                    console.log("rowdata", rowdata);
+                    $.ajax({
+                        cache: false,
+                        dataType: 'json',
+                        url: '/api/timesheets',
+                        data: rowdata,
+                        type: "POST",
+                        success: function (data, status, xhr) {
+                            // insert command is executed.
+                            console.log("Add Success");
+                            commit(true);
+                        },
+                        error: function (jqXHR, textStatus, errorThrown) {
+                            //alert(errorThrown);
+                            console.log("Error " + errorThrown);
+                            commit(false);
+                        }
+                    });
+
+                },
+                deleterow: function (rowid, commit) {
+                    commit(true);
+                },
+                updaterow: function (rowid, rowdata, commit) {
+                    //console.log('Try to PUT : ' + rowid);
+                    rowdata.ID = rowid;
+                    $.ajax({
+                        cache: false,
+                        dataType: "json",
+                        url: '/api/timesheets/' + rowid,
+                        data: rowdata,
+                        type: "PUT",
+                        success: function (data, status, xhr) {
+                            // update command is executed.
+                            console.log("Updaterow : " + rowid);
+                            commit(true);
+                        },
+                        error: function (jqXHR, textStatus, errorThrown) {
+                            console.log('Error ' + errorThrown);
+                            commit(false);
+                        }
+                    });
+                    commit(true);
+                },
+                id: 'ID',
+                url: '/api/timesheets'
+            };
+
+            var dataAdapter = new $.jqx.dataAdapter(source, {
+                downloadComplete: function (data) {
+                    source.totalrecords = data.TotalRows;
+                }
+            });
+
+            $("#dataTable").jqxGrid({
+                width: 950,
+                height: 400,
+                source: dataAdapter,
+                theme: theme,
+                pagesize: 15,
+                sortable: true,
+                groupable: true,
+                showfilterrow: true,
+                filterable: true,
+                pageable: true,
+                //serverProcessing: true,
+                editable: true,
+                columns: [
+                  { text: 'ID', dataField: 'ID', width: 200, hidden: true },
+                  { text: 'IDV', dataField: 'IDV', width: '10%', hidden: true },
+                  { text: 'IDVAPPROVAL', columnGroup: 'Current', dataField: 'IDVAPPROVAL', width: '10%', hidden: true },
+                  { text: 'EMPLOYEE', columnGroup: 'Current', dataField: 'IDVNAME', filtertype: 'input', width: 160 },
+                  { text: 'IN', columnGroup: 'Current', dataField: 'WORKIN', filtertype: 'datetimeinput', width: 100 },
+                  { text: 'OUT', columnGroup: 'Current', dataField: 'WORKOUT', filtertype: 'datetimeinput', width: 100 },
+                  { text: 'TIME', columnGroup: 'Current', dataField: 'WORKDURATION', filterable:false, width: 50 },
+                  { text: 'SUPERIOR', columnGroup: 'Adjusted', dataField: 'IDVAPPROVALNAME', filtertype: 'input', width: 160 },
+                  { text: 'IN', columnGroup: 'Adjusted', dataField: 'INADJUSTED', filtertype: 'datetimeinput', width: 100 },
+                  { text: 'OUT', columnGroup: 'Adjusted', dataField: 'OUTADJUSTED', filtertype: 'datetimeinput', width: 100 },
+                  { text: 'REASON', columnGroup: 'Adjusted', dataField: 'REASON', filtertype: 'input', width: 200, hidden:true },
+                  { text: 'DATE', columnGroup: 'Adjusted', dataField: 'DATEADJUSTED', filtertype: 'datetimeinput', width: 100 },
+                  { text: 'APPROVED', columnGroup: 'Adjusted', dataField: 'DATEAPPROVED', filtertype: 'datetimeinput', width: 100, hidden:true },
+                  {
+                      text: 'Edit', datafield: 'Edit', filterable: false, columntype: 'button', width: 60, cellsrenderer: function () {
+                          return "Edit";
+                      }, buttonclick: function (row) {
+                          editrow = row;
+                          console.log(editrow);
+                          // get the clicked row's data and initialize the input fields.
+                          var dataRecord = $("#dataTable").jqxGrid('getrowdata', editrow);
+                          console.log("dataRecord", dataRecord);
+                         
+                          // show the popup window.
+                          //$("#form").jqxWindow('open');
+                      }
+                  }
+                ],
+                columnGroups: [
+                    { text: 'CURRENT', name: 'Current' },
+                    { text: 'ADJUST', name: 'Adjusted' }
+                ]
+            });
+            $("#selectMonth").jqxDateTimeInput({ theme: 'orange', width: 90, formatString: 'MMMM', height: '35px' });
+            $("#selectDate").jqxDateTimeInput({ theme: 'orange', width: 100, formatString: 'MM/dd/yyyy', height: '35px' });
+        });
+        
+    </script>
+
+</head>
+<body>
+    <h1 style="text-align:left; letter-spacing:-1px; line-height:1; font-family: Arial, Helvetica, sans-serif; font-size: 25px; font-weight: bold; padding-bottom:0; padding-top:15px;">TIMESHEET MANAGER</h1>
+    <h2 style="padding-left:30px; font-size:14px; font-family:Calibri">Manage IN/OUT Working Time of your Employee</h2>
+    <hr />
+    <div style="overflow: hidden; margin-left: 10px">
+
+        <div style="margin-top:10px">
+            <!--<div id="chartGender" style="width: 400px; height: 70px; padding-top:10px"></div> -->
+            <table>
+                <tr>
+                    <td><label>by Month</label><br /><div id='selectMonth' /></div></td>
+                    <td><label style="margin-left:10px;">by Date</label><div style="margin-left:10px;" id='selectDate' /></div></td>
+                </tr>
+            </table>
+        </div>
+        <hr />
+
+    <div id="dataTable"></div>
+
+    <br />
+    </div>
+</body>
+</html>

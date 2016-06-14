@@ -1,0 +1,748 @@
+﻿
+@{
+    ViewBag.Title = "Employee Profile";
+    Layout = "~/Views/Shared/_LayoutNavigation.cshtml";
+}
+
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title></title>
+
+    @section scripts
+    {
+        <script type="text/javascript" src="@Url.Content("~/Scripts/jsList.js")"></script>
+       
+    }
+
+
+
+
+    <script type="text/javascript">
+
+    $(document).ready(function () {
+        var editrow = -1;
+        var theme = 'ui-redmond';
+        var initEmployee = function () {
+            var source = {
+                dataType: "json",
+                dataFields: [
+                    { name: 'Address', type: 'string' },
+                    { name: 'AddressKab', type: 'string' },
+                    { name: 'AddressKec', type: 'string' },
+                    { name: 'AddressKel', type: 'string' },
+                    { name: 'AddressProv', type: 'string' },
+                    { name: 'Birthdate', type: 'string' },
+                    { name: 'Birthplace', type: 'string' },
+                    { name: 'Marital', type: 'string' },
+                    { name: 'NIP', type: 'string' },
+                    { name: 'Nationality', type: 'string' },
+                    { name: 'Phone1', type: 'string' },
+                    { name: 'Phone2', type: 'string' },
+                    { name: 'empDepartement', type: 'string' },
+                    { name: 'empDivision', type: 'string' },
+                    { name: 'empJobLevel', type: 'string' },
+                    { name: 'empEdu', type: 'string' },
+                    { name: 'empEduMajor', type: 'string' },
+                    { name: 'empOfficeLocation', type: 'string' },
+                    { name: 'empPosition', type: 'string' },
+                    { name: 'rowStatus', type: 'string' },
+                    { name: 'ID', type: 'number' },
+                    { name: 'IDParentName', value: 'IDParent', values: { source: listEmployee.records, value: 'ID', name: 'Name' } },
+                    { name: 'IDParent', type: 'number' },
+                    { name: 'UID', type: 'string' },
+                    { name: 'Name', type: 'string' },
+                    { name: 'NickName', type: 'string' },
+                    { name: 'Religion', type: 'string' },
+                    { name: 'UID_ABSENCE', type: 'number' },
+                    { name: 'empStatus', type: 'string' },
+                    { name: 'Gender', type: 'string' }
+                ],
+                addrow: function (rowid, newdata, commit) {
+                    console.log("Addrow");
+                    console.log("rowdata", rowdata);
+                    $.ajax({
+                        cache: false,
+                        dataType: 'json',
+                        url: '/api/emp_master',
+                        data: rowdata,
+                        type: "POST",
+                        success: function (data, status, xhr) {
+                            // insert command is executed.
+                            console.log("Add Success");
+                            commit(true);
+                        },
+                        error: function (jqXHR, textStatus, errorThrown) {
+                            //alert(errorThrown);
+                            console.log("Error " + errorThrown);
+                            commit(false);
+                        }
+                    });
+
+                },
+                deleterow: function(rowid,commit){
+                    commit(true);
+                },
+                updaterow: function (rowid, rowdata, commit) {
+                    console.log("Updaterow : " + rowid);
+                    console.log("Updaterow : ", rowdata);
+                    //rowdata.ID = rowid;
+                    var uri = '/api/emp_master/' + rowid;
+                    $.ajax({
+                        cache: false,
+                        dataType: 'json',
+                        url: uri,
+                        contentType: 'application/json',
+                        data: JSON.stringify(rowdata),
+                        type: 'PUT',
+                        success: function (data, status, xhr) {
+                            // update command is executed.
+                            console.log("Row Updated on ID : " + rowdata.ID);
+                            commit(true);
+                        },
+                        error: function (jqXHR, textStatus, errorThrown) {
+                            console.log(rowdata);
+                            console.log('Error Update on ID : ' + rowdata.ID + ' Messages: ' + jqXHR.responseText);
+                            var output = JSON.parse(jqXHR.responseText);
+                            window.open('about:blank').document.body.innerText += output.StackTrace;
+                            //window.open('data:application/json;' + (window.btoa ? 'base64,' + btoa(JSON.stringify(output)) : JSON.stringify(output)));
+                            commit(false);
+                        }
+                    });
+                    commit(true);
+                },
+                id: 'ID',
+                url: '/api/emp_master'
+            };
+
+            var dataAdapter = new $.jqx.dataAdapter(source, {
+                downloadComplete: function (data) {
+                    source.totalrecords = data.TotalRows;
+                }
+            });
+
+            $("#dataTable").jqxGrid({
+                width: 950,
+                height: 400,
+                source: dataAdapter,
+                theme: theme,
+                pagesize: 15,
+                sortable: true,
+                groupable: true,
+                showfilterrow: true,
+                filterable: true,
+                pageable: true,
+                //serverProcessing: true,
+                editable: true,
+                columns: [
+                  { text: 'ID', dataField: 'ID', width: 200, hidden: true },
+                  { text: 'NIP', dataField: 'NIP', filtertype: 'input', width: '7%' },
+                  { text: 'Name', dataField: 'Name', filtertype: 'input', width: '30%' },
+                  {
+                      text: 'ReportTo', columntype: 'combobox', displayField: 'IDParentName', dataField: 'IDParent', filtertype: 'input', width: '30%',
+                      createeditor: function (row, value, editor) {
+                          editor.jqxComboBox({ source: listEmployee, displayMember: 'Name', valueMember: 'ID' });
+                      }
+                  },
+                  { text: 'NickName', dataField: 'NickName', filtertype: 'input', width: '15%' },
+                  { text: 'Gender', dataField: 'Gender', filtertype: 'checkedlist', width: '7%' },
+                  { text: 'Religion', dataField: 'Religion', columntype: 'checkedlist', filtertype: 'checkedlist', width: '12%', hidden: true },
+                  { text: 'Status', dataField: 'empStatus', filtertype: 'checkedlist', width: '10%', hidden:true },
+                  {
+                      text: 'Edit', datafield: 'Edit', columntype: 'button', filtertype: '',width: '8%',cellsrenderer: function () {
+                          return "Edit";
+                      }, buttonclick: function (row) {
+                          editrow = row;
+                          cleanForm();
+                          // get the clicked row's data and initialize the input fields.
+                          var dataRecord = $("#dataTable").jqxGrid('getrowdata', editrow);
+                          vvid = dataRecord.ID;
+                          console.log('Edit Mode on : ' + dataRecord.ID);
+                          //console.log("dataRecord", dataRecord);
+                          $("#nip").val(dataRecord.UID);
+                          $("#fullname").val(dataRecord.Name);
+                          $("#nickname").val(dataRecord.NickName);
+                          $("#birthDate").val(dataRecord.Birthdate);
+                          $("#religion").val(dataRecord.Religion);
+                          $("#address").val(dataRecord.Address);
+                          $("#district").val(dataRecord.AddressKab);
+                          $("#districts").val(dataRecord.AddressKec);
+                          $("#subDistricts").val(dataRecord.AddressKel);
+                          $("#province").val(dataRecord.AddressProv);
+                          $("#birthPlace").val(dataRecord.Birthplace);
+                          $("#birthDate").val(dataRecord.Birthdate);
+                          //ID: '',
+                          //Marital:'',
+                          $("#nationality").val(dataRecord.Nationality);
+                          $("#phone1").val(dataRecord.Phone1);
+                          $("#phone2").val(dataRecord.Phone2);
+                          $("#religion").val(dataRecord.Religion);
+                          //UID_ABSENCE: '',
+                          $("#department").val(dataRecord.empDepartement);
+                          $("#division").val(dataRecord.empDivision);
+                          $("#education").val(dataRecord.empEdu);
+                          $("#eduMajor").val(dataRecord.empEduMajor);
+                          //empJobLevel: '',
+                          $("#officeLocation").val(dataRecord.empOfficeLocation);
+                          $("#position").val(dataRecord.empPosition);
+                          $("#joblevel").val(dataRecord.empJobLevel);
+                          $("#status").val(dataRecord.empStatus);
+                          if (dataRecord.Gender == "M") {
+                              $("#maleGender").val(true);
+                          } else if (dataRecord.Gender == "F") {
+                              $("#femaleGender").val(true);
+                          }
+                          // show the popup window.
+                          $("#form").jqxWindow('open');
+                      }
+                  }
+                ]
+            });
+            //$("#chartGender").jqxChart(settings);
+        }
+
+        var initBalance = function () {
+            var sourcebalance = {
+                dataType: "json",
+                dataFields: [
+                    { name: 'ID', type: 'number' },
+                    { name: 'IDVNAME', value: 'IDV', values: { source: listEmployee.records, value: 'ID', name: 'Name' } },
+                    { name: 'IDV', type: 'number' },
+                    { name: 'LEAVE_TYPENAME', value: 'LEAVE_TYPE', values: { source: listCategory.records, value: 'id', name: 'uidname' } },
+                    { name: 'LEAVE_TYPE', type: 'number' },
+                    { name: 'BALANCE1', type: 'number' }
+                ],
+                id: 'ID',
+                url: '/api/balances'
+            };
+
+            var dataAdapter = new $.jqx.dataAdapter(sourcebalance, {
+                downloadComplete: function (data) {
+                    sourcebalance.totalrecords = data.TotalRows;
+                }
+            });
+
+            $("#dataBalance").jqxGrid({
+                width: 850,
+                height: 400,
+                source: dataAdapter,
+                theme: theme,
+                pagesize: 15,
+                sortable: true,
+                groupable: true,
+                showfilterrow: true,
+                filterable: true,
+                pageable: true,
+                editable: true,
+                //serverProcessing: true,
+                columns: [
+                  { text: 'ID', dataField: 'ID', width: 200, hidden: true },
+                  { text: 'EMPLOYEE', dataField: 'IDV', displayfield: 'IDVNAME',filtertype: 'input', width: 350, editable: false },
+                  { text: 'TYPE', dataField: 'LEAVE_TYPE', displayfield: 'LEAVE_TYPENAME',filtertype: 'checkedlist', width: 400, editable: false },
+                  { text: 'BALANCE', dataField: 'BALANCE1', filtertype: 'input', width: 200 }
+                ]
+            });
+        }
+
+        
+        var initWidgets = function (tab) {
+            switch (tab) {
+                case 0:
+                    initEmployee();
+                    break;
+                case 1:
+                    initBalance();
+                    break;
+               
+                case 2:
+                    initBalance();
+                    break;
+            }
+        }
+
+        $("#btnUpload").click(function () {
+            var files = $("#fileUpload").get(0).files;
+            console.log("Files : " + files.length);
+            if (files.length > 0) {
+                var data = [];
+                for (i = 0; i < files.length; i++) {
+                    data.push({ IMAGEDATA: files[i], IDV: i } );
+                    //data.push("IDV", i);
+                }
+                $.ajax({
+                    type: "POST",
+                    url: "/api/emp_image/postImage/" + 1,
+                    //contentType: false,
+                    //processData: false,
+                    data: data,
+                    success: function (results) {
+                        for (i = 0; i < results.length; i++) {
+                            alert(results[i]);
+                            console.log("Posted Success");
+                        }
+                    },
+                    error: function (data) {
+                        console.log("Error : " + files.length);
+                        console.log("IMG " + data.IDV);
+                    }
+                });
+            };
+        });
+
+        function readURL(input) {
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+
+                reader.onload = function (e) {
+                    $('#blah').attr('src', e.target.result);
+                }
+
+                reader.readAsDataURL(input.files[0]);
+            }
+        };
+
+        $("#fileUplod").change(function () {
+            readURL(this);
+        });
+
+        $('#dataTabs').jqxTabs({ theme: 'metro', width: '100%', height: 500, initTabContent: initWidgets });
+        $('#dataForm').jqxTabs({ theme: 'metro', width: 590, height: 500});
+
+        $("#addEmployee").jqxButton({ theme: 'orange', width: 120, height: 40 });
+        /*
+        $('#imgUpload').jqxFileUpload({
+            width: 300, uploadUrl: '#',
+            fileInputName: 'fileName',
+            browseTemplate: 'success',
+            uploadTemplate: 'primary',
+            cancelTemplate: 'danger',
+        });
+        */
+        $("#form").jqxWindow({
+            theme: 'metro',
+            //width: '100%',
+            height: 1000,
+            width: 600,
+            resizable: false, isModal: true, autoOpen: false, cancelButton: $("#Cancel"), modalOpacity: 0.9
+        });
+
+
+        $('#address').jqxTextArea({ placeHolder: "Address", width: '100%', height: 80 });
+        $("#nationality").jqxDropDownList({ source: countries, width: '100%', height: '25px' });
+        $("#religion").jqxDropDownList({ source: religion, width: '100%', height: '25px', autoDropDownHeight: true });
+        $("#birthDate").jqxDateTimeInput({ width: '100%', height: '35px' });
+        $("#maleGender").jqxRadioButton({ width: '100%' });
+        $("#femaleGender").jqxRadioButton({ width: '100%' });
+        $("#province").jqxDropDownList({ width: '100%', height: '25px', displayMember: "uidname", valueMember: "id" });
+        $("#district").jqxDropDownList({ width: '100%', height: '25px', disabled: true, displayMember: "uidname", valueMember: "id" });
+        $("#districts").jqxDropDownList({ width: '100%', height: '25px', disabled: true, displayMember: "uidname", valueMember: "id" });
+        $("#subDistricts").jqxDropDownList({ width: '100%', height: '25px', disabled: true, displayMember: "uidname", valueMember: "id" });
+        $("#education").jqxDropDownList({ width: '100%', height: '25px', disabled: false, displayMember: "uidname", valueMember: "id" });
+        $("#department").jqxDropDownList({ width: '100%', height: '25px' });
+        $("#division").jqxDropDownList({ width: '100%', height: '25px' });
+        $("#position").jqxDropDownList({ width: '100%', height: '25px' });
+        $("#joblevel").jqxDropDownList({ width: '100%', height: '25px' });
+        $("#status").jqxDropDownList({ width: '100%', height: '25px', autoDropDownHeight: true });
+        $("#SubmitButton").jqxButton({ theme: 'orange', width: 90, height: 30 });
+        $("#Cancel").jqxButton({ theme: 'orange', width: 90, height: 30 });
+
+        loadRegionList("province", 0);
+        loadJobList("department", 1);
+        loadJobList("division", 2);
+        loadJobList("position", 3);
+        loadJobList("education", 4);
+        loadJobList("joblevel", 11);
+        loadJobList("status", 9);
+
+        $("#addEmployee").click(function () {
+            cleanForm();
+            $("#form").jqxWindow('open');
+        });
+
+        //Capture from Screen Field then Submit
+        $("#SubmitButton").click(function () {
+            if ($("#maleGender").val() == true) {
+                genderVal = "M";
+            } else {
+                genderVal = "F";
+            }
+
+            var emprow = new Object();
+                emprow.ID = vvid;
+                emprow.Address = $("#address").val();
+                emprow.AddressKab = parseInt($("#district").val());
+                emprow.AddressKec = parseInt($("#districts").val());
+                emprow.AddressKel = parseInt($("#subDistricts").val());
+                emprow.AddressProv = parseInt($("#province").val());
+                emprow.Birthplace = $("#birthPlace").val();
+                emprow.Birthdate = $("#birthDate").val();
+                emprow.Gender = genderVal;
+            //Marital:'',
+                //emprow.NIP = $("#nip").val();
+                emprow.Name = $("#fullname").val();
+                emprow.Nationality = $("#nationality").val();
+                emprow.NickName = $("#nickname").val();
+                emprow.Phone1 = $("#phone1").val();
+                emprow.Phone2 = $("#phone2").val();
+                emprow.Religion = $("#religion").val();
+                //emprow.UID = $("#nip").val();
+            //UID_ABSENCE: '',
+                emprow.empDepartement = parseInt($("#department").val());
+                emprow.empDivision = parseInt($("#division").val());
+                emprow.empEdu = parseInt($("#education").val());
+                emprow.empEduMajor = $("#eduMajor").val();
+                emprow.empJobLevel = parseInt($("#joblevel").val());
+                emprow.empOfficeLocation = $("#officeLocation").val();
+                emprow.empPosition = parseInt($("#position").val());
+                emprow.empStatus = $("#status").val();
+                emprow.rowStatus = "ACTIVE";
+            
+            console.log("Submitted : ", vvid);
+            console.log("Submitted : ", emprow);
+            if(editrow>=0){
+                var rowID = $('#dataTable').jqxGrid('getrowid', editrow);
+                $('#dataTable').jqxGrid('updaterow', rowID, emprow);
+                //console.log('Try to PUT' + rowID + '=' + editrow);
+            } else {
+                $('#dataTable').jqxGrid('addrow', null, emprow);
+                //console.log('Try to POST');
+            }
+
+            $("#form").jqxWindow('hide');
+        });
+
+        $("#province").on('change', function (event) {
+            loadRegionList("district", event.args.item.value);
+        });
+
+        $("#district").on('change', function (event) {
+            loadRegionList("districts", event.args.item.value);
+        });
+
+        $("#districts").on('change', function (event) {
+            loadRegionList("subDistricts", event.args.item.value);
+        });
+
+        function loadRegionList(div, value) {
+            $("#" + div).jqxDropDownList({ source: ListRegion(div, value), disabled: false });
+        }
+
+        function loadJobList(div, value) {
+            $("#" + div).jqxDropDownList({ source: ListJob(div, value), disabled: false, displayMember: "uidname", valueMember: "id" });
+        }
+
+
+        function cleanForm() {
+            $("#address").val(null);
+            $("#district").jqxDropDownList({ selectedIndex: -1 })
+            $("#districts").jqxDropDownList({ selectedIndex: -1 })
+            $("#subDistricts").jqxDropDownList({ selectedIndex: -1 })
+            $("#province").jqxDropDownList({ selectedIndex: -1 })
+            $("#birthPlace").val(null);
+            $("#birthDate").val(null);
+            $("#nip").val(null);
+            $("#maleGender").val(false);
+            $("#femaleGender").val(false);
+            $("#fullname").val(null);
+            $("#nationality").jqxDropDownList({ selectedIndex: -1 })
+            $("#nickname").val(null);
+            $("#phone1").val(null);
+            $("#phone2").val(null);
+            $("#religion").jqxDropDownList({ selectedIndex: -1 })
+            //$("#nip").val(null);
+            $("#department").jqxDropDownList({ selectedIndex: -1 })
+            $("#division").jqxDropDownList({ selectedIndex: -1 })
+            $("#education").jqxDropDownList({ selectedIndex: -1 })
+            $("#eduMajor").val(null);
+            $("#officeLocation").val(null);
+            $("#position").jqxDropDownList({ selectedIndex: -1 })
+            $("#status").jqxDropDownList({ selectedIndex : -1})
+            console.log('Cleaning Form');
+        }
+
+    });
+    </script>
+
+
+</head>
+<body>
+    <h1 style="text-align:left; letter-spacing:-1px; line-height:1; font-family: Arial, Helvetica, sans-serif; font-size: 25px; font-weight: bold; padding-bottom:0; padding-top:15px;">EMPLOYEE PROFILE</h1>
+    <h2 style="padding-left:30px; font-size:14px; font-family:Calibri">Employee Management</h2>
+    @ViewData["sUsername"]
+    <hr />
+    <div id='dataTabs'>
+        <ul>
+            <li style="margin-left: 30px;">Employee</li>
+            <li style="margin-left: 30px;">Balance</li>
+        </ul>
+        <div style="overflow: hidden; margin-left: 30px">
+            <div style="margin-top:20px">
+                <!--<div id="chartGender" style="width: 400px; height: 70px; padding-top:10px"></div> -->
+                <input style='margin-bottom: 5px;' value="Add Employee" type="button" id='addEmployee' />
+            </div>
+
+            <div id="dataTable"></div>
+
+            <br />
+        </div>
+        <div style="overflow: hidden; margin-left: 30px; margin-top:30px;">
+            <h2 style="font-size:16px; text-align:left; font-family:Calibri; font-weight: bold;"> <strong>BALANCE MASTER</strong></h2>
+            <div id="dataBalance"></div>
+        </div>
+        
+    </div>
+    <div id="form" style="margin-left: 30px; margin-top: 10px; margin-right:30px">
+        <div id="dataForm">
+            <ul>
+                <li>Profile</li>
+                <li>Address</li>
+                <li>Education</li>
+                <li>Work</li>
+            </ul>
+            <div style="overflow: hidden; margin-right:20px;">
+                <div class="container-fluid" style="margin-top:20px">
+                    <!--PROFILE-->
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <input type="text" class="form-control" id="nip"  disabled>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <input type="text" class="form-control" id="fullname" placeholder="Fullname">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <input type="text" class="form-control" id="nickname" placeholder="Nickname">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <input type="text" class="form-control" id="birthPlace" placeholder="Birth Place">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <div id='birthDate'></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <div id='maleGender'>
+                                                    Male
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <div id='femaleGender'>
+                                                    Female
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="nationality">Nationality</label>
+                                    <div id="nationality"></div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="religion">Religion</label>
+                                    <div id="religion"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <input type="text" class="form-control" id="phone1" placeholder="Phone #1">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <input type="text" class="form-control" id="phone2" placeholder="Phone #2">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!--EMPLOYEE STATUS-->
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="status">Employee Status</label>
+                                    <div id='status'></div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div style="overflow: hidden; margin-right:20px;">
+                <div class="container-fluid" style="margin-top:20px">
+                    <!--ADDRESS-->
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <textarea id="address"></textarea>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="province">Province</label>
+                                    <div id='province'></div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="district">District</label>
+                                    <div id="district"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="districts">Districts</label>
+                                    <div id="districts"></div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="subDistricts">Sub-Districts</label>
+                                    <div id="subDistricts"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            <div style="overflow: hidden; margin-right:20px;">
+                <div class="container-fluid" style="margin-top:20px">
+                    <!--EDUCATION-->
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <div id='education'></div>
+                                    <label for="education">Education Level</label>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <input type="text" class="form-control" id="eduMajor" placeholder="Major">
+                                    <label for="eduMajor">Major</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div style="overflow: hidden; margin-right:20px;">
+                <div class="container-fluid" style="margin-top:20px">
+                    <!--JOB-->
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="department">Department</label>
+                                    <div id="department"></div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="division">Division</label>
+                                    <div id="division"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="position">Position</label>
+                                    <div id="position"></div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="officeLocation">Office Location</label>
+                                    <input type="text" class="form-control" id="officeLocation" placeholder="Office Location">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="position">Level</label>
+                                    <div id="joblevel"></div>
+                                </div>
+                            </div>
+                           
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <div class="container-fluid">
+            <!--SUBMIT-->
+            <div class="row">
+                <div class="col-md-10">
+                    <div class="col-md-6">
+                        <input type="submit" class="btn btn-default" value="Submit" id='SubmitButton' />
+                        <input type="submit" class="btn btn-default" value="Cancel" id='Cancel' />
+                    </div>
+                    
+            </div>
+
+        </div>
+    </div>
+    </div>
+</body>
+</html>

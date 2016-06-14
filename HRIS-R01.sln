@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
 VisualStudioVersion = 14.0.25123.0
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HRIS-R01", "HRIS-R01\HRIS-R01.csproj", "{7BA3579E-58B2-4C85-B53C-ED1E1E992D69}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HRISR01", "HRIS-R01\HRISR01.csproj", "{7BA3579E-58B2-4C85-B53C-ED1E1E992D69}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

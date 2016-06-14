@@ -1,0 +1,159 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="EmployeeModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="emp_master">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="IDParent" Type="int" />
+          <Property Name="UID" Type="nchar" MaxLength="10" Nullable="false" />
+          <Property Name="NIP" Type="nvarchar" MaxLength="13" StoreGeneratedPattern="Computed" />
+          <Property Name="UID_ABSENCE" Type="int" />
+          <Property Name="Name" Type="nvarchar" MaxLength="200" Nullable="false" />
+          <Property Name="NickName" Type="nvarchar" MaxLength="50" />
+          <Property Name="Gender" Type="nvarchar" MaxLength="50" />
+          <Property Name="Religion" Type="nchar" MaxLength="20" />
+          <Property Name="Marital" Type="nchar" MaxLength="10" />
+          <Property Name="Birthplace" Type="nchar" MaxLength="30" />
+          <Property Name="Birthdate" Type="date" />
+          <Property Name="Nationality" Type="nchar" MaxLength="100" />
+          <Property Name="Phone1" Type="nchar" MaxLength="20" />
+          <Property Name="Phone2" Type="nchar" MaxLength="20" />
+          <Property Name="Address" Type="nvarchar" MaxLength="300" />
+          <Property Name="AddressKel" Type="nchar" MaxLength="100" />
+          <Property Name="AddressKec" Type="bigint" />
+          <Property Name="AddressKab" Type="bigint" />
+          <Property Name="AddressProv" Type="bigint" />
+          <Property Name="AddressCountry" Type="bigint" />
+          <Property Name="empEdu" Type="int" />
+          <Property Name="empEduMajor" Type="nchar" MaxLength="50" />
+          <Property Name="empStatus" Type="nchar" MaxLength="10" />
+          <Property Name="empPosition" Type="int" />
+          <Property Name="empJobLevel" Type="int" />
+          <Property Name="empDivision" Type="int" />
+          <Property Name="empDepartement" Type="int" />
+          <Property Name="empOfficeLocation" Type="bigint" />
+          <Property Name="Contact" Type="nvarchar" MaxLength="200" />
+          <Property Name="rowStatus" Type="nchar" MaxLength="10" />
+          <Property Name="lastUpdate" Type="datetime" StoreGeneratedPattern="Computed" Nullable="false" />
+        </EntityType>
+        <EntityContainer Name="EmployeeModelStoreContainer">
+          <EntitySet Name="emp_master" EntityType="Self.emp_master" Schema="dbo" store:Type="Tables" />
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="EmployeeModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="emp_master">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IDParent" Type="Int32" />
+          <Property Name="UID" Type="String" MaxLength="10" FixedLength="true" Unicode="true" Nullable="false" />
+          <Property Name="NIP" Type="String" MaxLength="13" FixedLength="false" Unicode="true" annotation:StoreGeneratedPattern="Computed" />
+          <Property Name="UID_ABSENCE" Type="Int32" />
+          <Property Name="Name" Type="String" MaxLength="200" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="NickName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Gender" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Religion" Type="String" MaxLength="20" FixedLength="true" Unicode="true" />
+          <Property Name="Marital" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="Birthplace" Type="String" MaxLength="30" FixedLength="true" Unicode="true" />
+          <Property Name="Birthdate" Type="DateTime" Precision="0" />
+          <Property Name="Nationality" Type="String" />
+          <Property Name="Phone1" Type="String" MaxLength="20" FixedLength="true" Unicode="true" />
+          <Property Name="Phone2" Type="String" MaxLength="20" FixedLength="true" Unicode="true" />
+          <Property Name="Address" Type="String" MaxLength="300" FixedLength="false" Unicode="true" />
+          <Property Name="AddressKel" Type="String" MaxLength="100" FixedLength="true" Unicode="true" />
+          <Property Name="AddressKec" Type="Int64" />
+          <Property Name="AddressKab" Type="Int64" />
+          <Property Name="AddressProv" Type="Int64" />
+          <Property Name="AddressCountry" Type="Int64" />
+          <Property Name="empEdu" Type="Int32" />
+          <Property Name="empEduMajor" Type="String" MaxLength="50" FixedLength="true" Unicode="true" />
+          <Property Name="empStatus" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="empPosition" Type="Int32" />
+          <Property Name="empJobLevel" Type="Int32" />
+          <Property Name="empDivision" Type="Int32" />
+          <Property Name="empDepartement" Type="Int32" />
+          <Property Name="empOfficeLocation" Type="Int64" />
+          <Property Name="Contact" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="rowStatus" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="lastUpdate" Type="DateTime" Nullable="false" annotation:StoreGeneratedPattern="Computed" Precision="3" />
+        </EntityType>
+        <EntityContainer Name="EmployeeEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="emp_master" EntityType="Self.emp_master" />
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="EmployeeModelStoreContainer" CdmEntityContainer="EmployeeEntities">
+          <EntitySetMapping Name="emp_master">
+            <EntityTypeMapping TypeName="EmployeeModel.emp_master">
+              <MappingFragment StoreEntitySet="emp_master">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="IDParent" ColumnName="IDParent" />
+                <ScalarProperty Name="UID" ColumnName="UID" />
+                <ScalarProperty Name="NIP" ColumnName="NIP" />
+                <ScalarProperty Name="UID_ABSENCE" ColumnName="UID_ABSENCE" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="NickName" ColumnName="NickName" />
+                <ScalarProperty Name="Gender" ColumnName="Gender" />
+                <ScalarProperty Name="Religion" ColumnName="Religion" />
+                <ScalarProperty Name="Marital" ColumnName="Marital" />
+                <ScalarProperty Name="Birthplace" ColumnName="Birthplace" />
+                <ScalarProperty Name="Birthdate" ColumnName="Birthdate" />
+                <ScalarProperty Name="Nationality" ColumnName="Nationality" />
+                <ScalarProperty Name="Phone1" ColumnName="Phone1" />
+                <ScalarProperty Name="Phone2" ColumnName="Phone2" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
+                <ScalarProperty Name="AddressKel" ColumnName="AddressKel" />
+                <ScalarProperty Name="AddressKec" ColumnName="AddressKec" />
+                <ScalarProperty Name="AddressKab" ColumnName="AddressKab" />
+                <ScalarProperty Name="AddressProv" ColumnName="AddressProv" />
+                <ScalarProperty Name="AddressCountry" ColumnName="AddressCountry" />
+                <ScalarProperty Name="empEdu" ColumnName="empEdu" />
+                <ScalarProperty Name="empEduMajor" ColumnName="empEduMajor" />
+                <ScalarProperty Name="empStatus" ColumnName="empStatus" />
+                <ScalarProperty Name="empPosition" ColumnName="empPosition" />
+                <ScalarProperty Name="empJobLevel" ColumnName="empJobLevel" />
+                <ScalarProperty Name="empDivision" ColumnName="empDivision" />
+                <ScalarProperty Name="empDepartement" ColumnName="empDepartement" />
+                <ScalarProperty Name="empOfficeLocation" ColumnName="empOfficeLocation" />
+                <ScalarProperty Name="Contact" ColumnName="Contact" />
+                <ScalarProperty Name="rowStatus" ColumnName="rowStatus" />
+                <ScalarProperty Name="lastUpdate" ColumnName="lastUpdate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

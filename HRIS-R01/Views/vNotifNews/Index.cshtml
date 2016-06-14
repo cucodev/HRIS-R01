@@ -1,0 +1,117 @@
+﻿
+@{
+    ViewBag.Title = "News and Notifications";
+    Layout = "~/Views/Shared/_LayoutNavigation.cshtml";
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title></title>
+
+    @section scripts
+{
+        <script type="text/javascript" src="@Url.Content("~/Scripts/jsList.js")"></script>
+    }
+
+
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            var themes = 'ui-redmond';
+            var source = {
+                dataType: "json",
+                dataFields: [
+                    { name: 'id', type: 'number' },
+                    { name: 'cattype', type: 'number' },
+                    { name: 'title', type: 'string' },
+                    { name: 'description', type: 'string' },
+                    { name: 'filepath', type: 'string' },
+                    { name: 'lastupdatebyname', value: 'lastupdateby', values: { source: listEmployee.records, value: 'ID', name: 'Name' } },
+                    { name: 'lastupdateby', type: 'number' },
+                    { name: 'lastupdate', type: 'string' }
+                ],
+                hierarchy:
+                {
+                    keyDataField: { name: 'id' },
+                    parentDataField: { name: 'cattype' }
+                },
+                id: 'id',
+                url: '/api/notifnews'
+            };
+            var dataAdapter = new $.jqx.dataAdapter(source, {
+                autoBind: true
+            });
+            // create Tree Grid
+            $("#treeGrid").jqxTreeGrid({
+                width: 950,
+                theme: themes,
+                source: dataAdapter,
+                sortable: true,
+                ready: function () {
+                    $("#treeGrid").jqxTreeGrid('expandRow', '2');
+                },
+                columns: [
+                  { text: 'Title', columnGroup: 'title', dataField: 'title', width: 220 },
+                  { text: 'Description', columnGroup: 'title', dataField: 'description', width: 310 },
+                  { text: 'File', dataField: 'filepath', width: 120 },
+                  { text: 'Last Update by', dataField: 'lastupdateby', displayfield: 'lastupdatebyname', width: 180 },
+                  { text: 'Last Update', dataField: 'lastupdate', cellsFormat: 'd', width: 120 }
+                ],
+                columnGroups: [
+                  { text: ' ', name: 'title' }
+                ]
+            });
+            $("#treeGrid").on('rowselect', function (event) {
+                alert("Call");
+            });
+            $("#addNews").jqxButton({ theme: 'orange', width: 120, height: 40 });
+            $("#popupForm").jqxWindow({
+                theme: 'energyblue',
+                width: '100%',
+                height: 500,
+                maxWidth: 600,
+                resizable: false,
+                isModal: true,
+                autoOpen: false,
+                cancelButton: $("#Cancel"),
+                modalOpacity: 0.9
+            });
+        });
+    </script>
+    <style>
+        #h1 {
+            color: #111;
+            font-family: 'Helvetica Neue', sans-serif;
+            font-size: 275px;
+            font-weight: bold;
+            letter-spacing: -1px;
+            line-height: 1;
+            text-align: center;
+        }
+
+        #h2 {
+            color: #111;
+            font-family: 'Open Sans', sans-serif;
+            font-size: 30px;
+            font-weight: 300;
+            line-height: 32px;
+            margin: 0 0 72px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <h1 style="text-align:left; letter-spacing:-1px; line-height:1; font-family: Arial, Helvetica, sans-serif; font-size: 25px; font-weight: bold; padding-bottom:0; padding-top:15px;">NEWS & NOTIFICATIONS</h1>
+    <h2 style="padding-left:30px; font-size:14px; font-family:Calibri">Maintain your News and Notifications</h2>
+
+    <hr />
+    <div><input style='margin-bottom: 5px;' value="Add News" type="button" id='addNews' /></div>
+    <div id="treeGrid"></div>
+    <div id="popupForm">
+        <!---->
+    </div>
+</body>
+</html>

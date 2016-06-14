@@ -1,0 +1,304 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_LayoutNavigation.cshtml";
+}
+
+@section scripts
+{
+<script type="text/javascript" src="@Url.Content("~/Scripts/jsList.js")"></script>
+<script type="text/javascript" src="@Url.Content("~/Scripts/jsDateTime.js")"></script>
+}
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        var editrow = -1;
+        var theme = 'metro';
+
+        today = new Date();
+        var dateString = today.format("currentDate");
+
+        var source = {
+            dataType: "json",
+            dataFields: [
+                { name: 'MEDICAL_CLAIMID', type: 'number' },
+                { name: 'MEDICAL_ID', type: 'number' },
+                { name: 'PERSONROLE_ID', type: 'number' },
+                { name: 'NAME', type: 'string' }
+            ],
+            addrow: function (rowid, rowdata, commit) {
+                cleanForm();
+                //console.log("Addrow rowid : " + rowid);
+                console.log("Addrow : ", rowid);
+                var uri = 'api/medical_claim'; //+ '&' + rowdata;
+                $.ajax({
+                    type: "POST",
+                    cache: false,
+                    dataType: 'json',
+                    url: uri,
+                    contentType: 'application/json',
+                    data: JSON.stringify(rowid),
+                    success: function (data, status, xhr) {
+                        // insert command is executed.
+                        console.log("Add Success");
+                        //commit(true);
+                        $('#dataTable').jqxGrid('updatebounddata');
+
+                        // CALL APPROVAL CONTROLLER
+                    },
+                    error: function (jqXHR, textStatus, err) {
+                        //alert(errorThrown);
+                        console.log("Error " + err);
+                        console.log("Error " + uri);
+                        //commit(false);
+                    }
+                });
+            },
+            deleterow: function (rowid, commit) {
+                commit(true);
+            },
+            updaterow: function (rowid, newdata, commit) {
+                console.log("Updaterow");
+                console.log("rowid", rowid);
+                console.log("new data", newdata);
+                commit(true);
+            },
+            id: 'ID',
+            url: '/api/medical_claim'
+        };
+
+        var dataAdapter = new $.jqx.dataAdapter(source, {
+            downloadComplete: function (data) {
+                source.totalrecords = data.TotalRows;
+            }
+        });
+
+        $("#dataTable").jqxGrid({
+            width: 950,
+            height: 400,
+            source: dataAdapter,
+            theme: theme,
+            pagesize: 15,
+            sortable: true,
+            groupable: true,
+            showfilterrow: true,
+            filterable: true,
+            pageable: true,
+            //serverProcessing: true,
+            columns: [
+              { text: 'Medical ID', dataField: 'MEDICAL_ID', width: 200, hidden: true },
+              { text: 'Name', dataField: 'NAME', filtertype: 'input', width: '30%' },
+              {
+                  text: 'Edit', datafield: 'Edit', columntype: 'button', filtertype: '', width: '8%', cellsrenderer: function () {
+                      return "Edit";
+                  }, buttonclick: function (row) {
+                      editrow = row;
+                      // get the clicked row's data and initialize the input fields.
+                      var dataRecord = $("#dataTable").jqxGrid('getrowdata', editrow);
+                      console.log("dataRecord", dataRecord);
+                      cleanForm();
+                      /*
+                      $("#nip").val(dataRecord.UID);
+                      $("#fullname").val(dataRecord.Name);
+                      $("#nickname").val(dataRecord.NickName);
+                      $("#birthDate").val(dataRecord.Birthdate);
+                      $("#religion").val(dataRecord.Religion);
+                      if (dataRecord.Gender == "M") {
+                          $("#maleGender").val(true);
+                      } else if (dataRecord.Gender == "F") {
+                          $("#femaleGender").val(true);
+                      }
+                      */
+                      // show the popup window.
+                      $("#form").jqxWindow('open');
+                  }
+              }
+            ]
+        });
+        var srcClaim= [
+            "Self",
+            "Spouse",
+            "Child"
+        ];
+        var srcDoctor = [
+            "General Practitioners",
+            "Dentist",
+            "Spetialist",
+            "Others"
+        ];
+
+        $("#ename").jqxComboBox({ theme: 'orange', source: listEmployee, displayMember: "Name", valueMember: "ID", width: "100%", height: 25 });
+        $("#typeClaim").jqxComboBox({ theme: 'orange', source: srcClaim, width: '100%', height: '25px', autoDropDownHeight: true });
+        $("#typeDoctor").jqxComboBox({ theme: 'orange', source: srcDoctor, width: '100%', height: '25px', autoDropDownHeight: true });
+        $("#Cancel").jqxButton({ theme: 'orange', width: 120, height: 40 });
+        $("#SubmitButton").jqxButton({ theme: 'orange', width: 120, height: 40 });
+
+        $("#addMedical").jqxButton({ theme: 'orange', width: 120, height: 40 });
+        $("#addMedical").click(function () {
+            cleanForm()
+            $("#form").jqxWindow('open');
+        });
+        $("#doctorFee").on("change", function () {
+            getTotalAndClaim();
+        });
+        $("#prescribeMedicines").on("change", function () {
+            getTotalAndClaim();
+        });
+
+        function getTotalAndClaim() {
+            var totalFee = parseInt($("#doctorFee").val()) + parseInt($("#prescribeMedicines").val());
+            var totalClaim = totalFee - ((totalFee * 20) / 100);
+            if (isNaN(totalFee)) {
+                $("#totalAmount").html("Rp. 0");
+                $("#totalClaim").html("Rp. 0");
+            } else {
+                $("#totalAmount").html("Rp. " + totalFee);
+                $("#totalClaim").html("Rp. " + totalClaim);
+            }
+        }
+
+        function cleanForm() {
+            $("#ename").val(null);
+            $("#typeClaim").jqxComboBox({ selectedIndex: -1 });
+            $("#typeDoctor").jqxComboBox({ selectedIndex: -1 });
+            $("#doctorFee").val(null);
+            $("#prescribeMedicines").val(null);
+            $("#totalAmount").html("Rp. 0");
+            $("#totalClaim").html("Rp. 0");
+
+        }
+        $("#form").jqxWindow({
+            theme: theme,
+            width: '600px',
+            height: 'auto',
+            resizable: false,
+            isModal: true,
+            autoOpen: false,
+            cancelButton: $("#Cancel"),
+            modalOpacity: 0.9
+        });
+
+
+
+        $("#SubmitButton").click(function () {
+            var row = new Object();
+            //row.id = null;
+            //row.medicalID = null;
+            row.idvRequest = $("#ename").val();
+            row.idvApproval = $("#sname").val();
+            row.typeDoctor = $("#typeDoctor").val();
+            row.typeClaim = $("#tyoeClaim").val();
+            row.feeDoctor = $("#doctorFee").val();
+            row.feeMedicine = $("#prescribeMedicines").val();
+            row.feeTotal = $("#prescribeMedicines").val() +  $("#doctorFee").val();
+            row.feeClaimable = 0.8 * row.feeTotal;
+            row.rowStatus = "Active";
+            row.rowDate = Date.parse(dateString);
+
+            /*
+            var row = {
+                Name: ,
+                typeClaim: $("#typeClaim").val(),
+                typeDoctor: $("#typeDoctor").val(),
+                doctorFee: $("#doctorFee").val(),
+                prescribeMedicines: $("#prescribeMedicines").val()
+            };*/
+            console.log("editrow", editrow);
+            if (editrow >= 0) {
+                var rowID = $('#dataTable').jqxGrid('getrowid', editrow);
+                $('#dataTable').jqxGrid('updaterow', rowID, row);
+            } else {
+                $('#dataTable').jqxGrid('addrow', null, row);
+            }
+            $("#form").jqxWindow('hide');
+        });
+
+    });
+
+</script>
+
+<h1 style="text-align:left; letter-spacing:-1px; line-height:1; font-family: Arial, Helvetica, sans-serif; font-size: 25px; font-weight: bold; padding-bottom:0; padding-top:15px;">MEDICAL FORM</h1>
+<h2 style="padding-left:30px; font-size:14px; font-family:Calibri">Apply Medical Claim and See Your Form Status</h2>
+<hr /><br />
+<div><input style='margin-bottom: 5px;' value="Apply" type="button" id='addMedical' /></div>
+<table>
+    <tr>
+        <td><div id="dataTable"></div></td>
+        <td></td>
+    </tr>
+</table>
+<div id="form" style="margin-left: 30px">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="ename">Employee Name</label>
+                        <div id="ename"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label>Claim for:</label>
+                        <div id="typeClaim"></div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label>Type of Doctor:</label>
+                        <div id="typeDoctor"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="doctorFee">Doctor Fee</label>
+                        <input type="text" class="form-control" id="doctorFee" placeholder="Doctor Fee">
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="prescribeMedicines">Prescribe Medicines</label>
+                        <input type="text" class="form-control" id="prescribeMedicines" placeholder="Prescribe Medicine">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="col-md-6">
+                    <div class="form-group thumbnail text-center">
+                        <label for="totalAmount">Total Amount</label>
+                        <p class="form-control-static" id="totalAmount">Rp. 0</p><p class="form-control-static"><br /></p>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group thumbnail text-center">
+                        <label for="totalClaim">Total Claim</label>
+                        <p class="form-control-static" id="totalClaim">Rp. 0</p><p class="form-control-static">after 20% deduction</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="col-md-6">
+                    <input type="submit" class="btn btn-default" value="Submit" id='SubmitButton' />
+                    <input type="submit" class="btn btn-default" value="Cancel" id='Cancel' />
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+</div>
+
+

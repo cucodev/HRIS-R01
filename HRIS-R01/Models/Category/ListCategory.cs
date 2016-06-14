@@ -27,6 +27,7 @@ namespace HRIS_R01.Models
                 .Property(e => e.uidname)
                 .IsFixedLength();
 
+
             modelBuilder.Entity<categoryparent>()
                 .Property(e => e.uid)
                 .IsFixedLength();
@@ -48,5 +49,7 @@ namespace HRIS_R01.Models
                 .WithOptional(e => e.categoryparent)
                 .HasForeignKey(e => e.uidparent);
         }
+
+        public System.Data.Entity.DbSet<HRIS_R01.Models.Form.approval> approvals { get; set; }
     }
 }
