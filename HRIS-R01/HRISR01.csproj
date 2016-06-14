@@ -204,6 +204,7 @@
     <Compile Include="Controllers\Content\vLeavesController.cs" />
     <Compile Include="Controllers\Content\vMedicalClaimController.cs" />
     <Compile Include="Controllers\Content\vNotifNewsController.cs" />
+    <Compile Include="Controllers\Content\vScheduleController.cs" />
     <Compile Include="Controllers\Content\vTimesheetsController.cs" />
     <Compile Include="Controllers\DefaultController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -870,6 +871,7 @@
     <Content Include="Views\vApproval\Superior.cshtml" />
     <Content Include="Views\vMedicalClaim\Index.cshtml" />
     <Content Include="Views\vMedicalClaim\HRMedicalClaim.cshtml" />
+    <Content Include="Views\vSchedule\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
