@@ -872,6 +872,7 @@
     <Content Include="Views\vMedicalClaim\Index.cshtml" />
     <Content Include="Views\vMedicalClaim\HRMedicalClaim.cshtml" />
     <Content Include="Views\vSchedule\Index.cshtml" />
+    <Content Include="Views\Default\temp1.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />

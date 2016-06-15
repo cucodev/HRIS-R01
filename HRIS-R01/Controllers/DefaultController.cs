@@ -22,6 +22,11 @@ namespace HRIS_R01.Controllers
             return View();
         }
 
+        public ActionResult temp1()
+        {
+            return View();
+        }
+
         [HttpPost]
         public ActionResult LogOn(LogOnModel model, string returnUrl)
         {
