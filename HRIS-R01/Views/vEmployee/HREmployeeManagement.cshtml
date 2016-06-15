@@ -485,7 +485,7 @@
 
 
         //=====================================================LETTER==================================
-        $("#dropDownButton").jqxDropDownButton({ width: 150, height: 40, theme: 'orange' });
+        $("#dropDownButton").jqxDropDownButton({ width: 270, height: 40, theme: 'orange' });
         $('#jqxTree').on('select', function (event) {
             var args = event.args;
             var item = $('#jqxTree').jqxTree('getItem', args.element);
@@ -502,7 +502,6 @@
 <body>
     <h1 style="text-align:left; letter-spacing:-1px; line-height:1; font-family: Arial, Helvetica, sans-serif; font-size: 25px; font-weight: bold; padding-bottom:0; padding-top:15px;">EMPLOYEE PROFILE</h1>
     <h2 style="padding-left:30px; font-size:14px; font-family:Calibri">Employee Management</h2>
-    @ViewData["sUsername"]
     <hr />
     <div id='dataTabs'>
         <ul>
@@ -511,11 +510,10 @@
         </ul>
         <div style="overflow: hidden; margin-left: 30px">
             <div style="margin-top:20px">
-                <table width="950px">
+                <table width="950px" >
                     <tr>
-                        <td width="80%"><input style='margin-bottom: 5px;' value="Add Employee" type="button" id='addEmployee' /></td>
-                        <td>
-                            <div id="dropDownButton">
+                        <td width="80%">
+                            <div id="dropDownButton" style="vertical-align:bottom">
                                 <div style="border: none;" id='jqxTree'>
                                     <ul>
                                         <li item-selected='true'>Letter</li>
@@ -536,7 +534,10 @@
                                         <li>Surat Resign</li>
                                     </ul>
                                 </div>
-                            </div>
+                            </div> 
+                        </td>
+                        <td>
+                            <input style='margin-bottom: 5px;' value="Add Employee" type="button" id='addEmployee' />                            
                         </td>
                         <td><input style='margin-left:10px;  margin-bottom: 5px;' value="Promotion" type="button" id='promoteEmployee' /></td>
                         <td><input style='margin-left:10px;margin-bottom: 5px;' value="Mutation" type="button" id='mutateEmployee' /></td>
