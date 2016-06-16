@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.Security;
 using HRIS_R01.Models.Common;
 using HRIS_R01.Models.Session;
 using HRIS_R01.Controllers.Shared;
@@ -36,8 +37,19 @@ namespace HRIS_R01.Controllers
                 SetLogOnSessionModel(model);
                 /*Shows the session*/
                 LogOnModel sessionModel = GetLogOnSessionModel();
-                return RedirectToAction("Index", "vEmployee");
+                if (Membership.ValidateUser(model.UserName, model.Password))
+                {
+                    FormsAuthentication.SetAuthCookie(model.UserName, model.RememberMe);
+                    if (this.Url.IsLocalUrl(returnUrl) && returnUrl.Length > 1 && returnUrl.StartsWith("/")
+                        && !returnUrl.StartsWith("//") && !returnUrl.StartsWith("/\\"))
+                    {
+                        return this.Redirect(returnUrl);
+                    }
+
+                    return this.RedirectToAction("Index", "vEmployee");
+                }    
             }
+            this.ModelState.AddModelError(string.Empty, "The user name or password provided is incorrect.");
             return View(model);
         }
 
