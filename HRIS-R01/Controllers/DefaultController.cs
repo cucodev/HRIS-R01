@@ -47,9 +47,12 @@ namespace HRIS_R01.Controllers
                     }
 
                     return this.RedirectToAction("Index", "vEmployee");
-                }    
+                }  else
+                {
+                    this.ModelState.AddModelError(string.Empty, "The user name or password provided is incorrect.");
+                    return View(model);
+                }
             }
-            this.ModelState.AddModelError(string.Empty, "The user name or password provided is incorrect.");
             return View(model);
         }
 
