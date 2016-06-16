@@ -244,4 +244,4 @@ ModelManifest.xml
 # FAKE - F# Make
 .fake/
 
-HRIS-R01\Web.config
+*/Web.config
