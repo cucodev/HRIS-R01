@@ -303,6 +303,24 @@
     <Compile Include="Models\organization.cs" />
     <Compile Include="Models\OrganizationModel.cs" />
     <Compile Include="Models\Session\AccountModels.cs" />
+    <Compile Include="Models\Session\emp_user.cs">
+      <DependentUpon>UserModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Session\UserModel.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>UserModel.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Session\UserModel.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>UserModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Session\UserModel.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>UserModel.edmx</DependentUpon>
+    </Compile>
     <Compile Include="Models\timesheet.cs" />
     <Compile Include="Models\TimesheetModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -681,6 +699,16 @@
       <DependentUpon>LeavesModel.edmx</DependentUpon>
       <LastGenOutput>LeavesModel.cs</LastGenOutput>
     </Content>
+    <Content Include="Models\Session\UserModel.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>UserModel.edmx</DependentUpon>
+      <LastGenOutput>UserModel.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="Models\Session\UserModel.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>UserModel.edmx</DependentUpon>
+      <LastGenOutput>UserModel.cs</LastGenOutput>
+    </Content>
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Areas\HelpPage\Views\Web.config" />
@@ -734,6 +762,13 @@
     </EntityDeploy>
     <Content Include="Models\Employee\EmployeeModel.edmx.diagram">
       <DependentUpon>EmployeeModel.edmx</DependentUpon>
+    </Content>
+    <EntityDeploy Include="Models\Session\UserModel.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>UserModel.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <Content Include="Models\Session\UserModel.edmx.diagram">
+      <DependentUpon>UserModel.edmx</DependentUpon>
     </Content>
     <None Include="Properties\PublishProfiles\localServer.pubxml" />
     <Content Include="Scripts\fullcalendar\demos\json\events.json" />
