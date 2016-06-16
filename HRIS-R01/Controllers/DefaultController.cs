@@ -37,18 +37,19 @@ namespace HRIS_R01.Controllers
                 SetLogOnSessionModel(model);
                 /*Shows the session*/
                 LogOnModel sessionModel = GetLogOnSessionModel();
-                if (Membership.ValidateUser(model.UserName, model.Password))
+                try 
                 {
-                    FormsAuthentication.SetAuthCookie(model.UserName, model.RememberMe);
-                    if (this.Url.IsLocalUrl(returnUrl) && returnUrl.Length > 1 && returnUrl.StartsWith("/")
-                        && !returnUrl.StartsWith("//") && !returnUrl.StartsWith("/\\"))
-                    {
-                        return this.Redirect(returnUrl);
-                    }
+                    if (Membership.ValidateUser(model.UserName, model.Password)) { 
+                        FormsAuthentication.SetAuthCookie(model.UserName, model.RememberMe);
+                        if (this.Url.IsLocalUrl(returnUrl) && returnUrl.Length > 1 && returnUrl.StartsWith("/")
+                            && !returnUrl.StartsWith("//") && !returnUrl.StartsWith("/\\"))
+                        {
+                            return this.Redirect(returnUrl);
+                        }
 
-                    return this.RedirectToAction("Index", "vEmployee");
-                }  else
-                {
+                        return this.RedirectToAction("Index", "vEmployee");
+                    }
+                } catch (Exception e) {
                     this.ModelState.AddModelError(string.Empty, "The user name or password provided is incorrect.");
                     return View(model);
                 }
