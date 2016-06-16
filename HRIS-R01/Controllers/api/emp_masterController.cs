@@ -38,7 +38,7 @@ namespace HRIS_R01.Controllers.api
 
         // PUT: api/emp_master/5
         [ResponseType(typeof(void))]
-        public async Task<IHttpActionResult> Putemp_master(int id, [FromBody]emp_master emp_master)
+        public async Task<IHttpActionResult> Putemp_master(int id, emp_master emp_master)
         {
             if (!ModelState.IsValid)
             {
@@ -50,23 +50,23 @@ namespace HRIS_R01.Controllers.api
                 return BadRequest();
             }
 
-            //db.Entry(emp_master).State = EntityState.Modified;
+            db.Entry(emp_master).State = EntityState.Modified;
 
             try
             {
                 await db.SaveChangesAsync();
             }
-            catch (System.Data.Entity.Validation.DbEntityValidationException ex)
+            catch (DbUpdateConcurrencyException)
             {
-                /*if (!emp_masterExists(id))
+                if (!emp_masterExists(id))
                 {
                     return NotFound();
                 }
                 else
                 {
                     throw;
-                }*/
-                System.Diagnostics.Debug.WriteLine(" -----------------------" + ex.Message);
+                }
+                //System.Diagnostics.Debug.WriteLine(" -----------------------" + ex.Message);
 
 
             }

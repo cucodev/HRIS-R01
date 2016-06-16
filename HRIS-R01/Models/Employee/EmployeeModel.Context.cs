@@ -18,6 +18,8 @@ namespace HRIS_R01.Models.Employee
         public EmployeeEntities()
             : base("name=EmployeeEntities")
         {
+            this.Configuration.ProxyCreationEnabled = false;
+            this.Database.Log = s => System.Diagnostics.Debug.WriteLine(s);
         }
     
         protected override void OnModelCreating(DbModelBuilder modelBuilder)

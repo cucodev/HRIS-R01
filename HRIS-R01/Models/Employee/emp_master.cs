@@ -42,9 +42,10 @@ namespace HRIS_R01.Models.Employee
         public Nullable<int> empJobLevel { get; set; }
         public Nullable<int> empDivision { get; set; }
         public Nullable<int> empDepartement { get; set; }
-        public Nullable<long> empOfficeLocation { get; set; }
+        public string empOfficeLocation { get; set; }
         public string Contact { get; set; }
         public string rowStatus { get; set; }
         public System.DateTime lastUpdate { get; set; }
+        public Nullable<int> IDParentLevel { get; set; }
     }
 }

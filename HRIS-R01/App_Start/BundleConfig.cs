@@ -53,6 +53,7 @@ namespace HRIS_R01
                         "~/Scripts/jqwidgets/jqxgrid.grouping.js",
                         "~/Scripts/jqwidgets/jqxdatetimeinput.js",
                         "~/Scripts/jqwidgets/jqxdropdownlist.js",
+                        "~/Scripts/jqwidgets/jqxdropdownbutton.js",
                         "~/Scripts/jqwidgets/jqxslider.js",
                         "~/Scripts/jqwidgets/jqxfileupload.js",
                         "~/Scripts/jqwidgets/jqxsplitter.js",

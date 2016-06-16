@@ -11,6 +11,7 @@
           </Key>
           <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="IDParent" Type="int" />
+          <Property Name="IDParentLevel" Type="int" />
           <Property Name="UID" Type="nchar" MaxLength="10" Nullable="false" />
           <Property Name="NIP" Type="nvarchar" MaxLength="13" StoreGeneratedPattern="Computed" />
           <Property Name="UID_ABSENCE" Type="int" />
@@ -37,7 +38,7 @@
           <Property Name="empJobLevel" Type="int" />
           <Property Name="empDivision" Type="int" />
           <Property Name="empDepartement" Type="int" />
-          <Property Name="empOfficeLocation" Type="bigint" />
+          <Property Name="empOfficeLocation" Type="nchar" MaxLength="100" />
           <Property Name="Contact" Type="nvarchar" MaxLength="200" />
           <Property Name="rowStatus" Type="nchar" MaxLength="10" />
           <Property Name="lastUpdate" Type="datetime" StoreGeneratedPattern="Computed" Nullable="false" />
@@ -65,7 +66,7 @@
           <Property Name="Marital" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
           <Property Name="Birthplace" Type="String" MaxLength="30" FixedLength="true" Unicode="true" />
           <Property Name="Birthdate" Type="DateTime" Precision="0" />
-          <Property Name="Nationality" Type="String" />
+          <Property Name="Nationality" Type="String" MaxLength="100" Unicode="true" FixedLength="true" />
           <Property Name="Phone1" Type="String" MaxLength="20" FixedLength="true" Unicode="true" />
           <Property Name="Phone2" Type="String" MaxLength="20" FixedLength="true" Unicode="true" />
           <Property Name="Address" Type="String" MaxLength="300" FixedLength="false" Unicode="true" />
@@ -81,10 +82,11 @@
           <Property Name="empJobLevel" Type="Int32" />
           <Property Name="empDivision" Type="Int32" />
           <Property Name="empDepartement" Type="Int32" />
-          <Property Name="empOfficeLocation" Type="Int64" />
+          <Property Name="empOfficeLocation" Type="String" />
           <Property Name="Contact" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
           <Property Name="rowStatus" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
           <Property Name="lastUpdate" Type="DateTime" Nullable="false" annotation:StoreGeneratedPattern="Computed" Precision="3" />
+          <Property Name="IDParentLevel" Type="Int32" />
         </EntityType>
         <EntityContainer Name="EmployeeEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="emp_master" EntityType="Self.emp_master" />
@@ -98,6 +100,7 @@
           <EntitySetMapping Name="emp_master">
             <EntityTypeMapping TypeName="EmployeeModel.emp_master">
               <MappingFragment StoreEntitySet="emp_master">
+                <ScalarProperty Name="IDParentLevel" ColumnName="IDParentLevel" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
                 <ScalarProperty Name="IDParent" ColumnName="IDParent" />
                 <ScalarProperty Name="UID" ColumnName="UID" />

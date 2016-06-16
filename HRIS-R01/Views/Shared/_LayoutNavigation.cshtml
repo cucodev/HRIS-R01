@@ -17,6 +17,12 @@
     @Scripts.Render("~/bundles/bootstrap")
     @Scripts.Render("~/bundles/jsmenu")
     @Scripts.Render("~/bundles/jqwidgets")
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('body').css('zoom', '90%');
+        });      
+    </script>
 </head>
 
 </head>
@@ -26,7 +32,7 @@
         <header class="cd-main-header">
             <a href="#0" class="cd-logo"><img src="~/Content/bg/hollit-logo-small.png" alt="Logo" height="23px"></a>
 
-
+            <label><h1> @ViewBag.cUsername </h1></label>
             <a href="#0" class="cd-nav-trigger">Menu<span></span></a>
             <nav class="cd-nav">
 
@@ -58,6 +64,9 @@
                 <li class="cd-label">Organization </li>
                 <li class="has-children overview">
                     @Html.ActionLink("Structure", "Index", "vOrganization")
+                </li>
+                <li class="has-children overview">
+                    @Html.ActionLink("Schedule", "Index", "vSchedule")
                 </li>
             </ul> 
             <ul>

@@ -16,12 +16,13 @@ namespace HRIS_R01.Controllers.Content
         // GET: vEmployee
         public ActionResult Index()
         {
-            ViewData["sUsername"] = current.UserName;
+            ViewBag.cUsername = current.UserName;
             return View();
         }
 
         public ActionResult HREmployeeManagement()
         {
+            ViewBag.cUsername = current.UserName;
             return View();
         }
 
