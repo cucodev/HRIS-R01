@@ -1,7 +1,7 @@
 ﻿@model HRIS_R01.Models.Session.LogOnModel
 
 @{
-    ViewBag.Title = "Welcome TO HRIS";
+    ViewBag.Title = ViewBag.LoginError;
     Layout = "~/Views/Shared/_LayoutWelcome.cshtml";
 }
 
@@ -63,6 +63,7 @@
 
                         <div>
                             <img src="~/Content/bg/hollit-logo-large.png" sizes="40%" /><br /><br />
+                            <h2>@ViewBag.LoginError</h2>
                         </div>
                     </th>
                 </tr>
