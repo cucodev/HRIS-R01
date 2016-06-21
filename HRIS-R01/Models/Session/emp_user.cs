@@ -7,8 +7,6 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-using System.ComponentModel.DataAnnotations;
-
 namespace HRIS_R01.Models.Session
 {
     using System;
@@ -20,20 +18,6 @@ namespace HRIS_R01.Models.Session
         public Nullable<int> IDV { get; set; }
         public string IDVMAIL { get; set; }
         public Nullable<int> IDVROLE { get; set; }
-    }
-
-    public class LoginModel
-    {
-        [Required]
-        [Display(Name = "EMAIL")]
-        public string IDVMAIL { get; set; }
-
-        [Required]
-        [DataType(DataType.Password)]
-        [Display(Name = "PASSWORD")]
-        public string Password { get; set; }
-
-        [Display(Name = "Remember me?")]
-        public bool RememberMe { get; set; }
+        public string IDVMAILPASSWORD { get; set; }
     }
 }

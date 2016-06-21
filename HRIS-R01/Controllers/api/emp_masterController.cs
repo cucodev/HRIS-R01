@@ -33,6 +33,8 @@ namespace HRIS_R01.Controllers.api
                 return NotFound();
             }
 
+            
+
             return Ok(emp_master);
         }
 

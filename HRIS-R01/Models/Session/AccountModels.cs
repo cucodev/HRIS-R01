@@ -32,12 +32,16 @@ namespace HRIS_R01.Models.Session
     {
         [Required]
         [Display(Name = "EMAIL")]
+        [RegularExpression(@"^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$",
+            ErrorMessage = "Invalid email address.")]
         public string UserName { get; set; }
 
         [Required]
         [DataType(DataType.Password)]
         [Display(Name = "PASSWORD")]
         public string Password { get; set; }
+
+        public int IDV { get; set; }
 
         [Display(Name = "Remember me?")]
         public bool RememberMe { get; set; }

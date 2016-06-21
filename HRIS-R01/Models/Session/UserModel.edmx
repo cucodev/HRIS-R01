@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="UserModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="UserModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="emp_user">
           <Key>
             <PropertyRef Name="ID" />
@@ -12,13 +12,13 @@
           <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="IDV" Type="int" />
           <Property Name="IDVMAIL" Type="varchar" MaxLength="200" />
+          <Property Name="IDVMAILPASSWORD" Type="varchar" MaxLength="50" />
           <Property Name="IDVROLE" Type="int" />
         </EntityType>
         <EntityContainer Name="UserModelStoreContainer">
           <EntitySet Name="emp_user" EntityType="Self.emp_user" Schema="dbo" store:Type="Tables" />
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="UserModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -30,6 +30,7 @@
           <Property Name="IDV" Type="Int32" />
           <Property Name="IDVMAIL" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
           <Property Name="IDVROLE" Type="Int32" />
+          <Property Name="IDVMAILPASSWORD" Type="String" />
         </EntityType>
         <EntityContainer Name="UserEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="emp_user" EntityType="Self.emp_user" />
@@ -43,6 +44,7 @@
           <EntitySetMapping Name="emp_user">
             <EntityTypeMapping TypeName="UserModel.emp_user">
               <MappingFragment StoreEntitySet="emp_user">
+                <ScalarProperty Name="IDVMAILPASSWORD" ColumnName="IDVMAILPASSWORD" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
                 <ScalarProperty Name="IDV" ColumnName="IDV" />
                 <ScalarProperty Name="IDVMAIL" ColumnName="IDVMAIL" />
