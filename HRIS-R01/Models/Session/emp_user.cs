@@ -20,6 +20,7 @@ namespace HRIS_R01.Models.Session
         public Nullable<int> IDV { get; set; }
         public string IDVMAIL { get; set; }
         public Nullable<int> IDVROLE { get; set; }
+        public string PASSWORD { get; set; }
     }
 
     public class LoginModel
