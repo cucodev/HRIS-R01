@@ -5,6 +5,7 @@ using System.Web;
 using System.Web.Mvc;
 using HRIS_R01.Models.Session;
 using HRIS_R01.Models.Employee;
+using HRIS_R01.ViewModel;
 using System.Web.Routing;
 
 namespace HRIS_R01.Controllers.Shared
@@ -17,6 +18,7 @@ namespace HRIS_R01.Controllers.Shared
         private const string LogOnAction = "Index";
 
         private EmployeeEntities dbEmp = new EmployeeEntities();
+        private UserEntities dbUser = new UserEntities();
 
         protected ApplicationController()
         {
@@ -60,21 +62,99 @@ namespace HRIS_R01.Controllers.Shared
             return (TSource)this.Session[LogOnSession];
         }
 
-        protected List<emp_master> GetUserCred()
+        public IList<credentialViewModel> getViewModel(LogOnModel model)
         {
-            //List<emp_master> list = new Session["UserCred"];
-            var myList = (List<emp_master>)Session["UserCred"];
+            /*
+            var master = (from c in dbEmp.emp_master
+                       where c.ID  == model.IDV
+                       select(x => new credentialViewModel()
+                       {
+                           c.ID,
+                           c.IDParent,
+                           c.IDParentLevel,
+                           c.NIP,
+                           c.UID_ABSENCE,
+                           c.Name,
+                           c.NickName,
+                           c.empPosition,
+                           c.empJobLevel,
+                           c.empDivision,
+                           c.empDepartement,
+                           c.empOfficeLocation
+                       }).ToArray();
 
-            //Store Current Logged Emp into Session
-            ViewBag.UserCred = myList;
-            return myList;
+            var credUser = from x in credentialViewModel()
+
+                           select new
+                           {
+
+                           }
+
+            var credUser = from b in dbUser.emp_user
+                       join c in master on b.IDV equals c.ID
+                       select new
+                       {
+                           cID = c.ID,
+                           cIDParent = c.IDParent,
+                           cIDParentLevel = c.IDParentLevel,
+                           cNIP = c.NIP,
+                           cUID_ABSENCE = c.UID_ABSENCE,
+                           cName = c.Name,
+                           cNickName = c.NickName,
+                           cEmpPosition = c.empPosition,
+                           cEmpJobLevel = c.empJobLevel,
+                           cEmpDivision = c.empDivision,
+                           cEmpDepartement = c.empDepartement,
+                           cEmpOfficeLocation = c.empOfficeLocation,
+                           cUser = model.UserName,
+                           cStart = DateTime.Now
+                       };
+
+            */
+            var  credUser = dbEmp.emp_master
+                .Where(c => c.ID == model.IDV)
+                .Select(c => new
+                        {
+                            cID = c.ID,
+                            cIDParent = c.IDParent,
+                            cIDParentLevel = c.IDParentLevel,
+                            cNIP = c.NIP,
+                            cUID_ABSENCE = c.UID_ABSENCE,
+                            cName = c.Name,
+                            cNickName = c.NickName,
+                            cEmpPosition = c.empPosition,
+                            cEmpJobLevel = c.empJobLevel,
+                            cEmpDivision = c.empDivision,
+                            cEmpDepartement = c.empDepartement,
+                            cEmpOfficeLocation = c.empOfficeLocation,
+                            cUser = model.UserName,
+                            cStart = DateTime.Now
+                        })
+                 .Select(x => new credentialViewModel()
+                 {
+                     cID = x.cID,
+                     cIDParent = x.cIDParent.HasValue ? x.cIDParent.Value : -1,
+                     cIDParentLevel = x.cIDParentLevel.HasValue ? x.cIDParentLevel.Value : -1,
+                     cNIP = x.cNIP,
+                     cUID_ABSENCE = x.cUID_ABSENCE,
+                     cName = x.cName,
+                     cNickName = x.cNickName,
+                     cEmpPosition = x.cEmpPosition,
+                     cEmpJobLevel = x.cEmpJobLevel,
+                     cEmpDivision = x.cEmpDivision,
+                     cEmpDepartement = x.cEmpDepartement,
+                     cEmpOfficeLocation = x.cEmpOfficeLocation,
+                     cUser = x.cUser,
+                     cStart = x.cStart
+                 });
+
+            ViewData["UserCred"] = credUser;
+            return credUser.ToList();
         }
 
-        protected void SetLogOnSessionModel(TSource model, int id)
+        
+        protected void SetLogOnSessionModel(TSource model)
         {
-            emp_master us = dbEmp.emp_master.Find(id);// dbEmp.emp_master.FindAsync(id);
-            Session["UserCred"] = us;
-            ViewData["UserCred"] = us;
             Session[LogOnSession] = model;
         }
 

@@ -9,12 +9,14 @@ using HRIS_R01.Models.Session;
 using HRIS_R01.Controllers.Shared;
 using System.Text;
 using System.DirectoryServices;
-using HRIS_R01.Models.Session;
-using HRIS_R01.Models.Employee;
 using System.Web.Routing;
 using System.Threading.Tasks;
 using System.Data;
 using System.Data.Entity;
+
+using HRIS_R01.Models.Session;
+using HRIS_R01.Models.Employee;
+using HRIS_R01.ViewModel;
 
 
 namespace HRIS_R01.Controllers
@@ -24,6 +26,7 @@ namespace HRIS_R01.Controllers
         string Msg = "Login Initialize...";
         UserEntities dbUser = new UserEntities();
         EmployeeEntities dbEmp = new EmployeeEntities();
+        
 
         // GET: Default
         public ActionResult Index()
@@ -56,7 +59,7 @@ namespace HRIS_R01.Controllers
                 } else
                 {
                     /*Set model to session*/
-                    SetLogOnSessionModel(model, model.IDV);
+                    SetLogOnSessionModel(model);
                     /*Shows the session*/
                     LogOnModel sessionModel = GetLogOnSessionModel();
                     try
@@ -68,7 +71,12 @@ namespace HRIS_R01.Controllers
                             {
                                 Msg = "Login OK";
                                 ViewBag.Msg = Msg;
-                                return this.RedirectToAction("Index", "vEmployee");
+
+                                //Join table, set caching for user and custom viewmodel
+                                credentialViewModel userViewModel = new credentialViewModel();
+                                var userModel = getViewModel(model);
+
+                                return this.RedirectToAction("Index", "vEmployee" );
                             } else
                             {
                                 Msg = "Unable to Set User Caching, Contact Web Administrator";
@@ -86,7 +94,7 @@ namespace HRIS_R01.Controllers
                     {
                         //this.ModelState.AddModelError(string.Empty, "The user name or password provided is incorrect.");
                         Msg = "error.";
-                        ViewBag.Msg = Msg;
+                        ViewBag.Msg = Msg + " : " + e.Message;
                         return View(model);
                     }
                 }
