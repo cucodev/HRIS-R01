@@ -7,22 +7,11 @@ using System.Web.Security;
 using HRIS_R01.Models.Common;
 using HRIS_R01.Models.Session;
 using HRIS_R01.Controllers.Shared;
-using System.Text;
-using System.DirectoryServices;
-using HRIS_R01.Models.Session;
-
-using System.Threading.Tasks;
-using System.Data;
-using System.Data.Entity;
-
 
 namespace HRIS_R01.Controllers
 {
     public class DefaultController : ApplicationController<LogOnModel>
     {
-        string Msg = "Login Initialize...";
-        UserEntities dbUser = new UserEntities();
-
         // GET: Default
         public ActionResult Index()
         {
@@ -40,123 +29,32 @@ namespace HRIS_R01.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult> LogOn(LogOnModel model, string returnUrl)
+        public ActionResult LogOn(LogOnModel model, string returnUrl)
         {
-            
             if (ModelState.IsValid)
             {
-                emp_user user = await dbUser.emp_user
-                            .Where(b => b.IDVMAIL == model.UserName)
-                            .FirstOrDefaultAsync();
-                //leave leave = await db.leaves.FindAsync(id);
-                if (user == null)
+                /*Set model to session*/
+                SetLogOnSessionModel(model);
+                /*Shows the session*/
+                LogOnModel sessionModel = GetLogOnSessionModel();
+                if (Membership.ValidateUser(model.UserName, model.Password))
                 {
-                    ViewBag.Msg = "Email not Registered";
+                    FormsAuthentication.SetAuthCookie(model.UserName, model.RememberMe);
+                    if (this.Url.IsLocalUrl(returnUrl) && returnUrl.Length > 1 && returnUrl.StartsWith("/")
+                        && !returnUrl.StartsWith("//") && !returnUrl.StartsWith("/\\"))
+                    {
+                        return this.Redirect(returnUrl);
+                    }
+
+                    return this.RedirectToAction("Index", "vEmployee");
+                }  else
+                {
+                    this.ModelState.AddModelError(string.Empty, "The user name or password provided is incorrect.");
                     return View(model);
-                } else
-                {
-                    /*Set model to session*/
-                    SetLogOnSessionModel(model);
-                    /*Shows the session*/
-                    LogOnModel sessionModel = GetLogOnSessionModel();
-                    try
-                    {
-                        if (true == AuthenticateUser(model.UserName, model.Password, out Msg))
-                        {
-                            Msg = "Login OK";
-                            ViewBag.Msg = Msg;
-                            return this.RedirectToAction("Index", "vEmployee");
-                            //Response.Redirect("default.aspx");// Authenticated user redirects to default.aspx
-                        }
-
-                    }
-                    catch (Exception e)
-                    {
-                        //this.ModelState.AddModelError(string.Empty, "The user name or password provided is incorrect.");
-                        Msg = "error.";
-                        ViewBag.Msg = Msg;
-                        return View(model);
-                    }
                 }
-
-                
             }
-            
             return View(model);
         }
-
-
-        public bool AuthenticateUser(string username, string password, out string Errmsg)
-        {
-            /*
-            
-            string domain = "hollit";
-            string LdapPath = "LDAP://hlad01:389/ou=Users,dc=Hollit";
-            string domainAndUsername = domain + @"\" + username;
-            DirectoryEntry entry = new DirectoryEntry(LdapPath, domainAndUsername, password);
-            try
-            {
-                // Bind to the native AdsObject to force authentication.
-                Object obj = entry.NativeObject;
-                DirectorySearcher search = new DirectorySearcher(entry);
-                search.Filter = "(SAMAccountName=" + username + ")";
-                search.PropertiesToLoad.Add("cn");
-                SearchResult result = search.FindOne();
-                if (null == result)
-                {
-                    ViewBag.Msg = "Auth Error";
-                    return false;
-                }
-                // Update the new path to the user in the directory
-                LdapPath = result.Path;
-                string _filterAttribute = (String)result.Properties["cn"][0];
-                ViewBag.Msg = "Auth OK";
-            }
-            catch (Exception ex)
-            {
-                Errmsg = ex.Message;
-                ViewBag.Msg = Errmsg;
-                return false;
-                throw new Exception("Error authenticating user." + ex.Message);
-            }
-            
-            */
-            Errmsg = "";
-            ViewBag.Msg = "NULL";
-            try
-            {
-                DirectoryEntry de = new DirectoryEntry("LDAP://localhost:389/ou=Users,dc=hris,dc=com");
-                Object obj = de.NativeObject;
-                System.Diagnostics.Debug.WriteLine(obj.ToString());
-                DirectorySearcher ds = new DirectorySearcher(de);
-                ds.SearchScope = SearchScope.Subtree;
-                ds.Filter = "(uid= " + username + ")";
-                System.Diagnostics.Debug.WriteLine(username);
-                SearchResultCollection results = ds.FindAll();
-                if (results.Count > 0)
-                {
-                    ViewBag.Msg = "OK";
-                    return true;
-                }
-            } catch (Exception ex)
-            {
-                ViewBag.Msg =  ex.Message;
-                System.Diagnostics.Debug.WriteLine("==========================================================");
-                System.Diagnostics.Debug.WriteLine(ex.StackTrace.ToString());
-                System.Diagnostics.Debug.WriteLine("==========================================================");
-                System.Diagnostics.Debug.WriteLine(ex.Source.ToString());
-                System.Diagnostics.Debug.WriteLine("==========================================================");
-                System.Diagnostics.Debug.WriteLine(ex.InnerException);
-                System.Diagnostics.Debug.WriteLine("==========================================================");
-                System.Diagnostics.Debug.WriteLine(ex.Message);
-                System.Diagnostics.Debug.WriteLine("==========================================================");
-                return false;
-            }
-
-
-            return true;
-        }
-
 
         public ActionResult LogOff()
         {
