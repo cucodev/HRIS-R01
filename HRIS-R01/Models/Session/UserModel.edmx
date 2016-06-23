@@ -30,7 +30,7 @@
           <Property Name="IDV" Type="Int32" />
           <Property Name="IDVMAIL" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
           <Property Name="IDVROLE" Type="Int32" />
-          <Property Name="IDVMAILPASSWORD" Type="String" />
+          <Property Name="IDVMAILPASSWORD" Type="String" MaxLength="50" Unicode="false" FixedLength="false" />
         </EntityType>
         <EntityContainer Name="UserEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="emp_user" EntityType="Self.emp_user" />

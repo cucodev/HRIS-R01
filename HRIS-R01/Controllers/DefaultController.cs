@@ -56,7 +56,7 @@ namespace HRIS_R01.Controllers
                 } else
                 {
                     /*Set model to session*/
-                    SetLogOnSessionModel(model, model.IDV);
+                    SetLogOnSessionModel(model);
                     /*Shows the session*/
                     LogOnModel sessionModel = GetLogOnSessionModel();
                     try
@@ -64,7 +64,7 @@ namespace HRIS_R01.Controllers
                         //if (true == AuthenticateUser(model.UserName, model.Password, out Msg))
                         if (true == await AuthenticateLocal(model))
                         {
-                            if ( true == await SetCredential(model) )
+                            if ( true == SetCredential(model) )
                             {
                                 Msg = "Login OK";
                                 ViewBag.Msg = Msg;
@@ -99,30 +99,10 @@ namespace HRIS_R01.Controllers
 
        
         
-        public async Task<bool> SetCredential(LogOnModel model)
+        public bool SetCredential(LogOnModel model)
         {
-            try
-            {
-                //var us = dbEmp.emp_master.Find(model.IDV);
-                emp_master us = await dbEmp.emp_master.FindAsync(model.IDV);
-                //emp_master us = dbEmp.emp_master.SingleOrDefault(p => p.ID == model.IDV);
-
-                //Caching User
-                //SetLogOnSessionModel(model,model.IDV);
-
-                ViewBag.cUser = model.UserName;
-                ViewBag.cIDV = us.ID;
-                ViewBag.cIDVParent = us.IDParent;
-                ViewBag.cIDVParentLevel = us.IDParentLevel;
-                ViewBag.cName           = us.Name;
-                System.Diagnostics.Debug.WriteLine("ID: " + us.ID + " Parent:" + us.IDParent + " Level:" + us.IDParentLevel);
-                return true;
-            } catch (Exception ex)
-            {
-                ViewBag.Msg = ex.Message;
-                return false;
-            }
-            
+            SetUserSession(model);
+            return true;
         }
 
         public async Task<bool> AuthenticateLocal(LogOnModel model)
