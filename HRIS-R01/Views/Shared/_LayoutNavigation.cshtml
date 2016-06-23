@@ -35,7 +35,9 @@
             <label><h1> @ViewBag.cUsername </h1></label>
             <a href="#0" class="cd-nav-trigger">Menu<span></span></a>
             <nav class="cd-nav">
-
+                <label style="font-size:12px; font-family:Calibri; color:indianred; margin-right:30px">
+                    Credential Info: @ViewBag.cUser : @ViewBag.cIDV : Parent= @ViewBag.cIDVParent , ParentLevel= @ViewBag.cIDVParentLevel , Name= @ViewBag.cName
+                </label>
             </nav>
         </header> <!-- .cd-main-header -->
         <nav class="cd-side-nav">
@@ -83,7 +85,7 @@
             <ul>
                 <li class="cd-label">System Admin</li>
                 <li class="bookmarks"><a href="#0">User Management</a> </li>
-                
+                <li><input type="button" value="Logout" id="logout" style="margin-left:20px"/></li>       
             </ul>
 
         </nav>
@@ -94,6 +96,7 @@
         </div> <!-- .content-wrapper -->
         
     </main>
+    
 
 
 

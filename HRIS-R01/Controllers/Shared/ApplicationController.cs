@@ -4,6 +4,8 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using HRIS_R01.Models.Session;
+using HRIS_R01.Models.Employee;
+using HRIS_R01.ViewModel;
 using System.Web.Routing;
 
 namespace HRIS_R01.Controllers.Shared
@@ -14,6 +16,10 @@ namespace HRIS_R01.Controllers.Shared
         private const string ErrorController = "Error";
         private const string LogOnController = "Default";
         private const string LogOnAction = "Index";
+        private const string UserCred = "UserCred";
+
+        private EmployeeEntities dbEmp = new EmployeeEntities();
+        private UserEntities dbUser = new UserEntities();
 
         protected ApplicationController()
         {
@@ -45,6 +51,8 @@ namespace HRIS_R01.Controllers.Shared
             requestContext.HttpContext.Response.End();
         }
 
+       
+
         protected bool HasSession()
         {
             return Session[LogOnSession] != null;
@@ -53,6 +61,62 @@ namespace HRIS_R01.Controllers.Shared
         protected TSource GetLogOnSessionModel()
         {
             return (TSource)this.Session[LogOnSession];
+        }
+
+        public void SetUserSession(LogOnModel model)
+        {
+            
+            var credUser = (from c in dbEmp.emp_master
+                           where c.ID == model.IDV
+                           select new credentialViewModel()
+                           {
+                               cID = c.ID,
+                               cIDParent = c.IDParent.HasValue ? c.IDParent.Value : -1,
+                               cIDParentLevel = c.IDParentLevel.HasValue ? c.IDParentLevel.Value : -1,
+                               cNIP = c.NIP,
+                               cUID_ABSENCE = c.UID_ABSENCE,
+                               cName = c.Name,
+                               cNickName = c.NickName,
+                               cEmpPosition = c.empPosition,
+                               cEmpJobLevel = c.empJobLevel,
+                               cEmpDivision = c.empDivision,
+                               cEmpDepartement = c.empDepartement,
+                               cEmpOfficeLocation = c.empOfficeLocation,
+                               cUser = model.UserName,
+                               cStart = DateTime.Now
+                           }).ToList<credentialViewModel>();
+            ViewData[UserCred] = credUser;
+            Session[UserCred] = credUser;
+            UserSession();
+            //return credUser;
+        }
+
+        public void UserSession()
+        {
+            System.Diagnostics.Debug.WriteLine("SET VIEW BAG FROM SESSION ======================================================================");
+
+            var vm = (List<credentialViewModel>)Session[UserCred];
+            foreach (var dt in vm)
+            {
+                ViewBag.cUser = dt.cUser;
+                ViewBag.cIDV = dt.cID;
+                ViewBag.cIDVParent = dt.cIDParent;
+                ViewBag.cIDVParentLevel = dt.cIDParentLevel;
+                ViewBag.cName = dt.cName;
+                ViewBag.cNickName = dt.cNickName;
+                ViewBag.cNIP = dt.cNIP;
+                ViewBag.cEmpPosition = dt.cEmpPosition;
+                ViewBag.cEmpJobLevel = dt.cEmpJobLevel;
+                ViewBag.cEmpDivision = dt.cEmpDivision;
+                ViewBag.cEmpDepartement = dt.cEmpDepartement;
+                ViewBag.cEmpOfficeLocation = dt.cEmpOfficeLocation;
+
+
+                System.Diagnostics.Debug.Write(" Value : ");
+                System.Diagnostics.Debug.WriteLine(dt.cUser + ":" + dt.cID + ":" + dt.cIDParent + ":" + dt.cIDParentLevel);
+            }
+            System.Diagnostics.Debug.WriteLine("END VIEW BAG FROM SESSION ======================================================================");
+
         }
 
         protected void SetLogOnSessionModel(TSource model)
