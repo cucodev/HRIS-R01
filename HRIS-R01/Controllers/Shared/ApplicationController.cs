@@ -85,6 +85,7 @@ namespace HRIS_R01.Controllers.Shared
                                cUser = model.UserName,
                                cStart = DateTime.Now
                            }).ToList<credentialViewModel>();
+            //ViewData
             ViewData[UserCred] = credUser;
             Session[UserCred] = credUser;
             UserSession();
@@ -129,6 +130,8 @@ namespace HRIS_R01.Controllers.Shared
             if (HasSession())
             {
                 Session.Abandon();
+                
+                //Session["UserCred"]
             }
         }
 
