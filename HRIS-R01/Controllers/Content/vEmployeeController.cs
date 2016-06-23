@@ -23,7 +23,7 @@ namespace HRIS_R01.Controllers.Content
 
         public ActionResult HREmployeeManagement()
         {
-            //Session User
+            //Session User Added
             UserSession();
             return View();
         }
