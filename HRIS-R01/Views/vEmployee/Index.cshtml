@@ -23,26 +23,26 @@
 
     <script type="text/javascript">
         $(document).ready(function () {
-            
+            var vStatus = true;
             $('#dataForm').jqxTabs({ theme: 'metro', width: '100%', height: 500 });
-            $("#SubmitButton").jqxButton({ theme: 'orange', width: 120, height: 40 });
-            $('#address').jqxTextArea({ placeHolder: "Address", width: '100%', height: 80 });
-            $("#nationality").jqxDropDownList({ source: countries, width: '100%', height: '25px' });
-            $("#religion").jqxDropDownList({ source: religion, width: '100%', height: '25px', autoDropDownHeight: true });
-            $("#birthDate").jqxDateTimeInput({ width: '100%', height: '35px' });
-            $("#maleGender").jqxRadioButton({ width: '100%' });
-            $("#femaleGender").jqxRadioButton({ width: '100%' });
-            $("#province").jqxDropDownList({ width: '100%', height: '25px', displayMember: "uidname", valueMember: "id" });
+            $("#SubmitButton").jqxButton({ disabled: vStatus, theme: 'orange', width: 120, height: 40 });
+            $('#address').jqxTextArea({ disabled: vStatus, placeHolder: "Address", width: '100%', height: 80 });
+            $("#nationality").jqxDropDownList({ disabled: vStatus, source: countries, width: '100%', height: '25px' });
+            $("#religion").jqxDropDownList({ disabled: vStatus, source: religion, width: '100%', height: '25px', autoDropDownHeight: true });
+            $("#birthDate").jqxDateTimeInput({ disabled: vStatus, width: '100%', height: '35px' });
+            $("#maleGender").jqxRadioButton({ disabled: vStatus, width: '100%' });
+            $("#femaleGender").jqxRadioButton({ disabled: vStatus, width: '100%' });
+            $("#province").jqxDropDownList({ disabled: vStatus, width: '100%', height: '25px', displayMember: "uidname", valueMember: "id" });
             $("#district").jqxDropDownList({ width: '100%', height: '25px', disabled: true, displayMember: "uidname", valueMember: "id" });
             $("#districts").jqxDropDownList({ width: '100%', height: '25px', disabled: true, displayMember: "uidname", valueMember: "id" });
             $("#subDistricts").jqxDropDownList({ width: '100%', height: '25px', disabled: true, displayMember: "uidname", valueMember: "id" });
-            $("#education").jqxDropDownList({ width: '100%', height: '25px', disabled: false, displayMember: "uidname", valueMember: "id" });
-            $("#department").jqxDropDownList({ width: '100%', height: '25px' });
-            $("#division").jqxDropDownList({ width: '100%', height: '25px' });
-            $("#position").jqxDropDownList({ width: '100%', height: '25px' });
-            $("#status").jqxDropDownList({ width: '100%', height: '25px', autoDropDownHeight: true });
-            $("#SubmitButton").jqxButton({ theme: 'orange', width: 90, height: 30 });
-            $("#Cancel").jqxButton({ theme: 'orange', width: 90, height: 30 });
+            $("#education").jqxDropDownList({ disabled: vStatus, width: '100%', height: '25px', disabled: false, displayMember: "uidname", valueMember: "id" });
+            $("#department").jqxDropDownList({ disabled: vStatus, width: '100%', height: '25px' });
+            $("#division").jqxDropDownList({ disabled: vStatus, width: '100%', height: '25px' });
+            $("#position").jqxDropDownList({ disabled: vStatus, width: '100%', height: '25px' });
+            $("#status").jqxDropDownList({ disabled: vStatus, width: '100%', height: '25px', autoDropDownHeight: true });
+            //$("#SubmitButton").jqxButton({ disabled: vStatus, theme: 'orange', width: 90, height: 30 });
+            //$("#Cancel").jqxButton({ disabled: vStatus, theme: 'orange', width: 90, height: 30 });
 
         });
 

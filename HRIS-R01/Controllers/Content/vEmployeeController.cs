@@ -12,30 +12,18 @@ namespace HRIS_R01.Controllers.Content
     public class vEmployeeController : ApplicationController<LogOnModel>
     //public class vEmployeeController : Controller
     {
-        //LogOnModel current = new LogOnModel();
-        credentialViewModel CredviewModel = new credentialViewModel();
-
+       
         // GET: vEmployee
+        
         public ActionResult Index()
         {
-            var viewmodel = CredviewModel;
-
-            foreach (var dt in ViewData["UserCred"] as  List<credentialViewModel>)
-            {
-                ViewBag.cUser = dt.cUser;
-                ViewBag.cIDV = dt.cID;
-                ViewBag.cIDParent = dt.cIDParent;
-                ViewBag.cIDParentLevel = dt.cIDParentLevel;
-            }
-            
-
-            
-            return View(ViewData["UserCred"]);
+            UserSession();
+            return View(Session["UserCred"]);
         }
 
         public ActionResult HREmployeeManagement()
         {
-            //ViewBag.cUsername = current.UserName;
+            UserSession();
             return View();
         }
 
