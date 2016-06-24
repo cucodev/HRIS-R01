@@ -15,6 +15,7 @@
     $(document).ready(function () {
         var theme = 'darkblue';
         // Create ListBox
+        /*
         $('#listbox').jqxListBox({
             selectedIndex: 0,
             source: listEmployee,
@@ -30,6 +31,31 @@
                 var imgurls = imgurl.replace(/\s+/g, '');
                 var img = '<img height="100" width="90" src="' + imgurls + '"/>';
                 var table = '<table><tr><td rowspan="2">' + img + '</td><td>' + datarecord.Name + "<br>NIP " + datarecord.NIP + '</td></tr><tr><td> - </td></tr></table>';
+                return table;
+            }
+        }); */
+
+        // Create ListBox
+        $('#listbox').jqxListBox({
+            selectedIndex: 0,
+            source: listEmployee,
+            displayMember: "Name",
+            valueMember: "NickName",
+            itemHeight: 110,
+            height: '100%',
+            width: '100%',
+            theme: theme,
+            renderer: function (index, label, value) {
+                var datarecord = listEmployee.records[index];
+                if (datarecord.UID == ' ') {
+                    imgfile = 'person.png';
+                } else {
+                    imgfile = datarecord.UID.toLowerCase() + '.jpg';
+                }
+                var imgurl = '/Content/photo/' + imgfile;
+                var imgurls = imgurl.replace(/\s+/g, '');
+                var img = '<img height="100" width="90" src="' + imgurls + '"/>';
+                var table = '<table style="min-width: 50px; min-height:100px"><tr><td style="width: 100px;" rowspan="2">' + img + '</td><td>' + datarecord.Name + "<br>NIP " + datarecord.NIP + '</td></tr><tr><td> - </td></tr></table>';
                 return table;
             }
         });

@@ -150,6 +150,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Content\photo\" />
     <Folder Include="Models\Balance\" />
     <Folder Include="uploads\" />
     <Folder Include="Views\Application\" />
@@ -338,6 +339,7 @@
     <Content Include="Content\bg\lo-bg.png" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\csProfile.css" />
     <Content Include="Content\jqwidgets\images\backgroundTop.png" />
     <Content Include="Content\jqwidgets\images\backImage.png" />
     <Content Include="Content\jqwidgets\images\bg_black.png" />
@@ -972,6 +974,7 @@
     <Content Include="Scripts\jsmenu\jquery.menu-aim.js" />
     <Content Include="Scripts\jsmenu\main.js" />
     <Content Include="Scripts\jsmenu\modernizr.js" />
+    <Content Include="Scripts\jsProfile.js" />
     <Content Include="Scripts\modernizr-2.6.2.js" />
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
