@@ -28,6 +28,7 @@ namespace HRIS_R01.Controllers
         // GET: Default
         public ActionResult Index()
         {
+            // return this.RedirectToAction("LogOn", "Default");
             return View();
         }
 
@@ -87,13 +88,14 @@ namespace HRIS_R01.Controllers
                         //this.ModelState.AddModelError(string.Empty, "The user name or password provided is incorrect.");
                         Msg = "error.";
                         ViewBag.Msg = Msg;
+                        //return this.RedirectToAction("Logon", "Default");
                         return View(model);
                     }
                 }
 
                 
             }
-            
+           //return this.RedirectToAction("Logon", "Default");
             return View(model);
         }
 

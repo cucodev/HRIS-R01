@@ -150,7 +150,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Content\photo\" />
     <Folder Include="Models\Balance\" />
     <Folder Include="uploads\" />
     <Folder Include="Views\Application\" />
@@ -663,6 +662,7 @@
     <Content Include="Content\jqwidgets\jqx.windowsphone.css" />
     <Content Include="Content\jsmenu\reset.css" />
     <Content Include="Content\jsmenu\style.css" />
+    <Content Include="Content\photo\person.png" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <Content Include="Models\Common\FileModel.Context.tt">

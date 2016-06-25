@@ -2,13 +2,28 @@
 }
 
 .circular {
-	width: 300px;
-	height: 300px;
-	border-radius: 150px;
+	width: 60px;
+	height: 60px;
+	border-radius: 5px;
 	-webkit-border-radius: 150px;
 	-moz-border-radius: 150px;
-	background: url(#) no-repeat;
+	background: url(photo/person.png) no-repeat;
 	box-shadow: 0 0 8px rgba(0, 0, 0, .8);
 	-webkit-box-shadow: 0 0 8px rgba(0, 0, 0, .8);
 	-moz-box-shadow: 0 0 8px rgba(0, 0, 0, .8);
 	}
+
+.imgProfileContainer {
+    height:60px;
+    width:60px;
+    position:relative;  
+    border-radius:100%;
+    overflow:hidden;
+}
+
+.imgProfile {
+    position:absolute;
+    left:-50%; right:-50%; top:0;
+    margin:auto;
+    height:100%; width:auto;
+}
