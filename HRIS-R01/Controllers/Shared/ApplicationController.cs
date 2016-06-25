@@ -65,7 +65,15 @@ namespace HRIS_R01.Controllers.Shared
 
         public void SetUserSession(LogOnModel model)
         {
-            
+            if (model.RememberMe)
+            {
+                var ASPCookie = Request.Cookies["ASP.NET_SessionId"];
+                ASPCookie.Expires = DateTime.Now.AddDays(1);
+                Response.SetCookie(ASPCookie);
+            }
+
+           
+
             var credUser = (from c in dbEmp.emp_master
                            where c.ID == model.IDV
                            select new credentialViewModel()
@@ -122,6 +130,7 @@ namespace HRIS_R01.Controllers.Shared
 
         protected void SetLogOnSessionModel(TSource model)
         {
+           
             Session[LogOnSession] = model;
         }
 

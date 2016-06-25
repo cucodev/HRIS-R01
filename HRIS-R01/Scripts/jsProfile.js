@@ -1,6 +1,7 @@
 ﻿$(document).ready(function () {
 
 
+    console.log("jsProfile Loaded");
 
     var sourceProfile = {
         dataType: "json",
@@ -51,73 +52,67 @@
         url: '/api/emp_master/' + idv
     };
 
+    
     var dataAdapter = new $.jqx.dataAdapter(sourceProfile, {
-        downloadComplete: function (data) {
-            source.totalrecords = data.TotalRows;
+        loadComplete: function (records) { 
+            var dataRecord = dataAdapter.records;
+            var dt = dataRecord[0];
+            //console.log(dt);
+
+            IN('IDParent');
+            IN('IDParentLevel');
+            IN('UID');
+            IN('Name');
+            IN('NickName');
+            IN('Religion');
+            IN('Gender');
+            IN('Gender');
+            IN('Marital');
+            IN('NIP');
+
+            IN('Birthdate');
+            IN('Birthplace');
+            IN('Nationality');
+
+            IN('empEdu');
+            IN('empEduMajor');
+
+            IN('empDepartement');
+            IN('empDivision');
+            IN('empJobLevel');
+            IN('empOfficeLocation');
+            IN('empPosition');
+
+            IN('Phone1');
+            IN('Phone2');
+
+            IN('Address');
+            IN('AddressKec');
+            IN('AddressKel');
+            IN('AddressKab');
+            IN('AddressProv');
+
+            IN('UID_ABSENCE');
+            IN('empStatus');
+            IN('rowStatus');
+
+            //Fill IN FORM
+            function IN(idval) {
+                var str = eval('dt.' + idval);
+                $('#' + idval).val(str);
+            }
         },
-        success: function (results) {
-                console.log("GET Success");
-            
+        loadError: function (jqXHR, status, error) {
+            console.log(jqXHR.responseText);
         },
-        error: function (data) {
-            console.log("Error");
-            
+        beforeLoadComplete: function (records) {
+           // console.log
         }
     });
-
-    var dataRecord = dataAdapter.records;
-
-    //Fill IN FORM
-    function IN(id) {
-       $(id).val(dataRecord.id);
-    }
-
-
-    //ID: '',
-    IN('IDParent');
-    IN('Name');
-
-
-    $("#IDParent").val(dataRecord.IDParent);
-    $("#IDParentLevel").val(dataRecord.IDParentLevel);
-    //UID
-    $("#Name").val(dataRecord.Name);
-    $("#Nickname").val(dataRecord.NickName);
-
-
-
-    $("#nip").val(dataRecord.NIP);
-    $("#birthDate").val(dataRecord.Birthdate);
-    $("#religion").val(dataRecord.Religion);
-    $("#address").val(dataRecord.Address);
-    $("#province").jqxDropDownList('val', parseInt(dataRecord.AddressProv));
-    $("#district").jqxDropDownList('val', parseInt(dataRecord.AddressKab));
-    $("#districts").jqxDropDownList('val', parseInt(dataRecord.AddressKec));
-    $("#subDistricts").jqxDropDownList('val', parseInt(dataRecord.AddressKel));
-    $("#birthPlace").val(dataRecord.Birthplace);
-    $("#birthDate").val(dataRecord.Birthdate);
+    
+    dataAdapter.dataBind();
 
     
 
-    //Marital:'',
-    $("#nationality").val(dataRecord.Nationality);
-    $("#phone1").val(dataRecord.Phone1);
-    $("#phone2").val(dataRecord.Phone2);
-    $("#religion").val(dataRecord.Religion);
-    //UID_ABSENCE: '',
-    $("#department").val(dataRecord.empDepartement);
-    $("#division").val(dataRecord.empDivision);
-    $("#education").val(dataRecord.empEdu);
-    $("#eduMajor").val(dataRecord.empEduMajor);
-    //empJobLevel: '',
-    $("#officeLocation").val(dataRecord.empOfficeLocation);
-    $("#position").val(dataRecord.empPosition);
-    $("#joblevel").val(dataRecord.empJobLevel);
-    $("#status").val(dataRecord.empStatus);
-    if (dataRecord.Gender == "M") {
-        $("#maleGender").val(true);
-    } else if (dataRecord.Gender == "F") {
-        $("#femaleGender").val(true);
-    }
-});
 
+})

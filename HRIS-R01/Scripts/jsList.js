@@ -1,4 +1,5 @@
-﻿var CategorySource = {
+﻿console.log('jsList Loaded');
+var CategorySource = {
     datatype: "json",
     datafields: [
         { name: 'id', type: 'number' },
@@ -105,4 +106,9 @@ var religion = [
     "Budhiesm",
     "Hinduism"
 ];
+//================================================================================
+var Gender = [
+    { label: 'Male', value: 'M' },
+    { label: 'Female', value: 'F'}
+]
 //================================================================================

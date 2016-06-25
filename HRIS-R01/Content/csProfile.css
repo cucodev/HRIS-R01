@@ -27,3 +27,8 @@
     margin:auto;
     height:100%; width:auto;
 }
+
+input, textarea{
+    background-color: #47fff9 ;
+    color: #FFF;
+}

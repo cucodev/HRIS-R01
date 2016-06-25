@@ -6,33 +6,47 @@
 
     <script type="text/javascript">
         //$(document).ready(function) {
-            var idv = @ViewBag.cIDV;
+        var idv = @ViewBag.cIDV;
+        var th = 'ui-redmond';//darkblue';
         //}
     </script>
 
 
     @section scripts
     {
+        <link href="@Url.Content("~/Content/csProfile.css")" rel="stylesheet" />
         <script type="text/javascript" src="@Url.Content("~/Scripts/jsList.js")"></script>
         <script type="text/javascript" src="@Url.Content("~/Scripts/jsChart.js")"></script>
         <script type="text/javascript" src="@Url.Content("~/Scripts/jsProfile.js")"></script>
-        <link href="@Url.Content("~/Content/csProfile.css")" rel="stylesheet" />
+        
     }
 
+    
 
 
 
     <script type="text/javascript">
         $(document).ready(function () {
-            var vStatus = true;
-            $('#dataForm').jqxTabs({ theme: 'metro', width: '100%', height: 500 });
+            var vStatus = false;
+            $('#dataForm').jqxTabs({ theme: th, width: '100%', height: 550 });
+
+            $("#NIP").jqxInput({ disabled: true, theme:th, width: '100%',  height: '35px' })
+            $("#Name").jqxInput({ disabled: vStatus, theme:th, width: '100%', height: '35px' })
+            $("#NickName").jqxInput({ disabled: vStatus, theme:th, width: '100%', height: '35px' })
+            
+            $("#Birthdate").jqxDateTimeInput({ disabled: vStatus, theme: th, height: '35px' });
+            $("#Birthplace").jqxDateTimeInput({ disabled: vStatus, theme: th, width: '100%', height: '35px' });
+            $("#Gender").jqxListBox({ disabled: vStatus, source: Gender, theme: th,  width: '100%', height: '50px'});
+            
+            $("#Nationality").jqxComboBox({ disabled: vStatus, theme: th, source: countries,  height: '25px' });
+            $("#Religion").jqxDropDownList({ disabled: vStatus, theme: th, source: religion, width: '100%', height: '25px', autoDropDownHeight: true });
+            
+            $("#empStatus").jqxDropDownList({ disabled: vStatus, theme: th, width: '100%', height: '25px', autoDropDownHeight: true });
+            
+
+            
             $("#SubmitButton").jqxButton({ disabled: vStatus, theme: 'orange', width: 120, height: 40 });
             $('#address').jqxTextArea({ disabled: vStatus, placeHolder: "Address", width: '100%', height: 80 });
-            $("#nationality").jqxDropDownList({ disabled: vStatus, source: countries, width: '100%', height: '25px' });
-            $("#religion").jqxDropDownList({ disabled: vStatus, source: religion, width: '100%', height: '25px', autoDropDownHeight: true });
-            $("#birthDate").jqxDateTimeInput({ disabled: vStatus, width: '100%', height: '35px' });
-            $("#maleGender").jqxRadioButton({ disabled: vStatus, width: '100%' });
-            $("#femaleGender").jqxRadioButton({ disabled: vStatus, width: '100%' });
             $("#province").jqxDropDownList({ disabled: vStatus, width: '100%', height: '25px', displayMember: "uidname", valueMember: "id" });
             $("#district").jqxDropDownList({ width: '100%', height: '25px', disabled: true, displayMember: "uidname", valueMember: "id" });
             $("#districts").jqxDropDownList({ width: '100%', height: '25px', disabled: true, displayMember: "uidname", valueMember: "id" });
@@ -41,7 +55,6 @@
             $("#department").jqxDropDownList({ disabled: vStatus, width: '100%', height: '25px' });
             $("#division").jqxDropDownList({ disabled: vStatus, width: '100%', height: '25px' });
             $("#position").jqxDropDownList({ disabled: vStatus, width: '100%', height: '25px' });
-            $("#status").jqxDropDownList({ disabled: vStatus, width: '100%', height: '25px', autoDropDownHeight: true });
             //$("#SubmitButton").jqxButton({ disabled: vStatus, theme: 'orange', width: 90, height: 30 });
             //$("#Cancel").jqxButton({ disabled: vStatus, theme: 'orange', width: 90, height: 30 });
 
@@ -81,10 +94,11 @@
 
 
                 <ul>
-                    <li>Profile</li>
+                    <li style="margin-left:30px">Profile</li>
                     <li>Address</li>
                     <li>Education</li>
                     <li>Work</li>
+                    <li>Image</li>
                 </ul>
                 <div style="overflow: hidden; margin-right:20px;margin-top:20px">
                     <div class="container-fluid">
@@ -94,7 +108,7 @@
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="nip">NIP</label>
-                                        <input type="text" class="form-control" id="nip" placeholder="NIP" required>
+                                        <input type="text" class="form-control" id="NIP" placeholder="NIP" required>
                                     </div>
                                 </div>
                             </div>
@@ -104,13 +118,13 @@
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="fullname">Fullname</label>
-                                        <input type="text" class="form-control" id="fullname" placeholder="Fullname">
+                                        <input type="text" class="form-control" id="Name" placeholder="Fullname">
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="nickname">Nickname</label>
-                                        <input type="text" class="form-control" id="nickname" placeholder="Nickname">
+                                        <input type="text" class="form-control" id="NickName" placeholder="Nickname">
                                     </div>
                                 </div>
                             </div>
@@ -120,13 +134,13 @@
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="birthPlace">Birth Place</label>
-                                        <input type="text" class="form-control" id="birthPlace" placeholder="Birth Place">
+                                        <input type="text" class="form-control" id="Birthplace" placeholder="Birth Place">
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="birthDate">Birth Date</label>
-                                        <div id='birthDate'></div>
+                                        <div id='Birthdate'></div>
                                     </div>
                                 </div>
                             </div>
@@ -135,40 +149,23 @@
                             <div class="col-md-12">
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label for="gender">Gender</label>
-                                        <div class="row">
-                                            <div class="col-md-6">
-                                                <div class="form-group">
-                                                    <div id='maleGender'>
-                                                        Male
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="col-md-6">
-                                                <div class="form-group">
-                                                    <div id='femaleGender'>
-                                                        Female
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
+                                        <label for="Gender">Gender</label>
+                                        <div id="Gender"></div>
                                     </div>
                                 </div>
-
+                                <div class="col-md-6">
+                                    <label for="Nationality">Nationality</label>
+                                    <div id='Nationality'></div>
+                                </div> 
                             </div>
                         </div>
+                       
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label for="nationality">Nationality</label>
-                                        <div id="nationality"></div>
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label for="religion">Religion</label>
-                                        <div id="religion"></div>
+                                        <label for="Religion">Religion</label>
+                                        <div id="Religion"></div>
                                     </div>
                                 </div>
                             </div>
@@ -195,8 +192,8 @@
                             <div class="col-md-12">
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label for="status">Employee Status</label>
-                                        <div id='status'></div>
+                                        <label for="empStatus">Employee Status</label>
+                                        <div id='empStatus'></div>
                                     </div>
                                 </div>
 
@@ -311,7 +308,8 @@
 
                     </div>
                 </div>
-  
+                
+            <div></div>
                 <!--SUBMIT-->
             
             
