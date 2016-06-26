@@ -4,7 +4,8 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using HRIS_R01.Models.Session;
-using HRIS_R01.Models.Employee;
+//using HRIS_R01.Models.Employee;
+using HRIS_R01.Models;
 using HRIS_R01.ViewModel;
 using System.Web.Routing;
 
@@ -18,8 +19,10 @@ namespace HRIS_R01.Controllers.Shared
         private const string LogOnAction = "Index";
         private const string UserCred = "UserCred";
 
-        private EmployeeEntities dbEmp = new EmployeeEntities();
-        private UserEntities dbUser = new UserEntities();
+        private MasterHRISEntities db = new MasterHRISEntities();
+
+        //private EmployeeEntities dbEmp = new EmployeeEntities();
+        //private UserEntities dbUser = new UserEntities();
 
         protected ApplicationController()
         {
@@ -74,7 +77,7 @@ namespace HRIS_R01.Controllers.Shared
 
            
 
-            var credUser = (from c in dbEmp.emp_master
+            var credUser = (from c in db.emp_master
                            where c.ID == model.IDV
                            select new credentialViewModel()
                            {

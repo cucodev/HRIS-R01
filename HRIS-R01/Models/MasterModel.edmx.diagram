@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="6ad9aaaa041446029fd617922c455b4d" Name="Diagram1">
+        <EntityTypeShape EntityType="HRISMasterModel.locationparent" Width="1.5" PointX="5.75" PointY="4.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="HRISMasterModel.approval" Width="1.5" PointX="3" PointY="5.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="HRISMasterModel.balance" Width="1.5" PointX="6" PointY="15.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="HRISMasterModel.category" Width="1.5" PointX="3" PointY="1.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="HRISMasterModel.categoryfile" Width="1.5" PointX="7.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="HRISMasterModel.categoryparent" Width="1.5" PointX="0.75" PointY="1.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="HRISMasterModel.emp_address" Width="1.5" PointX="7.75" PointY="3.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="HRISMasterModel.emp_birth" Width="1.5" PointX="7.75" PointY="7.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="HRISMasterModel.emp_contact" Width="1.5" PointX="9.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="HRISMasterModel.emp_edu" Width="1.5" PointX="9.75" PointY="4.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="HRISMasterModel.emp_image" Width="1.5" PointX="3" PointY="11.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="HRISMasterModel.emp_job" Width="1.5" PointX="9.75" PointY="7.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="HRISMasterModel.emp_master" Width="1.5" PointX="0.75" PointY="9.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="HRISMasterModel.emp_master_absence" Width="1.5" PointX="11.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="HRISMasterModel.emp_phone" Width="1.5" PointX="11.75" PointY="3.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="HRISMasterModel.emp_user" Width="1.5" PointX="3" PointY="14.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="HRISMasterModel.file" Width="1.5" PointX="3" PointY="16.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="HRISMasterModel.leave" Width="1.5" PointX="5.25" PointY="9.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="HRISMasterModel.leave_master" Width="1.5" PointX="5.25" PointY="1.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="HRISMasterModel.location" Width="1.5" PointX="11.75" PointY="7.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="HRISMasterModel.medical" Width="1.5" PointX="11.75" PointY="10.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="HRISMasterModel.medical_fee" Width="1.5" PointX="13.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="HRISMasterModel.notifnew" Width="1.5" PointX="13.75" PointY="3.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="HRISMasterModel.organization" Width="1.5" PointX="3" PointY="19.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="HRISMasterModel.ref_dep" Width="1.5" PointX="13.75" PointY="6.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="HRISMasterModel.ref_div" Width="1.5" PointX="13.75" PointY="9.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="HRISMasterModel.ref_edu" Width="1.5" PointX="13.75" PointY="12.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="HRISMasterModel.ref_empStatus" Width="1.5" PointX="10.75" PointY="14.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="HRISMasterModel.ref_joblevel" Width="1.5" PointX="15.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="HRISMasterModel.ref_personrole" Width="1.5" PointX="15.75" PointY="3.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="HRISMasterModel.ref_pos" Width="1.5" PointX="15.75" PointY="6.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="HRISMasterModel.ref_typeleave" Width="1.5" PointX="15.75" PointY="9.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="HRISMasterModel.role" Width="1.5" PointX="8" PointY="11.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="HRISMasterModel.timesheet" Width="1.5" PointX="3" PointY="25.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="HRISMasterModel.Table_2" Width="1.5" PointX="15.75" PointY="12.75" IsExpanded="true" />
+        <AssociationConnector Association="HRISMasterModel.FK_approval_emp_master" ManuallyRouted="false" />
+        <AssociationConnector Association="HRISMasterModel.FK_leave_approval" ManuallyRouted="false" />
+        <AssociationConnector Association="HRISMasterModel.FK_balance_category" ManuallyRouted="false" />
+        <AssociationConnector Association="HRISMasterModel.FK_balance_emp_master" ManuallyRouted="false" />
+        <AssociationConnector Association="HRISMasterModel.FK_category_categoryparent" ManuallyRouted="false" />
+        <AssociationConnector Association="HRISMasterModel.FK_leave_category" ManuallyRouted="false" />
+        <AssociationConnector Association="HRISMasterModel.FK_leave_master_categoryfile" ManuallyRouted="false" />
+        <AssociationConnector Association="HRISMasterModel.FK_role_category" ManuallyRouted="false" />
+        <AssociationConnector Association="HRISMasterModel.FK_EMP_MASTER" ManuallyRouted="false" />
+        <AssociationConnector Association="HRISMasterModel.FK_emp_user_emp_master" ManuallyRouted="false" />
+        <AssociationConnector Association="HRISMasterModel.FK_FILE_emp_master" ManuallyRouted="false" />
+        <AssociationConnector Association="HRISMasterModel.FK_IDVApproval" ManuallyRouted="false" />
+        <AssociationConnector Association="HRISMasterModel.FK_IDVARequest" ManuallyRouted="false" />
+        <AssociationConnector Association="HRISMasterModel.FK_organization_emp_master" ManuallyRouted="false" />
+        <AssociationConnector Association="HRISMasterModel.FK_organization_emp_master1" ManuallyRouted="false" />
+        <AssociationConnector Association="HRISMasterModel.FK_role_emp_master" ManuallyRouted="false" />
+        <AssociationConnector Association="HRISMasterModel.FK_timesheet_emp_master" ManuallyRouted="false" />
+        <AssociationConnector Association="HRISMasterModel.FK_timesheet_emp_master1" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

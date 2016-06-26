@@ -151,6 +151,11 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Models\Balance\" />
+    <Folder Include="Models\Category\" />
+    <Folder Include="Models\Common\" />
+    <Folder Include="Models\Form\" />
+    <Folder Include="Models\Location\" />
+    <Folder Include="Models\Master\" />
     <Folder Include="uploads\" />
     <Folder Include="Views\Application\" />
     <Folder Include="Views\approvalCommon\" />
@@ -216,116 +221,131 @@
     <Compile Include="Controllers\apiList\locationController.cs" />
     <Compile Include="Controllers\Shared\ApplicationController.cs" />
     <Compile Include="Controllers\Shared\approvalCommonController.cs" />
-    <Compile Include="Controllers\Shared\approvalSharedController.cs" />
     <Compile Include="Controllers\Shared\categoriesSharedController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Models\Category\category.cs" />
-    <Compile Include="Models\Category\categoryparent.cs" />
-    <Compile Include="Models\Category\ListCategory.cs" />
-    <Compile Include="Models\Common\Common.cs" />
-    <Compile Include="Models\Common\file.cs">
-      <DependentUpon>FileModel.tt</DependentUpon>
+    <Compile Include="Models\approval.cs">
+      <DependentUpon>MasterModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\Common\FileModel.Context.cs">
+    <Compile Include="Models\balance.cs">
+      <DependentUpon>MasterModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\category.cs">
+      <DependentUpon>MasterModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\categoryfile.cs">
+      <DependentUpon>MasterModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\categoryparent.cs">
+      <DependentUpon>MasterModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\emp_address.cs">
+      <DependentUpon>MasterModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\emp_birth.cs">
+      <DependentUpon>MasterModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\emp_contact.cs">
+      <DependentUpon>MasterModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\emp_edu.cs">
+      <DependentUpon>MasterModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\emp_image.cs">
+      <DependentUpon>MasterModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\emp_job.cs">
+      <DependentUpon>MasterModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\emp_master.cs">
+      <DependentUpon>MasterModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\emp_master_absence.cs">
+      <DependentUpon>MasterModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\emp_phone.cs">
+      <DependentUpon>MasterModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\emp_user.cs">
+      <DependentUpon>MasterModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\file.cs">
+      <DependentUpon>MasterModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\leave.cs">
+      <DependentUpon>MasterModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\leave_master.cs">
+      <DependentUpon>MasterModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\location.cs">
+      <DependentUpon>MasterModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\locationparent.cs">
+      <DependentUpon>MasterModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\MasterModel.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>FileModel.Context.tt</DependentUpon>
+      <DependentUpon>MasterModel.Context.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\Common\FileModel.cs">
+    <Compile Include="Models\MasterModel.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>FileModel.tt</DependentUpon>
+      <DependentUpon>MasterModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\Common\FileModel.Designer.cs">
+    <Compile Include="Models\MasterModel.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>FileModel.edmx</DependentUpon>
+      <DependentUpon>MasterModel.edmx</DependentUpon>
     </Compile>
-    <Compile Include="Models\Employee\EmployeeImageModel.cs" />
-    <Compile Include="Models\Employee\EmployeeModel.Context.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>EmployeeModel.Context.tt</DependentUpon>
+    <Compile Include="Models\medical.cs">
+      <DependentUpon>MasterModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\Employee\EmployeeModel.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>EmployeeModel.tt</DependentUpon>
+    <Compile Include="Models\medical_fee.cs">
+      <DependentUpon>MasterModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\Employee\EmployeeModel.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>EmployeeModel.edmx</DependentUpon>
+    <Compile Include="Models\notifnew.cs">
+      <DependentUpon>MasterModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\Employee\emp_image.cs" />
-    <Compile Include="Models\Employee\emp_master.cs">
-      <DependentUpon>EmployeeModel.tt</DependentUpon>
+    <Compile Include="Models\organization.cs">
+      <DependentUpon>MasterModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\Form\approval.cs">
-      <DependentUpon>ApprovalModel.tt</DependentUpon>
+    <Compile Include="Models\ref_dep.cs">
+      <DependentUpon>MasterModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\Form\ApprovalModel.Context.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>ApprovalModel.Context.tt</DependentUpon>
+    <Compile Include="Models\ref_div.cs">
+      <DependentUpon>MasterModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\Form\ApprovalModel.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>ApprovalModel.tt</DependentUpon>
+    <Compile Include="Models\ref_edu.cs">
+      <DependentUpon>MasterModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\Form\ApprovalModel.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>ApprovalModel.edmx</DependentUpon>
+    <Compile Include="Models\ref_empStatus.cs">
+      <DependentUpon>MasterModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\Form\leave.cs">
-      <DependentUpon>LeavesModel.tt</DependentUpon>
+    <Compile Include="Models\ref_joblevel.cs">
+      <DependentUpon>MasterModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\Form\LeavesModel.Context.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>LeavesModel.Context.tt</DependentUpon>
+    <Compile Include="Models\ref_personrole.cs">
+      <DependentUpon>MasterModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\Form\LeavesModel.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>LeavesModel.tt</DependentUpon>
+    <Compile Include="Models\ref_pos.cs">
+      <DependentUpon>MasterModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\Form\LeavesModel.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>LeavesModel.edmx</DependentUpon>
+    <Compile Include="Models\ref_typeleave.cs">
+      <DependentUpon>MasterModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\Form\newsModel.cs" />
-    <Compile Include="Models\Form\notifnew.cs" />
-    <Compile Include="Models\Location\ListLocation.cs" />
-    <Compile Include="Models\Location\location.cs" />
-    <Compile Include="Models\organization.cs" />
-    <Compile Include="Models\OrganizationModel.cs" />
+    <Compile Include="Models\role.cs">
+      <DependentUpon>MasterModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\Session\AccountModels.cs" />
-    <Compile Include="Models\Session\emp_user.cs">
-      <DependentUpon>UserModel.tt</DependentUpon>
+    <Compile Include="Models\Table_2.cs">
+      <DependentUpon>MasterModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\Session\UserModel.Context.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>UserModel.Context.tt</DependentUpon>
+    <Compile Include="Models\timesheet.cs">
+      <DependentUpon>MasterModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\Session\UserModel.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>UserModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\Session\UserModel.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>UserModel.edmx</DependentUpon>
-    </Compile>
-    <Compile Include="Models\timesheet.cs" />
-    <Compile Include="Models\TimesheetModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ViewModel\credentialViewModel.cs" />
   </ItemGroup>
@@ -665,55 +685,15 @@
     <Content Include="Content\photo\person.png" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
-    <Content Include="Models\Common\FileModel.Context.tt">
+    <Content Include="Models\MasterModel.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>FileModel.edmx</DependentUpon>
-      <LastGenOutput>FileModel.Context.cs</LastGenOutput>
+      <DependentUpon>MasterModel.edmx</DependentUpon>
+      <LastGenOutput>MasterModel.Context.cs</LastGenOutput>
     </Content>
-    <Content Include="Models\Common\FileModel.tt">
+    <Content Include="Models\MasterModel.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>FileModel.edmx</DependentUpon>
-      <LastGenOutput>FileModel.cs</LastGenOutput>
-    </Content>
-    <Content Include="Models\Employee\EmployeeModel.Context.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>EmployeeModel.edmx</DependentUpon>
-      <LastGenOutput>EmployeeModel.Context.cs</LastGenOutput>
-    </Content>
-    <Content Include="Models\Employee\EmployeeModel.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>EmployeeModel.edmx</DependentUpon>
-      <LastGenOutput>EmployeeModel.cs</LastGenOutput>
-    </Content>
-    <Content Include="Models\Form\ApprovalModel.Context.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>ApprovalModel.edmx</DependentUpon>
-      <LastGenOutput>ApprovalModel.Context.cs</LastGenOutput>
-    </Content>
-    <Content Include="Models\Form\ApprovalModel.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>ApprovalModel.edmx</DependentUpon>
-      <LastGenOutput>ApprovalModel.cs</LastGenOutput>
-    </Content>
-    <Content Include="Models\Form\LeavesModel.Context.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>LeavesModel.edmx</DependentUpon>
-      <LastGenOutput>LeavesModel.Context.cs</LastGenOutput>
-    </Content>
-    <Content Include="Models\Form\LeavesModel.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>LeavesModel.edmx</DependentUpon>
-      <LastGenOutput>LeavesModel.cs</LastGenOutput>
-    </Content>
-    <Content Include="Models\Session\UserModel.Context.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>UserModel.edmx</DependentUpon>
-      <LastGenOutput>UserModel.Context.cs</LastGenOutput>
-    </Content>
-    <Content Include="Models\Session\UserModel.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>UserModel.edmx</DependentUpon>
-      <LastGenOutput>UserModel.cs</LastGenOutput>
+      <DependentUpon>MasterModel.edmx</DependentUpon>
+      <LastGenOutput>MasterModel.cs</LastGenOutput>
     </Content>
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
@@ -741,40 +721,12 @@
     <Content Include="Content\jqwidgets\images\lightness\Thumbs.db" />
     <Content Include="Content\jqwidgets\images\sunny\Thumbs.db" />
     <Content Include="Content\jqwidgets\images\Thumbs.db" />
-    <EntityDeploy Include="Models\Common\FileModel.edmx">
+    <EntityDeploy Include="Models\MasterModel.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>FileModel.Designer.cs</LastGenOutput>
+      <LastGenOutput>MasterModel.Designer.cs</LastGenOutput>
     </EntityDeploy>
-    <Content Include="Models\Common\FileModel.edmx.diagram">
-      <DependentUpon>FileModel.edmx</DependentUpon>
-    </Content>
-    <EntityDeploy Include="Models\Form\LeavesModel.edmx">
-      <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>LeavesModel.Designer.cs</LastGenOutput>
-    </EntityDeploy>
-    <Content Include="Models\Form\LeavesModel.edmx.diagram">
-      <DependentUpon>LeavesModel.edmx</DependentUpon>
-    </Content>
-    <EntityDeploy Include="Models\Form\ApprovalModel.edmx">
-      <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>ApprovalModel.Designer.cs</LastGenOutput>
-    </EntityDeploy>
-    <Content Include="Models\Form\ApprovalModel.edmx.diagram">
-      <DependentUpon>ApprovalModel.edmx</DependentUpon>
-    </Content>
-    <EntityDeploy Include="Models\Employee\EmployeeModel.edmx">
-      <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>EmployeeModel.Designer.cs</LastGenOutput>
-    </EntityDeploy>
-    <Content Include="Models\Employee\EmployeeModel.edmx.diagram">
-      <DependentUpon>EmployeeModel.edmx</DependentUpon>
-    </Content>
-    <EntityDeploy Include="Models\Session\UserModel.edmx">
-      <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>UserModel.Designer.cs</LastGenOutput>
-    </EntityDeploy>
-    <Content Include="Models\Session\UserModel.edmx.diagram">
-      <DependentUpon>UserModel.edmx</DependentUpon>
+    <Content Include="Models\MasterModel.edmx.diagram">
+      <DependentUpon>MasterModel.edmx</DependentUpon>
     </Content>
     <None Include="Properties\PublishProfiles\localServer.pubxml" />
     <Content Include="Scripts\fullcalendar\demos\json\events.json" />
@@ -975,6 +927,7 @@
     <Content Include="Scripts\jsmenu\main.js" />
     <Content Include="Scripts\jsmenu\modernizr.js" />
     <Content Include="Scripts\jsProfile.js" />
+    <Content Include="Scripts\List\jsMasterList.js" />
     <Content Include="Scripts\modernizr-2.6.2.js" />
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />

@@ -15,8 +15,8 @@ namespace HRIS_R01.Controllers.apiForm
 {
     public class organizationsController : ApiController
     {
-        private OrganizationModel db = new OrganizationModel();
-
+        //private OrganizationModel db = new OrganizationModel();
+        private MasterHRISEntities db = new MasterHRISEntities();
         // GET: api/organizations
         public IQueryable<organization> Getorganizations()
         {

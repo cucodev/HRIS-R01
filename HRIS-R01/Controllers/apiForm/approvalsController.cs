@@ -9,13 +9,15 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web.Http;
 using System.Web.Http.Description;
-using HRIS_R01.Models.Form;
+//using HRIS_R01.Models.Form;
+using HRIS_R01.Models;
 
 namespace HRIS_R01.Controllers.apiForm
 {
     public class approvalsController : ApiController
     {
-        private ApprovalEntities db = new ApprovalEntities();
+        //private ApprovalEntities db = new ApprovalEntities();
+        private MasterHRISEntities db = new MasterHRISEntities();
 
         // GET: api/approvals
         public IQueryable<approval> Getapprovals()

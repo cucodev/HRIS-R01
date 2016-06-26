@@ -10,14 +10,14 @@ using System.Threading.Tasks;
 using System.Web.Http;
 using System.Web.Http.Description;
 using HRIS_R01.Models;
-using HRIS_R01.Models.Form;
+//using HRIS_R01.Models.Form;
 
 namespace HRIS_R01.Controllers.apiForm
 {
     public class approvalsLeaveController : ApiController
     {
-        private ApprovalEntities db = new ApprovalEntities();
-
+        //private ApprovalEntities db = new ApprovalEntities();
+        private MasterHRISEntities db = new MasterHRISEntities();
         // GET: api/approvalsLeave
         public IQueryable<approval> Getapprovals()
         {

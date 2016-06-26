@@ -9,14 +9,14 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web.Http;
 using System.Web.Http.Description;
-using HRIS_R01.Models.Employee;
+using HRIS_R01.Models;
 
 namespace HRIS_R01.Controllers.api
 {
     public class emp_masterController : ApiController
     {
-        private EmployeeEntities db = new EmployeeEntities();
-
+        //private EmployeeEntities db = new EmployeeEntities();
+        private MasterHRISEntities db = new MasterHRISEntities();
         // GET: api/emp_master
         public IQueryable<emp_master> Getemp_master()
         {

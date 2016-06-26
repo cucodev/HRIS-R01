@@ -6,13 +6,15 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
-using HRIS_R01.Models.Form;
+//using HRIS_R01.Models.Form;
+using HRIS_R01.Models;
 
 namespace HRIS_R01.Controllers.Shared
 {
     public class approvalCommonController : Controller
     {
-        private ApprovalEntities db = new ApprovalEntities();
+        //private ApprovalEntities db = new ApprovalEntities();
+        private MasterHRISEntities db = new MasterHRISEntities();
 
         // GET: approvalCommon
         public ActionResult Index()

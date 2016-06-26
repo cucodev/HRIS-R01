@@ -12,9 +12,9 @@ namespace HRIS_R01.Controllers.Shared
 {
     public class categoriesSharedController : Controller
     {
-        private ListCategory db = new ListCategory();
-
-        
+        //private ListCategory db = new ListCategory();
+        //private category db = new category();
+        private MasterHRISEntities db = new MasterHRISEntities();
 
         // GET by ID UID = eg "txLeave or txMedical"
         public int getCatID(string uid)

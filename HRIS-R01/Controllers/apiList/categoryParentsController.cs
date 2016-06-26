@@ -15,7 +15,9 @@ namespace HRIS_R01.Controllers.List
 {
     public class categoryParentsController : ApiController
     {
-        private ListCategory db = new ListCategory();
+        //private ListCategory db = new ListCategory();
+        //private categoryparent db = new categoryparent();
+        private MasterHRISEntities db = new MasterHRISEntities();
 
         // GET: api/categoryParents
         public IQueryable<categoryparent> Getcategoryparents()

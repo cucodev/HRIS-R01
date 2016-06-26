@@ -9,14 +9,15 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web.Http;
 using System.Web.Http.Description;
-using HRIS_R01.Models.Location;
+//using HRIS_R01.Models.Location;
+using HRIS_R01.Models;
 
 namespace HRIS_R01.Controllers.List
 {
     public class locationController : ApiController
     {
-        private ListLocation db = new ListLocation();
-
+        //private ListLocation db = new ListLocation();
+        private MasterHRISEntities db = new MasterHRISEntities();
         
 
 

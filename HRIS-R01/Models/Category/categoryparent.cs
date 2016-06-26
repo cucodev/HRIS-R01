@@ -17,13 +17,13 @@ namespace HRIS_R01.Models
 
         public int id { get; set; }
 
-        [StringLength(10)]
+        [StringLength(20)]
         public string uid { get; set; }
 
-        [StringLength(10)]
+        [StringLength(20)]
         public string uidparent { get; set; }
 
-        [StringLength(10)]
+        [StringLength(20)]
         public string uidtype { get; set; }
 
         [StringLength(50)]
