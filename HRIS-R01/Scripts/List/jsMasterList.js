@@ -11,16 +11,40 @@ var jsParentCategorySource = {
         { name: 'uidname', type: 'string' },
         { name: 'uidtype', type: 'string' }
     ],
-    url: '/api/categoryParents/',
-    async: false
+    url: '/api/categoryParents',
+    async: false,
+    cached: false
 };
 
 var jsListParentCategory = new $.jqx.dataAdapter(jsParentCategorySource, {
     autoBind: true,
     contentType: 'application/json; charset=utf-8'
 });
-console.log('Category Parent ', jsListParentCategory.records[0]);
+//console.log('Category Parent ', jsListParentCategory);
 //================================================================================
+console.log("Line jsCategory");
+function jsCategory(uid) {
+    var CategoryParentSource = {
+        datatype: "json",
+        datafields: [
+            { name: 'id', type: 'number' },
+            { name: 'uid', type: 'string' },
+            { name: 'uidparent', type: 'int' },
+            { name: 'uidname', type: 'string' },
+            { name: 'categoryparent', type: 'string' }
+        ],
+        url: '/api/Common/CatParentsUID/' + uid,
+        async: false
+    };
 
+    var jsListCategory = new $.jqx.dataAdapter(CategoryParentSource, {
+        autoBind: true,
+        contentType: 'application/json; charset=utf-8'
+    });
+    //console.log("Function: ");
+    //console.log(jsListCategory.records)
+    return jsListCategory.records;
+}
+//================================================================================
 
 

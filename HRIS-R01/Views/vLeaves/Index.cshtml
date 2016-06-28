@@ -1,4 +1,4 @@
-﻿@model IEnumerable<HRIS_R01.Models.Form.leave>
+﻿@model IEnumerable<HRIS_R01.Models.leave>
 
 @{
     ViewBag.Title = "Leaves Form";
@@ -447,6 +447,14 @@
 </table>
 <br />
 <hr />
+<div class="row">
+    <div class="col-md-9">
+        <label style="font-size:12px; font-family:Calibri; color:indianred; margin-right:30px">
+            Credential Info: @ViewBag.cUser : @ViewBag.cIDV : Parent= @ViewBag.cIDVParent , ParentLevel= @ViewBag.cIDVParentLevel , Name= @ViewBag.cName
+        </label>
+
+    </div>
+</div>
 <div id="form" style="margin-left: 30px">
     <div class="container-fluid">
         <div class="row">
@@ -560,4 +568,5 @@
 
     </div>
 </div>
+
 

@@ -348,6 +348,7 @@
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ViewModel\credentialViewModel.cs" />
+    <Compile Include="ViewModel\masterListViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Areas\HelpPage\HelpPage.css" />
@@ -927,7 +928,10 @@
     <Content Include="Scripts\jsmenu\main.js" />
     <Content Include="Scripts\jsmenu\modernizr.js" />
     <Content Include="Scripts\jsProfile.js" />
+    <Content Include="Scripts\jstorage.js" />
+    <Content Include="Scripts\jsValidator.js" />
     <Content Include="Scripts\List\jsMasterList.js" />
+    <Content Include="Scripts\List\jsVar.js" />
     <Content Include="Scripts\modernizr-2.6.2.js" />
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />

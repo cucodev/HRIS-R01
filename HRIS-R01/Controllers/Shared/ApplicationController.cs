@@ -8,6 +8,7 @@ using HRIS_R01.Models.Session;
 using HRIS_R01.Models;
 using HRIS_R01.ViewModel;
 using System.Web.Routing;
+ 
 
 namespace HRIS_R01.Controllers.Shared
 {
@@ -18,6 +19,7 @@ namespace HRIS_R01.Controllers.Shared
         private const string LogOnController = "Default";
         private const string LogOnAction = "Index";
         private const string UserCred = "UserCred";
+        private const string ParentList = "ParentList";
 
         private MasterHRISEntities db = new MasterHRISEntities();
 
@@ -98,14 +100,42 @@ namespace HRIS_R01.Controllers.Shared
                            }).ToList<credentialViewModel>();
             //ViewData
             ViewData[UserCred] = credUser;
+
             Session[UserCred] = credUser;
+            Session[ParentList] = SetParentListSession();
+
             UserSession();
+            ParentListSession();
             //return credUser;
+        }
+
+        public List<masterListViewModel> SetParentListSession()
+        {
+            //var CategoryParents = db.categoryparents.FirstOrDefault();
+            var CategoryParents = (from c in db.categoryparents
+                            select new masterListViewModel()
+                            {
+                                cID = c.id,
+                                cUID = c.uid.Trim(),
+                                cUIDType = c.uidtype.TrimEnd(),
+                                cUIDParent = c.uidparent.TrimEnd(),
+                                cUIDName = c.uidname.TrimEnd()
+                            }).ToList<masterListViewModel>();
+            
+            return CategoryParents;
+        }
+
+        public void ParentListSession()
+        {
+            System.Diagnostics.Debug.WriteLine("SET PARENT CATEGORY SESSION ======================================================================");
+            ViewData[ParentList] = Session[ParentList];
+                //System.Diagnostics.Debug.WriteLine("Parent " +  dt.cID + ':' + dt.cUIDName);
+            System.Diagnostics.Debug.WriteLine("END PARENT CATEGORY SESSION ======================================================================");
         }
 
         public void UserSession()
         {
-            System.Diagnostics.Debug.WriteLine("SET VIEW BAG FROM SESSION ======================================================================");
+            System.Diagnostics.Debug.WriteLine("SET USER SESSION ======================================================================");
 
             var vm = (List<credentialViewModel>)Session[UserCred];
             foreach (var dt in vm)
@@ -127,7 +157,7 @@ namespace HRIS_R01.Controllers.Shared
                 System.Diagnostics.Debug.Write(" Value : ");
                 System.Diagnostics.Debug.WriteLine(dt.cUser + ":" + dt.cID + ":" + dt.cIDParent + ":" + dt.cIDParentLevel);
             }
-            System.Diagnostics.Debug.WriteLine("END VIEW BAG FROM SESSION ======================================================================");
+            System.Diagnostics.Debug.WriteLine("END USER SESSION ======================================================================");
 
         }
 

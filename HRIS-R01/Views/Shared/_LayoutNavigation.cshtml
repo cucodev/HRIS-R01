@@ -16,6 +16,7 @@
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
     @Scripts.Render("~/bundles/jsmenu")
+    @Scripts.Render("~/bundles/jstorage")
     @Scripts.Render("~/bundles/jqwidgets")
 
     <script type="text/javascript">
@@ -127,5 +128,7 @@
 
 
     @RenderSection("scripts", required: false)
+    @RenderSection("jsData", required: false)
+
 </body>
 </html>

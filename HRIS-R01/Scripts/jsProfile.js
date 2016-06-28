@@ -1,10 +1,11 @@
-﻿$(document).ready(function () {
-
-
+﻿$(document).ready(function() {
+        
+    //var idv = "@ViewBag.cIDV";
     console.log("jsProfile Loaded");
-
+    var uri = 'api/emp_master/' + $.jStorage.get('idv');
+    //console.log(uri);
     var sourceProfile = {
-        dataType: "json",
+        dataType: 'json',
         dataFields: [
             
             { name: 'ID', type: 'number' },
@@ -49,16 +50,18 @@
             
         ],
         id: 'ID',
-        url: '/api/emp_master/' + idv
+        url: uri
     };
 
     
     var dataAdapter = new $.jqx.dataAdapter(sourceProfile, {
+        //autoBind: true,
+        contentType: 'application/json; charset=utf-8',
         loadComplete: function (records) { 
             var dataRecord = dataAdapter.records;
-            var dt = dataRecord[0];
-            //console.log(dt);
-
+            var dt = records;
+          
+            //Fill IN FORM
             IN('IDParent');
             IN('IDParentLevel');
             IN('UID');
@@ -98,21 +101,118 @@
 
             //Fill IN FORM
             function IN(idval) {
-                var str = eval('dt.' + idval);
-                $('#' + idval).val(str);
+                try {
+                    var str = eval('dt.' + idval);
+                    $('#' + idval).val(str);
+                } catch (err) {
+                    console.log('Error : ' + idval + ' ' + err);
+                }
+                
             }
         },
         loadError: function (jqXHR, status, error) {
-            console.log(jqXHR.responseText);
+            console.log('Retrieve Error : ', jqXHR.responseText);
         },
         beforeLoadComplete: function (records) {
-           // console.log
+            // console.log
         }
     });
     
     dataAdapter.dataBind();
 
+    var vStatus = false;
+    var th = $.jStorage.get("th");
+
+    //bindInput("IDParent");
+    //bindInput("IDParentLevel");
+    //bindInput("UID");
+    bindInput("Name");
+    bindInput("NickName");
+    bindCategory("Religion", "empReligion");
+    bindCategory("Gender", "empGender");
+    bindCategory("Marital", "empMarital");
+    bindInput("NIP");
+
+    bindDateTime("Birthdate");
+    bindInput("Birthplace");
+    bindCategory("Nationality", "empCountry");
+
+    bindCategory("empEdu");
+    bindCategory("empEduMajor");
+
+    bindCategory("empDepartement");
+    bindCategory("empDivision");
+    bindCategory("empJobLevel");
+    bindCategory("empOfficeLocation");
+    bindCategory("empPosition");
+
+    bindInput("Phone1");
+    bindInput("Phone2");
+
+    bindTextArea("Address");
+    bindInput("AddressKel");
+    bindLocation("AddressKec");
+    bindLocation("AddressKab");
+    bindLocation("AddressProv");
+
+    //bindInput("UID_ABSENCE");
+    bindCategory("empStatus", "empStatus");
+    //bindCategory("rowStatus", "rowStatus");
     
 
+    bindButton("SubmitButton");
 
-})
+    function bindButton(div) {
+        try {
+            $("#" + div).jqxButton({ disabled: vStatus, theme: 'orange', width: 120, height: 40 });
+        } catch(err) {
+            console.log('Error: ',err)
+        }
+        
+    }
+
+    function bindTextArea(div) {
+        try {
+            $("#" + div).jqxTextArea({ disabled: vStatus, placeHolder: "Text", width: '100%', height: 80 });
+        } catch (err) {
+            console.log('Error: ', err)
+        }
+    }
+
+    function bindDateTime(div) {
+        try {
+            $("#" + div).jqxDateTimeInput({ disabled: vStatus, theme: th, height: '35px' });
+        } catch (err) {
+            console.log('Error: ', err)
+        }
+    }
+
+    function bindInput(div) {
+        try {
+            var th = $.jStorage.get("th");
+            $("#" + div).jqxInput({ disabled: true, theme: th, width: '100%', height: '35px' });
+        } catch (err) {
+            console.log('Error: ', err)
+        }
+    }
+
+    function bindCategory(div, value) {
+        try {
+            var th = $.jStorage.get("th");
+            $("#" + div).jqxDropDownList({ source: jsCategory(value), theme: th, disabled: false, displayMember: "uidname", valueMember: "id", width: '100%' });
+            console.log('value: ' + th + '==' + value + ' : ' + jsCategory(value));
+        } catch (err) {
+            console.log('Error: ', err)
+        }
+    }
+
+    function bindLocation(div, value) {
+        try {
+            var th = $.jStorage.get("th");
+            $("#" + div).jqxComboBox({ source: jsCategory(value), theme: th, disabled: false, displayMember: "uidname", valueMember: "id" });
+        } catch (err) {
+            console.log('Error: ', err)
+        }
+    }
+
+});

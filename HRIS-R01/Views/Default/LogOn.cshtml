@@ -14,6 +14,10 @@
 <script type="text/javascript">
     $(document).ready(function () {
         var theme = 'darkblue';
+        if ($.jStorage.storageAvailable()) {
+            $.jStorage.flush();
+        }
+
         // Create ListBox
         /*
         $('#listbox').jqxListBox({
