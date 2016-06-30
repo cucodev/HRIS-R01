@@ -19,6 +19,7 @@ namespace HRIS_R01.Models
             : base("name=MasterHRISEntities")
         {
             this.Configuration.ProxyCreationEnabled = false;
+            //this.Configuration.LazyLoadingEnabled = false;
             this.Database.Log = s => System.Diagnostics.Debug.WriteLine(s);
         }
     

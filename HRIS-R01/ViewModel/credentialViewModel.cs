@@ -40,9 +40,5 @@ namespace HRIS_R01.ViewModel
         public DateTime cStart { get; set; }
         public DateTime cStop { get; set; }
 
-
-
-
-
     }
 }

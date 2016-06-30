@@ -201,6 +201,7 @@
     <Compile Include="Controllers\apiForm\approvalsController.cs" />
     <Compile Include="Controllers\apiForm\approvalsLeaveController.cs" />
     <Compile Include="Controllers\apiForm\leavesController.cs" />
+    <Compile Include="Controllers\apiForm\medicalsController.cs" />
     <Compile Include="Controllers\apiForm\notifnewsController.cs" />
     <Compile Include="Controllers\apiForm\organizationsController.cs" />
     <Compile Include="Controllers\apiList\CommonController.cs" />
@@ -213,6 +214,7 @@
     <Compile Include="Controllers\Content\vMedicalClaimController.cs" />
     <Compile Include="Controllers\Content\vNotifNewsController.cs" />
     <Compile Include="Controllers\Content\vScheduleController.cs" />
+    <Compile Include="Controllers\Content\vTestController.cs" />
     <Compile Include="Controllers\Content\vTimesheetsController.cs" />
     <Compile Include="Controllers\DefaultController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -348,6 +350,7 @@
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ViewModel\credentialViewModel.cs" />
+    <Compile Include="ViewModel\MasterDataViewModel.cs" />
     <Compile Include="ViewModel\masterListViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -970,6 +973,12 @@
     <Content Include="Views\vMedicalClaim\HRMedicalClaim.cshtml" />
     <Content Include="Views\vSchedule\Index.cshtml" />
     <Content Include="Views\Default\temp1.cshtml" />
+    <Content Include="Views\Admin\ViewCategory.cshtml" />
+    <Content Include="Views\vTest\Create.cshtml" />
+    <Content Include="Views\vTest\Delete.cshtml" />
+    <Content Include="Views\vTest\Details.cshtml" />
+    <Content Include="Views\vTest\Edit.cshtml" />
+    <Content Include="Views\vTest\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />

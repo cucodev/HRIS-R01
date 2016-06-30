@@ -96,8 +96,11 @@
                     </ul>
                     <ul>
                         <li class="cd-label">System Admin</li>
-                        <li class="bookmarks"><a href="#0">User Management</a> </li>
-                        <li><input type="button" value="Logout" id="logout" style="margin-left:20px" /></li>
+                        <li class="bookmarks">
+                            @Html.ActionLink("Master Data", "Console", "Admin")
+                        </li>
+                        <li class="bookmarks">@Html.ActionLink("HELP", "", "HELP")</li>
+<li><input type="button" value="Logout" id="logout" style="margin-left:20px" /></li>
                     </ul>
 
                 </nav>

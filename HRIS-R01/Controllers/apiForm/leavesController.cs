@@ -50,6 +50,27 @@ namespace HRIS_R01.Controllers.apiForm
 
         // GET: api/leavesByApprovalID/5
         [ResponseType(typeof(leave))]
+        [Route("api/GetLeaveByUser/{idv}")]
+        [ActionName("GetLeaveByUser")]
+        public async Task<IHttpActionResult> GetLeaveByUser(int idv)
+        {
+            System.Diagnostics.Debug.WriteLine(db.Database.Log);
+            var lea = await (from b in db.leaves
+                                where  (b.idvRequest == idv)
+                                orderby b.id descending
+                                select b).ToListAsync();
+            //leave leave = await db.leaves.FindAsync(id);
+            if (lea == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(lea);
+        }
+
+
+        // GET: api/leavesByApprovalID/5
+        [ResponseType(typeof(leave))]
         [Route("api/GetLeaveByApproval/{id}")]
         [ActionName("GetLeaveByApproval")]
         public async Task<IHttpActionResult> GetLeaveByApproval(int id)
