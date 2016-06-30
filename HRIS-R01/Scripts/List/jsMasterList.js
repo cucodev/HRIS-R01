@@ -23,7 +23,7 @@ var jsListParentCategory = new $.jqx.dataAdapter(jsParentCategorySource, {
 //console.log('Category Parent ', jsListParentCategory);
 //================================================================================
 console.log("Line jsCategory");
-function jsCategory(uid) {
+function jsCategory(id) {
     var CategoryParentSource = {
         datatype: "json",
         datafields: [
@@ -33,7 +33,7 @@ function jsCategory(uid) {
             { name: 'uidname', type: 'string' },
             { name: 'categoryparent', type: 'string' }
         ],
-        url: '/api/Common/CatParentsUID/' + uid,
+        url: '/api/Common/Catparents/' + id,
         async: false
     };
 
@@ -44,6 +44,26 @@ function jsCategory(uid) {
     //console.log("Function: ");
     //console.log(jsListCategory.records)
     return jsListCategory.records;
+}
+//================================================================================
+console.log("Line jsRegion");
+function jsRegion(id) {
+    var Locationsource = {
+        datatype: "json",
+        dataFields: [
+            { name: 'id', type: 'number' },
+            { name: 'uidparent', type: 'number' },
+            { name: 'uidtype', type: 'number' },
+            { name: 'uidname', type: 'string' }
+        ],
+        url: '/api/Common/Loc/' + id,
+        async: false
+    };
+
+    return jsListLocation = new $.jqx.dataAdapter(Locationsource, {
+        autoBind: true,
+        contentType: 'application/json; charset=utf-8'
+    });
 }
 //================================================================================
 

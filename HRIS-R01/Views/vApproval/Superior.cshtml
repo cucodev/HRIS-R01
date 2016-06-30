@@ -47,7 +47,7 @@
                     cleanForm();
                     //console.log("Addrow rowid : " + rowid);
                     console.log("Addrow : ", rowid);
-                    var uri = 'api/leaves'; //+ '&' + rowdata;
+                    var uri = 'api/medicals'; //+ '&' + rowdata;
                     $.ajax({
                         type: "POST",
                         cache: false,
@@ -137,7 +137,7 @@
                 { text: 'ID', dataField: 'id', width: 200, hidden: true },
                 { text: 'Type', displayField: 'approvalTypeName', dataField: 'approvalType', width: 100, hidden: true },
                 { text: 'Status', displayField: 'approvalStatusName', dataField: 'approvalStatus', width: 50 },
-                { text: 'Approved By', displayField: 'approvalbyName', dataField: 'approvalby', width: 200 },
+                { text: 'Approved By', displayField: 'approvalIdvName', dataField: 'approvalby', width: 200 },
                 { text: 'Mail', dataField: 'approvalMail', width: 200, hidden: true },
                 { text: 'Q', dataField: 'approvalQ', width: 20 },
                 { text: 'Approved', columngroup: 'Date', dataField: 'approvalDate', width: 70 },

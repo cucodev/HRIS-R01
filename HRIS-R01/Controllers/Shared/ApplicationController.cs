@@ -73,6 +73,7 @@ namespace HRIS_R01.Controllers.Shared
             if (model.RememberMe)
             {
                 var ASPCookie = Request.Cookies["ASP.NET_SessionId"];
+               // var FormCookie = Request.Cookies[""]
                 ASPCookie.Expires = DateTime.Now.AddDays(1);
                 Response.SetCookie(ASPCookie);
             }

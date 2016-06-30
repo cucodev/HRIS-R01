@@ -8,433 +8,437 @@
 @section scripts
 {
     <script type="text/javascript" src="@Url.Content("~/Scripts/jsList.js")"></script>
-<script type="text/javascript" src="@Url.Content("~/Scripts/jsDateTime.js")"></script>
+    <script type="text/javascript" src="@Url.Content("~/Scripts/jsDateTime.js")"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            var editrow = -1;
+            var diffDays;
+            var diff;
+            var hour;
+            today = new Date();
+            var dateString = today.format("currentDate");
+            var themes = 'metro';
+            var source = {
+                datatype: "json",
+                dataFields: [
+                    { name: 'id', type: 'number' },
+                    { name: 'leaveName', value: 'leaveCategory', values: { source: listCategory.records, value: 'id', name: 'uidname' } },
+                    { name: 'leaveCategory', type: 'number' },
+                    { name: 'idvRequestName', value: 'idvRequest', values: { source: listEmployee.records, value: 'ID', name: 'Name' } },
+                    { name: 'idvRequest', type: 'number' },
+                    { name: 'idvApprovalName', value: 'idvApproval', values: { source: listEmployee.records, value: 'ID', name: 'Name' } },
+                    { name: 'idvApproval', type: 'number' },
+                    { name: 'leaveStart', type: 'datetime' },
+                    { name: 'leaveStop', type: 'datetime' },
+                    { name: 'appliedDay', type: 'number' },
+                    { name: 'appliedTime', type: 'time' },
+                    { name: 'remainDay', type: 'number' },
+                    { name: 'remainTime', type: 'time' },
+                    { name: 'currBalance', type: 'number' },
+                    { name: 'approvalID', type: 'number' },
+                    { name: 'rowStatus', type: 'string' },
+                    { name: 'rowDate', type: 'datetime' }
+                ],
+                addrow: function (rowdata, rowid, commit) {
+                    cleanForm();
+                    //console.log("Addrow rowid : " + rowid);
+                    console.log("Addrow : ", rowid);
+                    var uri = 'api/leaves'; //+ '&' + rowdata;
+                    $.ajax({
+                        type: "POST",
+                        cache: false,
+                        dataType: 'json',
+                        url: uri,
+                        contentType: 'application/json',
+                        data: JSON.stringify(rowid),
+                        success: function (data, status, xhr) {
+                            // insert command is executed.
+                            console.log("Add Success");
+                            //commit(true);
+                            $('#dataTable').jqxGrid('updatebounddata');
+
+                            // CALL APPROVAL CONTROLLER
+                        },
+                        error: function (jqXHR, textStatus, err) {
+                            //alert(errorThrown);
+                            console.log("Error " + err + ':' + jqXHR.responseText);
+                            console.log("Error " + uri);
+                            //commit(false);
+                        }
+                    });
+                },
+                deleterow: function (rowid, commit) {
+                    commit(true);
+                },
+                updaterow: function (rowid, rowdata, commit) {
+                    cleanForm();
+                    console.log("Updaterow : " + rowid);
+                    console.log("Updaterow : ", rowdata);
+                    var uri = '/api/leaves/' + rowid;
+                    $.ajax({
+                        type: "PUT",
+                        cache: false,
+                        dataType: 'json',
+                        url: uri,
+                        contentType: 'application/json',
+                        data: JSON.stringify(rowdata),
+                        success: function (data, status, xhr) {
+                            // insert command is executed.
+                            console.log("Update Success");
+                            commit(true);
+                            $('#dataTable').jqxGrid('updatebounddata');
+
+                            // THEN CALL APPROVAL CONTROLLER via API CONTROLLER
+                        },
+                        error: function (jqXHR, textStatus, err) {
+                            //alert(errorThrown);
+                            console.log("Error " + err);
+                            console.log("Error " + jqXHR.responseText);
+                            //commit(false);
+                        }
+                    });
+                },
+                id: 'id',
+                url: '/api/GetLeaveByUser/' + @ViewBag.cIDV
+            };
+
+            var dataAdapter = new $.jqx.dataAdapter(source, {
+                downloadComplete: function (data) {
+                    source.totalrecords = data.TotalRows;
+                },
+                autoBind: true
+            });
+
+
+            var nestedGrids = new Array();
+            var initrowdetails = function (index, parentElement, gridElement, record) {
+                var master = dataAdapter.records;
+                var id = record.id.toString();
+                //console.log("initrowdetails Called " + id + "in Length " + dataAdapter.records.length);
+                var grid = $($(parentElement).children()[0]);
+                nestedGrids[index] = grid;
+                var filtergroup = new $.jqx.filter();
+                var filter_or_operator = 1;
+                var filtervalue = id;
+                var filtercondition = 'equal';
+                var filter = filtergroup.createfilter('stringfilter', filtervalue, filtercondition);
+                var detailData = [];
+                for (var m = 0; m < master.length; m++) {
+                    var result = filter.evaluate(master[m]["id"]);
+                    if (result) {
+                        detailData.push(master[m]);
+                        //console.log("ID Nested : " + id);
+                    }
+                }
+                var detailSource = {
+                    datafields: [
+                    { name: 'id', type: 'number' },
+                    { name: 'leaveName', value: 'leaveCategory', values: { source: listCategory.records, value: 'id', name: 'uidname' } },
+                    { name: 'leaveCategory', type: 'number' },
+                    { name: 'idvRequestName', value: 'idvRequest', values: { source: listEmployee.records, value: 'ID', name: 'Name' } },
+                    { name: 'idvRequest', type: 'number' },
+                    { name: 'idvApprovalName', value: 'idvApproval', values: { source: listEmployee.records, value: 'ID', name: 'Name' } },
+                    { name: 'idvApproval', type: 'number' },
+                    { name: 'leaveStart', type: 'datetime' },
+                    { name: 'leaveStop', type: 'datetime' },
+                    { name: 'appliedDay', type: 'number' },
+                    { name: 'appliedTime', type: 'time' },
+                    { name: 'remainDay', type: 'number' },
+                    { name: 'remainTime', type: 'time' },
+                    { name: 'currBalance', type: 'number' },
+                    { name: 'approvalID', type: 'number' },
+                    { name: 'rowStatus', type: 'string' },
+                    { name: 'rowDate', type: 'datetime' }
+                    ],
+                    id: 'id',
+                    localdata: detailData
+                }
+
+                var nestedGridAdapter = new $.jqx.dataAdapter(detailSource);
+                if (grid != null) {
+                    grid.jqxGrid({
+                        source: nestedGridAdapter, width: 780, height: 200, editable: false, theme: themes,
+                        columns: [
+                          { text: 'ID', dataField: 'id', filtertype: 'checkedlist', width: 100, hidden: true },
+                          { text: 'ApprovedDay', editable: false, dataField: 'appliedDat', filtertype: 'checkedlist', width: 100 },
+                          { text: 'ApprovedTime', editable: false, dataField: 'appliedTime', filtertype: 'checkedlist', width: 100 },
+                          { text: 'remain Day', editable: false, dataField: 'remainDate', filtertype: 'checkedlist', width: 100 },
+                          { text: 'remain Time', editable: false, dataField: 'remainTime', filtertype: 'checkedlist', width: 100 },
+                          { text: 'Balance', editable: false, dataField: 'currBalance', filtertype: 'checkedlist', width: 100 },
+                          { text: 'Date', editable: false, dataField: 'rowDate', columntype: 'date', filtertype: 'date', width: 100 },
+                          { text: 'Status', dataField: 'rowStatus', filtertype: 'checkedlist', width: 100 }
+                        ]
+                    });
+                }
+            }
+
+            var vvid;
+            $("#dataTable").jqxGrid({
+                width: 900,
+                height: 500,
+                source: dataAdapter,
+                pageable: true,
+                rowdetails: true,
+                autoheight: true,
+                sortable: true,
+                altrows: true,
+                enabletooltips: true,
+                editable: true,
+                //selectionmode: 'multiplecellsadvanced',
+                theme: themes,
+                pagesize: 15,
+                groupable: true,
+                //showfilterrow: true,
+                filterable: true,
+                pageable: true,
+                //editable: true,
+                initrowdetails: initrowdetails,
+                rowdetailstemplate: { rowdetails: "<div id='grid' style='margin: 10px;'></div>", rowdetailsheight: 220, rowdetailshidden: true },
+                ready: function () {
+                    $("#dataTable").jqxGrid('showrowdetails', 1);
+                },
+                columns: [
+                  { text: 'ID', dataField: 'id', width: 200, hidden: true },
+                  {
+                      text: 'Type', columntype: 'dropdownlist', datafield: 'leaveCategory', displayfield: 'leaveName', width: 160,
+                      createeditor: function (row, value, editor) {
+                          editor.jqxDropDownList({ source: listCategory, displayMember: 'uidname', valueMember: 'id' });
+                      }
+                  },
+                  { text: 'Employee', editable: false, columntype: 'dropdownlist', dataField: 'idvRequest', displayField: 'idvRequestName', filtertype: 'input', width: 230 },
+                  {
+                      text: 'Superior', dataField: 'idvApproval', columntype: 'dropdownlist', displayField: 'idvApprovalName', filtertype: 'input', width: 230,
+                      createeditor: function (row, value, editor) {
+                          editor.jqxDropDownList({ source: listEmployee, displayMember: 'Name', valueMember: 'ID' });
+                      }
+                  },
+                  { text: 'From', dataField: 'leaveStop', columntype: 'datetimeinput', formatString: 'dd-MM-yyyy H-mm-ss', filtertype: 'checkedlist', width: 90 },
+                  { text: 'To', dataField: 'leaveStart', columntype: 'datetimeinput', formatString: 'dd-MM-yyyy H-mm-ss', filtertype: 'checkedlist', width: 90 },
+                  {
+                      text: 'Edit', datafield: 'Edit', columntype: 'button', filtertype: '', width: '8%', cellsrenderer: function () {
+                          return "Edit";
+                      }, buttonclick: function (row) {
+                          editrow = row;
+                          // get the clicked row's data and initialize the input fields.
+                          var selectedrowindex = $("#dataTable").jqxGrid('getselectedrowindex');
+                          var rowscount = $("#dataTable").jqxGrid('getdatainformation').rowscount;
+                          if (editrow >= 0 && editrow < rowscount) {
+                              var id = $("#dataTable").jqxGrid('getrowid', selectedrowindex);
+                              //$("#jqxgrid").jqxGrid('updaterow', id, datarow);
+                              var dataRecord = $("#dataTable").jqxGrid('getrowdata', editrow);
+                              //console.log("dataRecord", dataRecord.idvApproval + " : " + dataRecord);
+                              cleanForm();
+                              vvid = dataRecord.id;
+                              $("#ename").val(dataRecord.idvRequest);
+                              $("#sname").val(dataRecord.idvApproval);
+                              $("#typeLeave").jqxListBox('val', dataRecord.leaveCategory);
+                              $("#commDateFrom").val(dataRecord.leaveStart);
+                              $("#commDateTo").val(dataRecord.leaveStop);
+                              console.log("Current leaveType : ", dataRecord.leaveCategory);
+                              // show the popup window.
+                              $("#form").jqxWindow('open');
+                          }
+
+                      }
+                  },
+                   { text: 'ApprovedDay', editable: false, dataField: 'appliedDat', filtertype: 'checkedlist', width: 100, hidden: true },
+                          { text: 'ApprovedTime', editable: false, dataField: 'appliedTime', filtertype: 'checkedlist', width: 100, hidden: true },
+                          { text: 'remain Day', editable: false, dataField: 'remainDate', filtertype: 'checkedlist', width: 100, hidden: true },
+                          { text: 'remain Time', editable: false, dataField: 'remainTime', filtertype: 'checkedlist', width: 100, hidden: true },
+                          { text: 'Balance', editable: false, dataField: 'currBalance', filtertype: 'checkedlist', width: 100, hidden: true },
+                          { text: 'Date', editable: false, dataField: 'rowDate', columntype: 'date', filtertype: 'date', width: 100, hidden: true },
+                          { text: 'Status', dataField: 'rowStatus', filtertype: 'checkedlist', width: 100, hidden: true }
+
+                ]
+            });
+
+
+
+            var photorenderer = function (row, column, value) {
+                var name = $('#jqxgrid').jqxGrid('getrowdata', row).FirstName;
+                var imgurl = '../../images/' + name.toLowerCase() + '.png';
+                var img = '<div style="background: white;"><img style="margin:2px; margin-left: 10px;" width="32" height="32" src="' + imgurl + '"></div>';
+                return img;
+            }
+
+            var renderer = function (row, column, value) {
+                return '<span style="margin-left: 4px; margin-top: 9px; float: left;">' + value + '</span>';
+            }
+
+            var dayInput = "65px";
+            var nameInput = 240;
+            var reasonInput = 240;
+            var dateInput = 100;
+            var countries = new Array("Afghanistan", "Albania", "Algeria", "Andorra", "Angola", "Antarctica", "Antigua and Barbuda", "Argentina", "Armenia", "Australia", "Austria", "Azerbaijan", "Bahamas", "Bahrain", "Bangladesh", "Barbados", "Belarus", "Belgium", "Belize", "Benin", "Bermuda", "Bhutan", "Bolivia", "Bosnia and Herzegovina", "Botswana", "Brazil", "Brunei", "Bulgaria", "Burkina Faso", "Burma", "Burundi", "Cambodia", "Cameroon", "Canada", "Cape Verde", "Central African Republic", "Chad", "Chile", "China", "Colombia", "Comoros", "Congo, Democratic Republic", "Congo, Republic of the", "Costa Rica", "Cote d'Ivoire", "Croatia", "Cuba", "Cyprus", "Czech Republic", "Denmark", "Djibouti", "Dominica", "Dominican Republic", "East Timor", "Ecuador", "Egypt", "El Salvador", "Equatorial Guinea", "Eritrea", "Estonia", "Ethiopia", "Fiji", "Finland", "France", "Gabon", "Gambia", "Georgia", "Germany", "Ghana", "Greece", "Greenland", "Grenada", "Guatemala", "Guinea", "Guinea-Bissau", "Guyana", "Haiti", "Honduras", "Hong Kong", "Hungary", "Iceland", "India", "Indonesia", "Iran", "Iraq", "Ireland", "Israel", "Italy", "Jamaica", "Japan", "Jordan", "Kazakhstan", "Kenya", "Kiribati", "Korea, North", "Korea, South", "Kuwait", "Kyrgyzstan", "Laos", "Latvia", "Lebanon", "Lesotho", "Liberia", "Libya", "Liechtenstein", "Lithuania", "Luxembourg", "Macedonia", "Madagascar", "Malawi", "Malaysia", "Maldives", "Mali", "Malta", "Marshall Islands", "Mauritania", "Mauritius", "Mexico", "Micronesia", "Moldova", "Mongolia", "Morocco", "Monaco", "Mozambique", "Namibia", "Nauru", "Nepal", "Netherlands", "New Zealand", "Nicaragua", "Niger", "Nigeria", "Norway", "Oman", "Pakistan", "Panama", "Papua New Guinea", "Paraguay", "Peru", "Philippines", "Poland", "Portugal", "Qatar", "Romania", "Russia", "Rwanda", "Samoa", "San Marino", " Sao Tome", "Saudi Arabia", "Senegal", "Serbia and Montenegro", "Seychelles", "Sierra Leone", "Singapore", "Slovakia", "Slovenia", "Solomon Islands", "Somalia", "South Africa", "Spain", "Sri Lanka", "Sudan", "Suriname", "Swaziland", "Sweden", "Switzerland", "Syria", "Taiwan", "Tajikistan", "Tanzania", "Thailand", "Togo", "Tonga", "Trinidad and Tobago", "Tunisia", "Turkey", "Turkmenistan", "Uganda", "Ukraine", "United Arab Emirates", "United Kingdom", "United States", "Uruguay", "Uzbekistan", "Vanuatu", "Venezuela", "Vietnam", "Yemen", "Zambia", "Zimbabwe");
+
+            $("#typeLeave").jqxListBox({ theme: 'orange', width: '100%', height: '125px', source: catParents(14), displayMember: "uidname", valueMember: "id", scrollBarSize: 0 });
+            $("#ename").jqxComboBox({ theme: 'orange', disabled: true, source: listEmployee, displayMember: "Name", valueMember: "ID", width: "100%", height: 25 });
+            $("#sname").jqxComboBox({ theme: 'orange', source: listEmployee, displayMember: "Name", valueMember: "ID", width: "100%", height: 25 });
+            $("#commDateFrom").jqxDateTimeInput({ theme: 'orange', width: '100%', height: '25px', formatString: 'MM/dd/yyyy', showTimeButton: false, showCalendarButton: true });
+            $("#commDateTo").jqxDateTimeInput({ theme: 'orange', width: '100%', height: '25px', formatString: 'MM/dd/yyyy', showTimeButton: false, showCalendarButton: true });
+            $("#byDate").jqxRadioButton({ width: '100%' });
+            $("#byDate").val(true);
+            $("#byHour").jqxRadioButton({ width: '100%' });
+            $("#commHourFrom").jqxDateTimeInput({ width: '100%', height: '25px', formatString: 'HH:mm', showTimeButton: true, showCalendarButton: false });
+            $("#commHourTo").jqxDateTimeInput({ width: '100%', height: '25px', formatString: 'T', showTimeButton: true, showCalendarButton: false });
+            $("#dateDiv").show();
+            $("#hourDiv").hide();
+
+            $("#byDate").on("change", function () {
+                if ($("#byDate").val() == true) {
+                    $("#dateDiv").show();
+                    $("#hourDiv").hide();
+                }
+            });
+
+            $("#byHour").on("change", function () {
+                if ($("#byHour").val() == true) {
+                    $("#dateDiv").hide();
+                    $("#hourDiv").show();
+                }
+            });
+
+            $("#commDateFrom").on("change", function () {
+                if (($("#commDateFrom").val() != "") && ($("#commDateTo").val() != "")) {
+                    diffDay($("#commDateFrom").val(), $("#commDateTo").val());
+                }
+
+            });
+            $("#commDateTo").on("change", function () {
+                if (($("#commDateFrom").val() != "") && ($("#commDateTo").val() != "")) {
+                    diffDay($("#commDateFrom").val(), $("#commDateTo").val());
+                }
+            });
+
+            $("#commHourFrom").on("change", function () {
+                if (($("#commHourFrom").val() != "") && ($("#commHourTo").val() != "")) {
+                    diffHour($("#commHourFrom").val(), $("#commHourTo").val());
+                }
+
+            });
+            $("#commHourTo").on("change", function () {
+                if (($("#commHourFrom").val() != "") && ($("#commHourTo").val() != "")) {
+                    diffHour($("#commHourFrom").val(), $("#commHourTo").val());
+                }
+            });
+
+            $("#form").jqxWindow({
+                theme: themes,
+                width: '100%',
+                height: 'auto',
+                maxWidth: 600,
+                resizable: false, isModal: true, autoOpen: false, cancelButton: $("#CancelButton"), modalOpacity: 0.9
+            });
+
+            $("#addLeave").jqxButton({ theme: 'orange', width: 120, height: 40 });
+            $("#SubmitButton").jqxButton({ theme: 'orange', width: 120, height: 40 });
+            $("#CancelButton ").jqxButton({ theme: 'orange', width: 120, height: 40 });
+            $("#addLeave").click(function () {
+                cleanForm();
+                $("#ename").val(@ViewBag.cIDV);
+                $("#sname").val(@ViewBag.cIDVParent);
+                editrow = -1;
+                $("#form").jqxWindow('open');
+            });
+
+            $("#SubmitButton").click(function () {
+                var dt = new Object();
+                dt.id = vvid;
+                dt.idvRequest = $("#ename").val();
+                //leaveCategory: $("leaveType").val(),
+                //currBalance: $("").val(),
+                //remainDay: $("").val(),
+                //remainTime: $("").val(),
+                dt.idvApproval = $("#sname").val();
+                if ($("#byHour").val() == true) {
+                    $("#commHourFrom").jqxDateTimeInput({ formatString: 'M/d/yyyy HH:MM' });
+                    $("#commHourTo").jqxDateTimeInput({ formatString: 'M/d/yyyy HH:MM' });
+                    $("#totalLeaveAppliedUnit").jqxDateTimeInput({ formatString: 'M/d/yyyy HH:MM' });
+                    dt.appliedTime = hour;
+                    dt.appliedDay = 0;
+                    dt.leaveStart = $("#commHourFrom").val();
+                    dt.leaveStop = $("#commHourTo").val();
+                } else {
+                    dt.appliedTime = '00:00';
+                    dt.appliedDay = parseInt(diffDays);
+                    dt.leaveStart = $("#commDateFrom").val();
+                    dt.leaveStop = $("#commDateTo").val();
+                }
+                console.log(dt.leaveStart + " : " + $("#commHourFrom").jqxDateTimeInput('val'));
+                dt.leaveCategory = parseInt($("#typeLeave").jqxListBox('val'));
+                dt.rowDate = dateString;
+                console.log("Submitted : ", dt);
+                if (editrow >= 0) {
+                    var rowID = $('#dataTable').jqxGrid('getrowid', editrow);
+                    $('#dataTable').jqxGrid('updaterow', rowID, dt);
+
+                } else {
+                    $('#dataTable').jqxGrid('addrow', null, dt);
+                    //$('#dataTable').jqxGrid('updatebounddata');
+                };
+                vvid = 0;
+                $("#form").jqxWindow('hide');
+            });
+            loadJobList("typeLeave", 12);
+
+            function loadJobList(div, value) {
+                $("#" + div).jqxListBox({ source: ListJob(div, value), disabled: false, displayMember: "uidname", valueMember: "id" });
+            }
+
+            function cleanForm() {
+                $("#ename").jqxComboBox({ selectedIndex: -1 });
+                $("#sname").jqxComboBox({ selectedIndex: -1 });
+                $("#typeLeave").jqxListBox({ selectedIndex: -1 });
+                $("#commDateFrom").val(null);
+                $("#commDateTo").val(null);
+            }
+
+            function diffDay(from, to) {
+                var oneDay = 24 * 60 * 60 * 1000; // hours*minutes*seconds*milliseconds
+                var firstDate = new Date(from);
+                var secondDate = new Date(to);
+
+                diffDays = Math.round(Math.abs((firstDate.getTime() - secondDate.getTime()) / (oneDay)));
+                console.log("Here", diffDays);
+                unit = "Day";
+                $("#totalLeaveApplied").html(diffDays);
+                if (diffDays > 1) {
+                    unit = "Days";
+                }
+                $("#totalLeaveAppliedUnit").html(unit);
+            }
+
+            function diffHour(from, to) {
+                var time1 = from.split(":");
+                var time2 = to.split(":");
+                var date1 = new Date(2000, 0, 1, time1[0], time1[1]);
+                var date2 = new Date(2000, 0, 1, time2[0], time2[1]);
+
+                // the following is to handle cases where the times are on the opposite side of
+                // midnight e.g. when you want to get the difference between 9:00 PM and 5:00 AM
+                diff = date2 - date1;
+                hour = diff / (1000 * 60 * 60);
+                unit = "Hour";
+                if (hour < 0) {
+                    $("#totalLeaveApplied").html(0);
+                } else {
+                    $("#totalLeaveApplied").html(hour);
+                }
+
+                if (hour > 1) {
+                    unit = "Hours";
+                }
+                $("#totalLeaveAppliedUnit").html(unit);
+
+            }
+        });
+    </script>
 }
 
 
 
 
-<script type="text/javascript">
-    $(document).ready(function () {
-        var editrow = -1;
-        var diffDays;
-        var diff;
-        var hour;
-        today = new Date();
-        var dateString = today.format("currentDate");
-        var themes = 'metro';
-        var source = {
-            datatype: "json",
-            dataFields: [
-                { name: 'id', type: 'number' },
-                { name: 'leaveName', value: 'leaveCategory', values: { source: listCategory.records, value: 'id', name: 'uidname' } },
-                { name: 'leaveCategory', type: 'number' },
-                { name: 'idvRequestName', value: 'idvRequest', values: { source: listEmployee.records, value: 'ID', name: 'Name' } },
-                { name: 'idvRequest', type: 'number' },
-                { name: 'idvApprovalName', value: 'idvApproval', values: { source: listEmployee.records, value: 'ID', name: 'Name' } },
-                { name: 'idvApproval', type: 'number' },
-                { name: 'leaveStart', type: 'datetime' },
-                { name: 'leaveStop', type: 'datetime' },
-                { name: 'appliedDay', type: 'number' },
-                { name: 'appliedTime', type: 'time' },
-                { name: 'remainDay', type: 'number' },
-                { name: 'remainTime', type: 'time' },
-                { name: 'currBalance', type: 'number' },
-                { name: 'approvalID', type: 'number' },
-                { name: 'rowStatus', type: 'string' },
-                { name: 'rowDate', type: 'datetime' }
-            ],
-            addrow: function (rowdata, rowid, commit) {
-                cleanForm();
-                //console.log("Addrow rowid : " + rowid);
-                console.log("Addrow : ", rowid);
-                var uri = 'api/leaves'; //+ '&' + rowdata;
-                $.ajax({
-                    type: "POST",
-                    cache: false,
-                    dataType: 'json',
-                    url: uri,
-                    contentType: 'application/json',
-                    data: JSON.stringify(rowid),
-                    success: function (data, status, xhr) {
-                        // insert command is executed.
-                        console.log("Add Success");
-                        //commit(true);
-                        $('#dataTable').jqxGrid('updatebounddata');
 
-                        // CALL APPROVAL CONTROLLER
-                    },
-                    error: function (jqXHR, textStatus, err) {
-                        //alert(errorThrown);
-                        console.log("Error " + err);
-                        console.log("Error " + uri);
-                        //commit(false);
-                    }
-                });
-            },
-            deleterow: function (rowid, commit) {
-                commit(true);
-            },
-            updaterow: function (rowid, rowdata, commit) {
-                cleanForm();
-                console.log("Updaterow : " + rowid);
-                console.log("Updaterow : ", rowdata);
-                var uri = '/api/leaves/' + rowid ; 
-                $.ajax({
-                    type: "PUT",
-                    cache: false,
-                    dataType: 'json',
-                    url: uri,
-                    contentType: 'application/json',
-                    data: JSON.stringify(rowdata),
-                    success: function (data, status, xhr) {
-                        // insert command is executed.
-                        console.log("Update Success");                      
-                        commit(true);
-                        $('#dataTable').jqxGrid('updatebounddata');
-
-                        // THEN CALL APPROVAL CONTROLLER via API CONTROLLER
-                    },
-                    error: function (jqXHR, textStatus, err) {
-                        //alert(errorThrown);
-                        console.log("Error " + err);
-                        console.log("Error " + jqXHR.responseText);
-                        //commit(false);
-                    }
-                });
-            },
-            id: 'id',
-            url: '/api/leaves'
-        };
-
-        var dataAdapter = new $.jqx.dataAdapter(source, {
-            downloadComplete: function (data) {
-                source.totalrecords = data.TotalRows;
-            },
-            autoBind: true
-        });
-
-
-        var nestedGrids = new Array();
-        var initrowdetails = function (index, parentElement, gridElement, record) {
-            var master = dataAdapter.records;
-            var id = record.id.toString();
-            //console.log("initrowdetails Called " + id + "in Length " + dataAdapter.records.length);
-            var grid = $($(parentElement).children()[0]);
-            nestedGrids[index] = grid;
-            var filtergroup = new $.jqx.filter();
-            var filter_or_operator = 1;
-            var filtervalue = id;
-            var filtercondition = 'equal';
-            var filter = filtergroup.createfilter('stringfilter', filtervalue, filtercondition);
-            var detailData = [];
-            for (var m = 0; m < master.length; m++) {
-                var result = filter.evaluate(master[m]["id"]);
-                if (result) {
-                    detailData.push(master[m]);
-                    //console.log("ID Nested : " + id);
-                }
-            }
-            var detailSource = {
-                datafields: [
-                { name: 'id', type: 'number' },
-                { name: 'leaveName', value: 'leaveCategory', values: { source: listCategory.records, value: 'id', name: 'uidname' } },
-                { name: 'leaveCategory', type: 'number' },
-                { name: 'idvRequestName', value: 'idvRequest', values: { source: listEmployee.records, value: 'ID', name: 'Name' } },
-                { name: 'idvRequest', type: 'number' },
-                { name: 'idvApprovalName', value: 'idvApproval', values: { source: listEmployee.records, value: 'ID', name: 'Name' } },
-                { name: 'idvApproval', type: 'number' },
-                { name: 'leaveStart', type: 'datetime' },
-                { name: 'leaveStop', type: 'datetime' },
-                { name: 'appliedDay', type: 'number' },
-                { name: 'appliedTime', type: 'time' },
-                { name: 'remainDay', type: 'number' },
-                { name: 'remainTime', type: 'time' },
-                { name: 'currBalance', type: 'number' },
-                { name: 'approvalID', type: 'number' },
-                { name: 'rowStatus', type: 'string' },
-                { name: 'rowDate', type: 'datetime' }
-                ],
-                id: 'id',
-                localdata: detailData
-            }
-
-            var nestedGridAdapter = new $.jqx.dataAdapter(detailSource);
-            if (grid != null) {
-                grid.jqxGrid({
-                    source: nestedGridAdapter, width: 780, height: 200, editable: false, theme: themes,
-                    columns: [
-                      { text: 'ID', dataField: 'id', filtertype: 'checkedlist', width: 100, hidden: true },
-                      { text: 'ApprovedDay', editable: false, dataField: 'appliedDat', filtertype: 'checkedlist', width: 100 },
-                      { text: 'ApprovedTime', editable: false, dataField: 'appliedTime', filtertype: 'checkedlist', width: 100 },
-                      { text: 'remain Day', editable: false, dataField: 'remainDate', filtertype: 'checkedlist', width: 100 },
-                      { text: 'remain Time', editable: false, dataField: 'remainTime', filtertype: 'checkedlist', width: 100 },
-                      { text: 'Balance', editable: false, dataField: 'currBalance', filtertype: 'checkedlist', width: 100 },
-                      { text: 'Date', editable: false, dataField: 'rowDate', columntype: 'date', filtertype: 'date', width: 100 },
-                      { text: 'Status', dataField: 'rowStatus', filtertype: 'checkedlist', width: 100 }
-                    ]
-                });
-            }
-        }
-
-        var vvid;
-        $("#dataTable").jqxGrid({
-            width: 900,
-            height: 500,
-            source: dataAdapter,
-            pageable: true,
-            rowdetails: true,
-            autoheight: true,
-            sortable: true,
-            altrows: true,
-            enabletooltips: true,
-            editable: true,
-            //selectionmode: 'multiplecellsadvanced',
-            theme: themes,
-            pagesize: 15,
-            groupable: true,
-            //showfilterrow: true,
-            filterable: true,
-            pageable: true,
-            //editable: true,
-            initrowdetails: initrowdetails,
-            rowdetailstemplate: { rowdetails: "<div id='grid' style='margin: 10px;'></div>", rowdetailsheight: 220, rowdetailshidden: true },
-            ready: function () {
-                $("#dataTable").jqxGrid('showrowdetails', 1);
-            },
-            columns: [
-              { text: 'ID', dataField: 'id', width: 200, hidden: true },
-              {
-                  text: 'Type', columntype: 'dropdownlist', datafield: 'leaveCategory', displayfield: 'leaveName', width: 160,
-                  createeditor: function (row, value, editor) {
-                      editor.jqxDropDownList({ source: listCategory, displayMember: 'uidname', valueMember: 'id' });
-                  }
-              },
-              { text: 'Employee', editable: false, columntype: 'dropdownlist', dataField: 'idvRequest', displayField: 'idvRequestName', filtertype: 'input', width: 230 },
-              {
-                  text: 'Superior', dataField: 'idvApproval', columntype: 'dropdownlist', displayField: 'idvApprovalName', filtertype: 'input', width: 230,
-                  createeditor: function (row, value, editor) {
-                      editor.jqxDropDownList({ source: listEmployee, displayMember: 'Name', valueMember: 'ID' });
-                  }
-              },
-              { text: 'From', dataField: 'leaveStop', columntype: 'datetimeinput', formatString: 'dd-MM-yyyy H-mm-ss',filtertype: 'checkedlist', width: 90 },
-              { text: 'To', dataField: 'leaveStart', columntype: 'datetimeinput', formatString: 'dd-MM-yyyy H-mm-ss', filtertype: 'checkedlist', width: 90 },
-              {
-                  text: 'Edit', datafield: 'Edit', columntype: 'button', filtertype: '', width: '8%', cellsrenderer: function () {
-                      return "Edit";
-                  }, buttonclick: function (row) {
-                      editrow = row;
-                      // get the clicked row's data and initialize the input fields.
-                      var selectedrowindex = $("#dataTable").jqxGrid('getselectedrowindex');
-                      var rowscount = $("#dataTable").jqxGrid('getdatainformation').rowscount;
-                      if (editrow >= 0 && editrow < rowscount) {
-                          var id = $("#dataTable").jqxGrid('getrowid', selectedrowindex);
-                          //$("#jqxgrid").jqxGrid('updaterow', id, datarow);
-                          var dataRecord = $("#dataTable").jqxGrid('getrowdata', editrow);
-                          //console.log("dataRecord", dataRecord.idvApproval + " : " + dataRecord);
-                          cleanForm();
-                          vvid = dataRecord.id;
-                          $("#ename").val(dataRecord.idvRequest);
-                          $("#sname").val(dataRecord.idvApproval);
-                          $("#typeLeave").jqxListBox('val', dataRecord.leaveCategory);
-                          $("#commDateFrom").val(dataRecord.leaveStart);
-                          $("#commDateTo").val(dataRecord.leaveStop);
-                          console.log("Current leaveType : ", dataRecord.leaveCategory);
-                          // show the popup window.
-                          $("#form").jqxWindow('open');
-                      }
-                      
-                  }
-              },
-               { text: 'ApprovedDay', editable: false, dataField: 'appliedDat', filtertype: 'checkedlist', width: 100, hidden: true },
-                      { text: 'ApprovedTime', editable: false, dataField: 'appliedTime', filtertype: 'checkedlist', width: 100, hidden: true },
-                      { text: 'remain Day', editable: false, dataField: 'remainDate', filtertype: 'checkedlist', width: 100, hidden: true },
-                      { text: 'remain Time', editable: false, dataField: 'remainTime', filtertype: 'checkedlist', width: 100, hidden: true },
-                      { text: 'Balance', editable: false, dataField: 'currBalance', filtertype: 'checkedlist', width: 100, hidden: true },
-                      { text: 'Date', editable: false, dataField: 'rowDate', columntype: 'date', filtertype: 'date', width: 100, hidden: true },
-                      { text: 'Status', dataField: 'rowStatus', filtertype: 'checkedlist', width: 100, hidden: true }
-
-            ]
-        });
-
-       
-
-        var photorenderer = function (row, column, value) {
-            var name = $('#jqxgrid').jqxGrid('getrowdata', row).FirstName;
-            var imgurl = '../../images/' + name.toLowerCase() + '.png';
-            var img = '<div style="background: white;"><img style="margin:2px; margin-left: 10px;" width="32" height="32" src="' + imgurl + '"></div>';
-            return img;
-        }
-
-        var renderer = function (row, column, value) {
-            return '<span style="margin-left: 4px; margin-top: 9px; float: left;">' + value + '</span>';
-        }
-
-        var dayInput = "65px";
-        var nameInput = 240;
-        var reasonInput = 240;
-        var dateInput = 100;
-        var countries = new Array("Afghanistan", "Albania", "Algeria", "Andorra", "Angola", "Antarctica", "Antigua and Barbuda", "Argentina", "Armenia", "Australia", "Austria", "Azerbaijan", "Bahamas", "Bahrain", "Bangladesh", "Barbados", "Belarus", "Belgium", "Belize", "Benin", "Bermuda", "Bhutan", "Bolivia", "Bosnia and Herzegovina", "Botswana", "Brazil", "Brunei", "Bulgaria", "Burkina Faso", "Burma", "Burundi", "Cambodia", "Cameroon", "Canada", "Cape Verde", "Central African Republic", "Chad", "Chile", "China", "Colombia", "Comoros", "Congo, Democratic Republic", "Congo, Republic of the", "Costa Rica", "Cote d'Ivoire", "Croatia", "Cuba", "Cyprus", "Czech Republic", "Denmark", "Djibouti", "Dominica", "Dominican Republic", "East Timor", "Ecuador", "Egypt", "El Salvador", "Equatorial Guinea", "Eritrea", "Estonia", "Ethiopia", "Fiji", "Finland", "France", "Gabon", "Gambia", "Georgia", "Germany", "Ghana", "Greece", "Greenland", "Grenada", "Guatemala", "Guinea", "Guinea-Bissau", "Guyana", "Haiti", "Honduras", "Hong Kong", "Hungary", "Iceland", "India", "Indonesia", "Iran", "Iraq", "Ireland", "Israel", "Italy", "Jamaica", "Japan", "Jordan", "Kazakhstan", "Kenya", "Kiribati", "Korea, North", "Korea, South", "Kuwait", "Kyrgyzstan", "Laos", "Latvia", "Lebanon", "Lesotho", "Liberia", "Libya", "Liechtenstein", "Lithuania", "Luxembourg", "Macedonia", "Madagascar", "Malawi", "Malaysia", "Maldives", "Mali", "Malta", "Marshall Islands", "Mauritania", "Mauritius", "Mexico", "Micronesia", "Moldova", "Mongolia", "Morocco", "Monaco", "Mozambique", "Namibia", "Nauru", "Nepal", "Netherlands", "New Zealand", "Nicaragua", "Niger", "Nigeria", "Norway", "Oman", "Pakistan", "Panama", "Papua New Guinea", "Paraguay", "Peru", "Philippines", "Poland", "Portugal", "Qatar", "Romania", "Russia", "Rwanda", "Samoa", "San Marino", " Sao Tome", "Saudi Arabia", "Senegal", "Serbia and Montenegro", "Seychelles", "Sierra Leone", "Singapore", "Slovakia", "Slovenia", "Solomon Islands", "Somalia", "South Africa", "Spain", "Sri Lanka", "Sudan", "Suriname", "Swaziland", "Sweden", "Switzerland", "Syria", "Taiwan", "Tajikistan", "Tanzania", "Thailand", "Togo", "Tonga", "Trinidad and Tobago", "Tunisia", "Turkey", "Turkmenistan", "Uganda", "Ukraine", "United Arab Emirates", "United Kingdom", "United States", "Uruguay", "Uzbekistan", "Vanuatu", "Venezuela", "Vietnam", "Yemen", "Zambia", "Zimbabwe");
-
-        $("#typeLeave").jqxListBox({ theme: 'orange', width: '100%', height: '125px', source: catParents(14), displayMember: "uidname", valueMember: "id", scrollBarSize: 0 });
-        $("#ename").jqxComboBox({ theme: 'orange', source: listEmployee, displayMember: "Name", valueMember: "ID", width: "100%", height: 25 });
-        $("#sname").jqxComboBox({ theme: 'orange', source: listEmployee, displayMember: "Name", valueMember: "ID", width: "100%", height: 25 });
-        $("#commDateFrom").jqxDateTimeInput({ theme: 'orange', width: '100%', height: '25px', formatString: 'MM/dd/yyyy', showTimeButton: false, showCalendarButton: true });
-        $("#commDateTo").jqxDateTimeInput({ theme: 'orange', width: '100%', height: '25px', formatString: 'MM/dd/yyyy', showTimeButton: false, showCalendarButton: true });
-        $("#byDate").jqxRadioButton({ width: '100%' });
-        $("#byDate").val(true);
-        $("#byHour").jqxRadioButton({ width: '100%' });
-        $("#commHourFrom").jqxDateTimeInput({ width: '100%', height: '25px', formatString: 'HH:mm', showTimeButton: true, showCalendarButton: false });
-        $("#commHourTo").jqxDateTimeInput({ width: '100%', height: '25px', formatString: 'T', showTimeButton: true, showCalendarButton: false });
-        $("#dateDiv").show();
-        $("#hourDiv").hide();
-
-        $("#byDate").on("change", function () {
-            if ($("#byDate").val() == true) {
-                $("#dateDiv").show();
-                $("#hourDiv").hide();
-            }
-        });
-
-        $("#byHour").on("change", function () {
-            if ($("#byHour").val() == true) {
-                $("#dateDiv").hide();
-                $("#hourDiv").show();
-            }
-        });
-
-        $("#commDateFrom").on("change", function () {
-            if (($("#commDateFrom").val() != "") && ($("#commDateTo").val() != "")) {
-                diffDay($("#commDateFrom").val(), $("#commDateTo").val());
-            }
-
-        });
-        $("#commDateTo").on("change", function () {
-            if (($("#commDateFrom").val() != "") && ($("#commDateTo").val() != "")) {
-                diffDay($("#commDateFrom").val(), $("#commDateTo").val());
-            }
-        });
-
-        $("#commHourFrom").on("change", function () {
-            if (($("#commHourFrom").val() != "") && ($("#commHourTo").val() != "")) {
-                diffHour($("#commHourFrom").val(), $("#commHourTo").val());
-            }
-
-        });
-        $("#commHourTo").on("change", function () {
-            if (($("#commHourFrom").val() != "") && ($("#commHourTo").val() != "")) {
-                diffHour($("#commHourFrom").val(), $("#commHourTo").val());
-            }
-        });
-
-        $("#form").jqxWindow({
-            theme: themes,
-            width: '100%',
-            height: 'auto',
-            maxWidth: 600,
-            resizable: false, isModal: true, autoOpen: false, cancelButton: $("#Cancel"), modalOpacity: 0.9
-        });
-
-        $("#addLeave").jqxButton({ theme: 'orange', width: 120, height: 40 });
-        $("#SubmitButton").jqxButton({ theme: 'orange', width: 120, height: 40 });
-        $("#addLeave").click(function () {
-            cleanForm();
-            editrow = -1;
-            $("#form").jqxWindow('open');
-        });
-
-        $("#SubmitButton").click(function () {
-            var dt = new Object();
-            dt.id = vvid;
-            dt.idvRequest = $("#ename").val();
-            //leaveCategory: $("leaveType").val(),
-            //currBalance: $("").val(),
-            //remainDay: $("").val(),
-            //remainTime: $("").val(),
-            dt.idvApproval = $("#sname").val();
-            if ($("#byHour").val() == true) {
-                $("#commHourFrom").jqxDateTimeInput({ formatString: 'M/d/yyyy HH:MM' });
-                $("#commHourTo").jqxDateTimeInput({ formatString: 'M/d/yyyy HH:MM' });
-                $("#totalLeaveAppliedUnit").jqxDateTimeInput({ formatString: 'M/d/yyyy HH:MM' });
-                dt.appliedTime = hour;
-                dt.appliedDay = 0;
-                dt.leaveStart = $("#commHourFrom").val();
-                dt.leaveStop = $("#commHourTo").val();
-            } else {
-                dt.appliedTime = '00:00';
-                dt.appliedDay = parseInt(diffDays);
-                dt.leaveStart = $("#commDateFrom").val();
-                dt.leaveStop = $("#commDateTo").val();
-            }
-            console.log(dt.leaveStart + " : " + $("#commHourFrom").jqxDateTimeInput('val'));
-            dt.leaveCategory = parseInt($("#typeLeave").jqxListBox('val'));
-            dt.rowDate = dateString;
-            console.log("Submitted : ", dt);
-            if (editrow >= 0) {
-                var rowID = $('#dataTable').jqxGrid('getrowid', editrow);
-                $('#dataTable').jqxGrid('updaterow', rowID, dt);
-
-            } else {
-                $('#dataTable').jqxGrid('addrow', null, dt);
-                //$('#dataTable').jqxGrid('updatebounddata');
-            };
-            vvid = 0;
-            $("#form").jqxWindow('hide');
-        });
-        loadJobList("typeLeave",12);
-
-        function loadJobList(div, value) {
-            $("#" + div).jqxListBox({ source: ListJob(div, value), disabled: false, displayMember: "uidname", valueMember: "id" });
-        }
-
-        function cleanForm() {
-            $("#ename").jqxComboBox({ selectedIndex: -1 });
-            $("#sname").jqxComboBox({ selectedIndex: -1 });
-            $("#typeLeave").jqxListBox({ selectedIndex: -1 });
-            $("#commDateFrom").val(null);
-            $("#commDateTo").val(null);
-        }
-
-        function diffDay(from,to) {
-            var oneDay = 24 * 60 * 60 * 1000; // hours*minutes*seconds*milliseconds
-            var firstDate = new Date(from);
-            var secondDate = new Date(to);
-
-            diffDays = Math.round(Math.abs((firstDate.getTime() - secondDate.getTime()) / (oneDay)));
-            console.log("Here", diffDays);
-            unit = "Day";
-            $("#totalLeaveApplied").html(diffDays);
-            if (diffDays > 1) {
-                unit = "Days";
-            }
-            $("#totalLeaveAppliedUnit").html(unit);
-        }
-
-        function diffHour(from, to) {
-            var time1 = from.split(":");
-            var time2 = to.split(":");
-            var date1 = new Date(2000, 0, 1, time1[0], time1[1]);
-            var date2 = new Date(2000, 0, 1, time2[0], time2[1]);
-
-            // the following is to handle cases where the times are on the opposite side of
-            // midnight e.g. when you want to get the difference between 9:00 PM and 5:00 AM
-            diff = date2 - date1;
-            hour = diff / (1000 * 60 * 60);
-            unit = "Hour";
-            if (hour < 0) {
-                $("#totalLeaveApplied").html(0);
-            } else {
-                $("#totalLeaveApplied").html(hour);
-            }
-
-            if (hour > 1) {
-                unit = "Hours";
-            }
-            $("#totalLeaveAppliedUnit").html(unit);
-
-        }
-    });
-</script>
 <h1 style="text-align:left; letter-spacing:-1px; line-height:1; font-family: Arial, Helvetica, sans-serif; font-size: 25px; font-weight: bold; padding-bottom:0; padding-top:15px;">LEAVE FORM</h1>
 <h2 style="padding-left:30px; font-size:14px; font-family:Calibri">Apply Leave and See Your Form Status</h2>
 <hr /><br />
@@ -561,7 +565,17 @@
             <div class="col-md-12">
                 <div class="col-md-6">
                     <input type="submit" class="btn btn-default" value="Submit" id='SubmitButton' />
+                    <input type="button" class="btn btn-default" value="Cancel" id='CancelButton' />
                 </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-9">
+                <label style="font-size:12px; font-family:Calibri; color:indianred; margin-right:30px">
+                    Credential Info: @ViewBag.cUser : @ViewBag.cIDV : Parent= @ViewBag.cIDVParent , ParentLevel= @ViewBag.cIDVParentLevel , Name= @ViewBag.cName
+                </label>
+
             </div>
         </div>
 

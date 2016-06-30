@@ -28,10 +28,13 @@ namespace HRIS_R01.Models
         public Nullable<int> approvalID { get; set; }
         public string rowStatus { get; set; }
         public Nullable<System.DateTime> rowDate { get; set; }
-    
+
         public virtual approval approval { get; set; }
+
         public virtual category category { get; set; }
+
         public virtual emp_master emp_master { get; set; }
+
         public virtual emp_master emp_master1 { get; set; }
     }
 }
