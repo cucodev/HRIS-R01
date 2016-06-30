@@ -103,7 +103,7 @@ Header
     left: 0;
     height: 45px;
     width: 100%;
-    //background: #3e454c;
+    /*background: #3e454c;*/
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
@@ -117,7 +117,7 @@ Header
 
 @media only screen and (min-width: 768px) {
     .cd-main-header {
-        position: fixed;
+        /*position: fixed;*/
         height: 55px;
     }
 }
@@ -134,7 +134,7 @@ Header
 
 @media only screen and (min-width: 768px) {
     .cd-logo {
-        margin: 16px 0 0 36px;
+        margin: 16px 0 0 15%;
     }
 }
 
@@ -563,7 +563,7 @@ Sidebar
     .cd-side-nav {
         position: relative;
         float: left;
-        top: auto;
+        /*top: auto;*/
         width: 110px;
         min-height: 100vh;
         padding-top: 55px;

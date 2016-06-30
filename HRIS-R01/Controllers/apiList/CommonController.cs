@@ -9,16 +9,18 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web.Http;
 using System.Web.Http.Description;
-using HRIS_R01.Models.Location;
+//using HRIS_R01.Models.Location;
 using HRIS_R01.Models;
 
 namespace HRIS_R01.Controllers.apiList
 {
     public class CommonController : ApiController
     {
-        private ListLocation dbLoc = new ListLocation();
-        private ListCategory dbCat = new ListCategory();
-        private OrganizationModel dbOrg = new OrganizationModel();
+        //private ListLocation dbLoc = new ListLocation();
+        private MasterHRISEntities db = new MasterHRISEntities();
+        //private category dbCat = category();
+       // private ListCategory dbCat = new ListCategory();
+        //private OrganizationModel dbOrg = new OrganizationModel();
 
         // GET: api/locationsCat
         [System.Web.Http.HttpGet]
@@ -26,21 +28,31 @@ namespace HRIS_R01.Controllers.apiList
         [System.Web.Http.Route("api/Common/Loc/{id}")]
         public async Task<IHttpActionResult> Loc(int id)
         {
-            //location location = await db.locations.FindAsync(id);
+            location location = await db.locations.FindAsync(id);
             //var loc = new locations();
             //return Ok(loc.locations)
+            
 
             string query = "SELECT * FROM [HRIS].[dbo].[location] where uidparent = @p0";
-            DbSqlQuery<location> data = dbLoc.locations.SqlQuery(query, id);
+            DbSqlQuery<location> data = db.locations.SqlQuery(query, id);
             //location loc = await db.locations.SqlQuery(query, id).SingleOrDefaultAsync();
             //IEnumerable<location> data = db.locations.SqlQuery<location>(query);
 
             return Ok(data.ToList());
         }
 
+        // GET: api/Common/Catparentsuid/{uidname}
+        [System.Web.Http.HttpGet]
+        [System.Web.Http.ActionName("CatParentsUID")]
+        [System.Web.Http.Route("api/Common/CatParentsUID/{uid}")]
+        public async Task<IHttpActionResult> CatParentsUID(string uid)
+        {
+            string query = "SELECT * FROM [HRIS].[dbo].[category] where uid = @p0";
+            DbSqlQuery<category> data = db.categories.SqlQuery(query, uid);
+            return Ok(data.ToList());
+        }
 
-
-        // GET: api/locationsCat
+        // GET: api/Common/Catparents/{id}
         [System.Web.Http.HttpGet]
         [System.Web.Http.ActionName("Catparents")]
         [System.Web.Http.Route("api/Common/Catparents/{id}")]
@@ -51,7 +63,7 @@ namespace HRIS_R01.Controllers.apiList
             //return Ok(loc.locations)
 
             string query = "SELECT * FROM [HRIS].[dbo].[category] where uidparent = @p0";
-            DbSqlQuery<category> data = dbCat.categories.SqlQuery(query, id);
+            DbSqlQuery<category> data = db.categories.SqlQuery(query, id);
             //location loc = await db.locations.SqlQuery(query, id).SingleOrDefaultAsync();
             //IEnumerable<location> data = db.locations.SqlQuery<location>(query);
 
@@ -69,7 +81,7 @@ namespace HRIS_R01.Controllers.apiList
             //return Ok(loc.locations)
 
             string query = "SELECT * FROM [HRIS].[dbo].[category] where id = @p0";
-            DbSqlQuery<category> data = dbCat.categories.SqlQuery(query, id);
+            DbSqlQuery<category> data = db.categories.SqlQuery(query, id);
             //location loc = await db.locations.SqlQuery(query, id).SingleOrDefaultAsync();
             //IEnumerable<location> data = db.locations.SqlQuery<location>(query);
 
@@ -100,7 +112,7 @@ namespace HRIS_R01.Controllers.apiList
                               dbo.category AS category_1 ON dbo.emp_master.empJobLevel = category_1.id INNER JOIN
                               dbo.category AS category_2 ON emp_master_1.empPosition = category_2.id INNER JOIN
                               dbo.category AS category_3 ON emp_master_1.empJobLevel = category_3.id";
-            DbSqlQuery<organization> data = dbOrg.organizations.SqlQuery(query);
+            DbSqlQuery<organization> data = db.organizations.SqlQuery(query);
             //location loc = await db.locations.SqlQuery(query, id).SingleOrDefaultAsync();
             //IEnumerable<location> data = db.locations.SqlQuery<location>(query);
 

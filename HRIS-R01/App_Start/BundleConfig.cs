@@ -28,6 +28,7 @@ namespace HRIS_R01
             bundles.Add(new ScriptBundle("~/bundles/jsmenu").Include(
                                   "~/Scripts/jsmenu/jquery.menu-aim.js",
                                   "~/Scripts/jsmenu/main.js"));
+            bundles.Add(new ScriptBundle("~/bundles/jstorage").Include("~/Scripts/jstorage.js"));
             bundles.Add(new ScriptBundle("~/bundles/jqwidgets").Include(
                         "~/Scripts/jqwidgets/jqxcore.js",
                         "~/Scripts/jqwidgets/jqxdata.js",

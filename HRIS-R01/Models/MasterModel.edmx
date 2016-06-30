@@ -1,0 +1,2036 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="HRISMasterModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="locationparent">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="uidparent" Type="int" />
+          <Property Name="uidtype" Type="int" />
+          <Property Name="uidname" Type="nvarchar" MaxLength="200" />
+        </EntityType>
+        <EntityType Name="approval">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="approvalType" Type="int" />
+          <Property Name="approvalStatus" Type="nchar" MaxLength="10" />
+          <Property Name="approvalIdv" Type="int" Nullable="false" />
+          <Property Name="approvalby" Type="int" />
+          <Property Name="approvalQ" Type="int" />
+          <Property Name="approvalMail" Type="nchar" MaxLength="50" />
+          <Property Name="approvalDate" Type="datetime" />
+          <Property Name="rowStatus" Type="nchar" MaxLength="10" />
+          <Property Name="rowDate" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="balance">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="IDV" Type="int" Nullable="false" />
+          <Property Name="LEAVE_TYPE" Type="int" Nullable="false" />
+          <Property Name="BALANCE" Type="int" />
+        </EntityType>
+        <EntityType Name="category">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="uidparent" Type="int" />
+          <Property Name="uid" Type="nchar" MaxLength="20" />
+          <Property Name="uidname" Type="nchar" MaxLength="100" />
+        </EntityType>
+        <EntityType Name="categoryfile">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="idv" Type="int" />
+          <Property Name="type" Type="nchar" MaxLength="10" />
+          <Property Name="image" Type="image" />
+          <Property Name="description" Type="varchar" MaxLength="200" />
+        </EntityType>
+        <EntityType Name="categoryparent">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="uid" Type="nchar" MaxLength="20" />
+          <Property Name="uidparent" Type="nchar" MaxLength="10" />
+          <Property Name="uidtype" Type="nchar" MaxLength="20" />
+          <Property Name="uidname" Type="nchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="emp_address">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="IDV" Type="int" />
+          <Property Name="UID" Type="nchar" MaxLength="10" />
+          <Property Name="Address" Type="nchar" MaxLength="200" />
+          <Property Name="Kelurahan" Type="nchar" MaxLength="100" />
+          <Property Name="Kecamatan" Type="bigint" />
+          <Property Name="Kabupaten" Type="bigint" />
+          <Property Name="Provinsi" Type="bigint" />
+          <Property Name="Country" Type="int" />
+          <Property Name="rowStatus" Type="nchar" MaxLength="10" />
+        </EntityType>
+        <EntityType Name="emp_birth">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="IDV" Type="int" />
+          <Property Name="UID" Type="nchar" MaxLength="10" Nullable="false" />
+          <Property Name="BIRTH_PLACE" Type="nchar" MaxLength="20" />
+          <Property Name="BIRTH_DATE" Type="date" />
+          <Property Name="NATIONALITY" Type="int" />
+          <Property Name="rowStatus" Type="nchar" MaxLength="10" />
+          <Property Name="lastUpdate" Type="nchar" MaxLength="10" />
+        </EntityType>
+        <EntityType Name="emp_contact">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="IDV" Type="int" />
+          <Property Name="UID" Type="nchar" MaxLength="10" Nullable="false" />
+          <Property Name="contact1" Type="nvarchar" MaxLength="300" />
+          <Property Name="contact2" Type="nvarchar" MaxLength="300" />
+          <Property Name="contact3" Type="nvarchar" MaxLength="300" />
+          <Property Name="contact4" Type="nvarchar" MaxLength="300" />
+          <Property Name="contact_temp" Type="nvarchar(max)" />
+          <Property Name="rowStatus" Type="nchar" MaxLength="10" />
+          <Property Name="lastUpdate" Type="nchar" MaxLength="10" />
+        </EntityType>
+        <EntityType Name="emp_edu">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="IDV" Type="int" Nullable="false" />
+          <Property Name="UID" Type="nchar" MaxLength="10" Nullable="false" />
+          <Property Name="edu" Type="int" />
+          <Property Name="Latest_Edu" Type="nchar" MaxLength="10" />
+          <Property Name="Latest_Major" Type="nchar" MaxLength="100" />
+          <Property Name="rowStatus" Type="nchar" MaxLength="10" Nullable="false" />
+          <Property Name="lastUpdate" Type="datetime" />
+        </EntityType>
+        <EntityType Name="emp_image">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="IDV" Type="int" />
+          <Property Name="IMAGEDATA" Type="varbinary(max)" />
+        </EntityType>
+        <EntityType Name="emp_job">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="IDV" Type="int" />
+          <Property Name="UID" Type="nchar" MaxLength="10" Nullable="false" />
+          <Property Name="empStatus" Type="int" />
+          <Property Name="empPosition" Type="int" />
+          <Property Name="empJoblevel" Type="int" />
+          <Property Name="empDivison" Type="int" />
+          <Property Name="empDepartement" Type="int" />
+          <Property Name="empCity" Type="nchar" MaxLength="10" />
+          <Property Name="rowStatus" Type="nchar" MaxLength="10" />
+          <Property Name="lastUpdate" Type="time" Precision="7" />
+        </EntityType>
+        <EntityType Name="emp_master">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="IDParent" Type="int" />
+          <Property Name="IDParentLevel" Type="int" />
+          <Property Name="UID" Type="nchar" MaxLength="10" Nullable="false" />
+          <Property Name="NIP" Type="nvarchar" MaxLength="13" StoreGeneratedPattern="Computed" />
+          <Property Name="UID_ABSENCE" Type="int" />
+          <Property Name="Name" Type="nvarchar" MaxLength="200" Nullable="false" />
+          <Property Name="NickName" Type="nvarchar" MaxLength="50" />
+          <Property Name="Gender" Type="nvarchar" MaxLength="50" />
+          <Property Name="Religion" Type="nchar" MaxLength="20" />
+          <Property Name="Marital" Type="nchar" MaxLength="10" />
+          <Property Name="Birthplace" Type="nchar" MaxLength="30" />
+          <Property Name="Birthdate" Type="date" />
+          <Property Name="Nationality" Type="nchar" MaxLength="100" />
+          <Property Name="Phone1" Type="nchar" MaxLength="20" />
+          <Property Name="Phone2" Type="nchar" MaxLength="20" />
+          <Property Name="Address" Type="nvarchar" MaxLength="300" />
+          <Property Name="AddressKel" Type="nchar" MaxLength="100" />
+          <Property Name="AddressKec" Type="bigint" />
+          <Property Name="AddressKab" Type="bigint" />
+          <Property Name="AddressProv" Type="bigint" />
+          <Property Name="AddressCountry" Type="bigint" />
+          <Property Name="empEdu" Type="int" />
+          <Property Name="empEduMajor" Type="nchar" MaxLength="50" />
+          <Property Name="empStatus" Type="nchar" MaxLength="10" />
+          <Property Name="empPosition" Type="int" />
+          <Property Name="empJobLevel" Type="int" />
+          <Property Name="empDivision" Type="int" />
+          <Property Name="empDepartement" Type="int" />
+          <Property Name="empOfficeLocation" Type="nchar" MaxLength="100" />
+          <Property Name="Contact" Type="nvarchar" MaxLength="200" />
+          <Property Name="rowStatus" Type="nchar" MaxLength="10" />
+          <Property Name="lastUpdate" Type="datetime" StoreGeneratedPattern="Computed" Nullable="false" />
+        </EntityType>
+        <EntityType Name="emp_master_absence">
+          <Key>
+            <PropertyRef Name="DIN" />
+          </Key>
+          <Property Name="ID" Type="int" Nullable="false" />
+          <Property Name="UID" Type="nchar" MaxLength="10" Nullable="false" />
+          <Property Name="DN" Type="smallint" />
+          <Property Name="DIN" Type="bigint" Nullable="false" />
+          <Property Name="UserName" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="FirstName" Type="nvarchar" MaxLength="100" />
+          <Property Name="LastName" Type="nvarchar" MaxLength="100" />
+          <Property Name="Gender" Type="nchar" MaxLength="10" />
+        </EntityType>
+        <EntityType Name="emp_phone">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="IDV" Type="int" />
+          <Property Name="UID" Type="nchar" MaxLength="10" Nullable="false" />
+          <Property Name="Phone1" Type="nchar" MaxLength="20" />
+          <Property Name="Phone2" Type="nchar" MaxLength="20" />
+          <Property Name="Phone3" Type="nchar" MaxLength="20" />
+          <Property Name="Phone4" Type="nchar" MaxLength="20" />
+          <Property Name="phone_temp" Type="nvarchar" MaxLength="200" />
+          <Property Name="rowStatus" Type="nchar" MaxLength="10" />
+          <Property Name="lastUpdate" Type="time" Precision="7" />
+        </EntityType>
+        <EntityType Name="emp_user">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="IDV" Type="int" />
+          <Property Name="IDVMAIL" Type="varchar" MaxLength="200" />
+          <Property Name="IDVMAILPASSWORD" Type="varchar" MaxLength="50" />
+          <Property Name="IDVROLE" Type="int" />
+        </EntityType>
+        <EntityType Name="file">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="IDV" Type="int" Nullable="false" />
+          <Property Name="CATTYPE" Type="int" />
+          <Property Name="CONTENT" Type="varbinary(max)" />
+          <Property Name="CONTENTTYPE" Type="varchar" MaxLength="50" />
+          <Property Name="FILETYPE" Type="varchar" MaxLength="50" />
+          <Property Name="FILENAME" Type="varbinary" MaxLength="100" />
+        </EntityType>
+        <EntityType Name="leave">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="leaveCategory" Type="int" />
+          <Property Name="idvRequest" Type="int" />
+          <Property Name="idvApproval" Type="int" />
+          <Property Name="leaveStart" Type="datetime" />
+          <Property Name="leaveStop" Type="datetime" />
+          <Property Name="appliedDay" Type="int" />
+          <Property Name="appliedTime" Type="time" Precision="7" />
+          <Property Name="remainDay" Type="int" />
+          <Property Name="remainTime" Type="time" Precision="7" />
+          <Property Name="currBalance" Type="int" />
+          <Property Name="approvalID" Type="int" />
+          <Property Name="rowStatus" Type="nchar" MaxLength="10" />
+          <Property Name="rowDate" Type="datetime" />
+        </EntityType>
+        <EntityType Name="leave_master">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="idv" Type="int" />
+          <Property Name="categoryType" Type="int" />
+          <Property Name="appliedDay" Type="int" />
+          <Property Name="appliedTime" Type="time" Precision="7" />
+          <Property Name="balance" Type="int" />
+        </EntityType>
+        <EntityType Name="location">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="bigint" Nullable="false" />
+          <Property Name="uidparent" Type="bigint" />
+          <Property Name="uidtype" Type="bigint" />
+          <Property Name="uidname" Type="varchar" MaxLength="300" />
+        </EntityType>
+        <EntityType Name="medical">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="medicalID" Type="int" />
+          <Property Name="idvRequest" Type="int" Nullable="false" />
+          <Property Name="idvApproval" Type="int" Nullable="false" />
+          <Property Name="typeDoctor" Type="nchar" MaxLength="10" />
+          <Property Name="typeClaim" Type="nchar" MaxLength="10" />
+          <Property Name="feeDoctor" Type="int" />
+          <Property Name="feeMedicine" Type="int" />
+          <Property Name="feeTotal" Type="int" />
+          <Property Name="feeClaimable" Type="int" />
+          <Property Name="rowStatus" Type="nchar" MaxLength="10" />
+          <Property Name="rowDate" Type="datetime" />
+        </EntityType>
+        <EntityType Name="medical_fee">
+          <Key>
+            <PropertyRef Name="MEDICAL_ID" />
+          </Key>
+          <Property Name="MEDICAL_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="LEAVE_ID" Type="int" />
+          <Property Name="FEE_DOCTOR" Type="money" />
+          <Property Name="FEE_MEDICINE" Type="money" />
+          <Property Name="FEE_TOTAL" Type="money" />
+          <Property Name="FEE_CLAIM" Type="money" />
+          <Property Name="ROWSTATUS" Type="nchar" MaxLength="10" />
+          <Property Name="ROWDATE" Type="timestamp" StoreGeneratedPattern="Computed" />
+        </EntityType>
+        <EntityType Name="notifnews">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="title" Type="nchar" MaxLength="100" />
+          <Property Name="description" Type="text" />
+          <Property Name="cattype" Type="int" />
+          <Property Name="filepath" Type="text" />
+          <Property Name="filename" Type="varbinary(max)" />
+          <Property Name="lastupdateby" Type="int" />
+          <Property Name="lastupdate" Type="time" Precision="7" />
+        </EntityType>
+        <EntityType Name="organization">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="IDV" Type="int" />
+          <Property Name="ParentIDV" Type="int" />
+        </EntityType>
+        <EntityType Name="ref_dep">
+          <Key>
+            <PropertyRef Name="uid" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="uid" Type="nchar" MaxLength="10" Nullable="false" />
+          <Property Name="name" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ref_div">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="uid" Type="nchar" MaxLength="10" />
+          <Property Name="name" Type="varchar" MaxLength="50" />
+          <Property Name="UID-CAT" Type="nchar" MaxLength="10" />
+        </EntityType>
+        <EntityType Name="ref_edu">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UID" Type="nchar" MaxLength="10" />
+          <Property Name="name" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="ref_empStatus">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="uid" Type="nchar" MaxLength="10" />
+          <Property Name="name" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="ref_joblevel">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="uid" Type="nchar" MaxLength="10" />
+          <Property Name="name" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="ref_personrole">
+          <Key>
+            <PropertyRef Name="PERSONROLE_ID" />
+          </Key>
+          <Property Name="PERSONROLE_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="PERSONROLE_TYPE" Type="nchar" MaxLength="10" />
+          <Property Name="PERSONROLE_DESC" Type="nchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="ref_pos">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UID" Type="nchar" MaxLength="10" />
+          <Property Name="name" Type="varchar" MaxLength="50" />
+          <Property Name="UID-CAT" Type="nchar" MaxLength="10" />
+        </EntityType>
+        <EntityType Name="ref_typeleave">
+          <Key>
+            <PropertyRef Name="uid" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="uid" Type="nchar" MaxLength="10" Nullable="false" />
+          <Property Name="name" Type="varchar" MaxLength="100" />
+        </EntityType>
+        <EntityType Name="role">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" Nullable="false" />
+          <Property Name="IDV" Type="int" />
+          <Property Name="IDROLE" Type="int" />
+          <Property Name="APPSTATUS" Type="int" />
+          <Property Name="rowUpdateDate" Type="date" />
+          <Property Name="rowUpdateBy" Type="int" />
+          <Property Name="rowCreatedDate" Type="date" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'HRIS.dbo.Table_2' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="Table_2">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UID" Type="nvarchar" MaxLength="13" StoreGeneratedPattern="Computed" />
+          <Property Name="Name" Type="nchar" MaxLength="10" />
+        </EntityType>
+        <EntityType Name="timesheet">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="IDV" Type="int" />
+          <Property Name="IDVAPPROVAL" Type="int" />
+          <Property Name="WORKIN" Type="datetime" />
+          <Property Name="WORKOUT" Type="datetime" />
+          <Property Name="WORKDURATION" Type="datetime" />
+          <Property Name="INADJUSTED" Type="datetime" />
+          <Property Name="OUTADJUSTED" Type="datetime" />
+          <Property Name="DATEADJUSTED" Type="datetime" />
+          <Property Name="DATEAPPROVED" Type="datetime" />
+          <Property Name="REASON" Type="varchar" MaxLength="200" />
+        </EntityType>
+        <Association Name="FK_approval_emp_master">
+          <End Role="emp_master" Type="Self.emp_master" Multiplicity="1" />
+          <End Role="approval" Type="Self.approval" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="emp_master">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="approval">
+              <PropertyRef Name="approvalIdv" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_balance_category">
+          <End Role="category" Type="Self.category" Multiplicity="1" />
+          <End Role="balance" Type="Self.balance" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="category">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="balance">
+              <PropertyRef Name="LEAVE_TYPE" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_balance_emp_master">
+          <End Role="emp_master" Type="Self.emp_master" Multiplicity="1" />
+          <End Role="balance" Type="Self.balance" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="emp_master">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="balance">
+              <PropertyRef Name="IDV" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_category_categoryparent">
+          <End Role="categoryparent" Type="Self.categoryparent" Multiplicity="0..1" />
+          <End Role="category" Type="Self.category" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="categoryparent">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="category">
+              <PropertyRef Name="uidparent" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_EMP_MASTER">
+          <End Role="emp_master" Type="Self.emp_master" Multiplicity="0..1" />
+          <End Role="emp_image" Type="Self.emp_image" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="emp_master">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="emp_image">
+              <PropertyRef Name="IDV" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_emp_user_emp_master">
+          <End Role="emp_master" Type="Self.emp_master" Multiplicity="0..1" />
+          <End Role="emp_user" Type="Self.emp_user" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="emp_master">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="emp_user">
+              <PropertyRef Name="IDV" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_FILE_emp_master">
+          <End Role="emp_master" Type="Self.emp_master" Multiplicity="1" />
+          <End Role="file" Type="Self.file" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="emp_master">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="file">
+              <PropertyRef Name="IDV" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_IDVApproval">
+          <End Role="emp_master" Type="Self.emp_master" Multiplicity="0..1" />
+          <End Role="leave" Type="Self.leave" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="emp_master">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="leave">
+              <PropertyRef Name="idvApproval" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_IDVARequest">
+          <End Role="emp_master" Type="Self.emp_master" Multiplicity="0..1" />
+          <End Role="leave" Type="Self.leave" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="emp_master">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="leave">
+              <PropertyRef Name="idvRequest" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_leave_approval">
+          <End Role="approval" Type="Self.approval" Multiplicity="0..1" />
+          <End Role="leave" Type="Self.leave" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="approval">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="leave">
+              <PropertyRef Name="approvalID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_leave_category">
+          <End Role="category" Type="Self.category" Multiplicity="0..1" />
+          <End Role="leave" Type="Self.leave" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="category">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="leave">
+              <PropertyRef Name="leaveCategory" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_leave_master_categoryfile">
+          <End Role="category" Type="Self.category" Multiplicity="0..1" />
+          <End Role="leave_master" Type="Self.leave_master" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="category">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="leave_master">
+              <PropertyRef Name="categoryType" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_organization_emp_master">
+          <End Role="emp_master" Type="Self.emp_master" Multiplicity="0..1" />
+          <End Role="organization" Type="Self.organization" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="emp_master">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="organization">
+              <PropertyRef Name="IDV" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_organization_emp_master1">
+          <End Role="emp_master" Type="Self.emp_master" Multiplicity="0..1" />
+          <End Role="organization" Type="Self.organization" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="emp_master">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="organization">
+              <PropertyRef Name="ParentIDV" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_role_category">
+          <End Role="category" Type="Self.category" Multiplicity="0..1" />
+          <End Role="role" Type="Self.role" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="category">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="role">
+              <PropertyRef Name="IDROLE" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_role_emp_master">
+          <End Role="emp_master" Type="Self.emp_master" Multiplicity="0..1" />
+          <End Role="role" Type="Self.role" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="emp_master">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="role">
+              <PropertyRef Name="IDV" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_timesheet_emp_master">
+          <End Role="emp_master" Type="Self.emp_master" Multiplicity="0..1" />
+          <End Role="timesheet" Type="Self.timesheet" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="emp_master">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="timesheet">
+              <PropertyRef Name="IDV" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_timesheet_emp_master1">
+          <End Role="emp_master" Type="Self.emp_master" Multiplicity="0..1" />
+          <End Role="timesheet" Type="Self.timesheet" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="emp_master">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="timesheet">
+              <PropertyRef Name="IDVAPPROVAL" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="HRISMasterModelStoreContainer">
+          <EntitySet Name="locationparent" EntityType="Self.locationparent" Schema="db_owner" store:Type="Tables" />
+          <EntitySet Name="approval" EntityType="Self.approval" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="balance" EntityType="Self.balance" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="category" EntityType="Self.category" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="categoryfile" EntityType="Self.categoryfile" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="categoryparent" EntityType="Self.categoryparent" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="emp_address" EntityType="Self.emp_address" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="emp_birth" EntityType="Self.emp_birth" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="emp_contact" EntityType="Self.emp_contact" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="emp_edu" EntityType="Self.emp_edu" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="emp_image" EntityType="Self.emp_image" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="emp_job" EntityType="Self.emp_job" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="emp_master" EntityType="Self.emp_master" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="emp_master_absence" EntityType="Self.emp_master_absence" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="emp_phone" EntityType="Self.emp_phone" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="emp_user" EntityType="Self.emp_user" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="file" EntityType="Self.file" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="leave" EntityType="Self.leave" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="leave_master" EntityType="Self.leave_master" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="location" EntityType="Self.location" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="medical" EntityType="Self.medical" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="medical_fee" EntityType="Self.medical_fee" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="notifnews" EntityType="Self.notifnews" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="organization" EntityType="Self.organization" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ref_dep" EntityType="Self.ref_dep" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ref_div" EntityType="Self.ref_div" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ref_edu" EntityType="Self.ref_edu" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ref_empStatus" EntityType="Self.ref_empStatus" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ref_joblevel" EntityType="Self.ref_joblevel" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ref_personrole" EntityType="Self.ref_personrole" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ref_pos" EntityType="Self.ref_pos" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ref_typeleave" EntityType="Self.ref_typeleave" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="role" EntityType="Self.role" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="timesheet" EntityType="Self.timesheet" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Table_2" EntityType="Self.Table_2" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [Table_2].[ID] AS [ID], 
+    [Table_2].[UID] AS [UID], 
+    [Table_2].[Name] AS [Name]
+    FROM [dbo].[Table_2] AS [Table_2]</DefiningQuery>
+          </EntitySet>
+          <AssociationSet Name="FK_approval_emp_master" Association="Self.FK_approval_emp_master">
+            <End Role="emp_master" EntitySet="emp_master" />
+            <End Role="approval" EntitySet="approval" />
+          </AssociationSet>
+          <AssociationSet Name="FK_balance_category" Association="Self.FK_balance_category">
+            <End Role="category" EntitySet="category" />
+            <End Role="balance" EntitySet="balance" />
+          </AssociationSet>
+          <AssociationSet Name="FK_balance_emp_master" Association="Self.FK_balance_emp_master">
+            <End Role="emp_master" EntitySet="emp_master" />
+            <End Role="balance" EntitySet="balance" />
+          </AssociationSet>
+          <AssociationSet Name="FK_category_categoryparent" Association="Self.FK_category_categoryparent">
+            <End Role="categoryparent" EntitySet="categoryparent" />
+            <End Role="category" EntitySet="category" />
+          </AssociationSet>
+          <AssociationSet Name="FK_EMP_MASTER" Association="Self.FK_EMP_MASTER">
+            <End Role="emp_master" EntitySet="emp_master" />
+            <End Role="emp_image" EntitySet="emp_image" />
+          </AssociationSet>
+          <AssociationSet Name="FK_emp_user_emp_master" Association="Self.FK_emp_user_emp_master">
+            <End Role="emp_master" EntitySet="emp_master" />
+            <End Role="emp_user" EntitySet="emp_user" />
+          </AssociationSet>
+          <AssociationSet Name="FK_FILE_emp_master" Association="Self.FK_FILE_emp_master">
+            <End Role="emp_master" EntitySet="emp_master" />
+            <End Role="file" EntitySet="file" />
+          </AssociationSet>
+          <AssociationSet Name="FK_IDVApproval" Association="Self.FK_IDVApproval">
+            <End Role="emp_master" EntitySet="emp_master" />
+            <End Role="leave" EntitySet="leave" />
+          </AssociationSet>
+          <AssociationSet Name="FK_IDVARequest" Association="Self.FK_IDVARequest">
+            <End Role="emp_master" EntitySet="emp_master" />
+            <End Role="leave" EntitySet="leave" />
+          </AssociationSet>
+          <AssociationSet Name="FK_leave_approval" Association="Self.FK_leave_approval">
+            <End Role="approval" EntitySet="approval" />
+            <End Role="leave" EntitySet="leave" />
+          </AssociationSet>
+          <AssociationSet Name="FK_leave_category" Association="Self.FK_leave_category">
+            <End Role="category" EntitySet="category" />
+            <End Role="leave" EntitySet="leave" />
+          </AssociationSet>
+          <AssociationSet Name="FK_leave_master_categoryfile" Association="Self.FK_leave_master_categoryfile">
+            <End Role="category" EntitySet="category" />
+            <End Role="leave_master" EntitySet="leave_master" />
+          </AssociationSet>
+          <AssociationSet Name="FK_organization_emp_master" Association="Self.FK_organization_emp_master">
+            <End Role="emp_master" EntitySet="emp_master" />
+            <End Role="organization" EntitySet="organization" />
+          </AssociationSet>
+          <AssociationSet Name="FK_organization_emp_master1" Association="Self.FK_organization_emp_master1">
+            <End Role="emp_master" EntitySet="emp_master" />
+            <End Role="organization" EntitySet="organization" />
+          </AssociationSet>
+          <AssociationSet Name="FK_role_category" Association="Self.FK_role_category">
+            <End Role="category" EntitySet="category" />
+            <End Role="role" EntitySet="role" />
+          </AssociationSet>
+          <AssociationSet Name="FK_role_emp_master" Association="Self.FK_role_emp_master">
+            <End Role="emp_master" EntitySet="emp_master" />
+            <End Role="role" EntitySet="role" />
+          </AssociationSet>
+          <AssociationSet Name="FK_timesheet_emp_master" Association="Self.FK_timesheet_emp_master">
+            <End Role="emp_master" EntitySet="emp_master" />
+            <End Role="timesheet" EntitySet="timesheet" />
+          </AssociationSet>
+          <AssociationSet Name="FK_timesheet_emp_master1" Association="Self.FK_timesheet_emp_master1">
+            <End Role="emp_master" EntitySet="emp_master" />
+            <End Role="timesheet" EntitySet="timesheet" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="HRISMasterModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="locationparent">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="uidparent" Type="Int32" />
+          <Property Name="uidtype" Type="Int32" />
+          <Property Name="uidname" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="approval">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="approvalType" Type="Int32" />
+          <Property Name="approvalStatus" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="approvalIdv" Type="Int32" Nullable="false" />
+          <Property Name="approvalby" Type="Int32" />
+          <Property Name="approvalQ" Type="Int32" />
+          <Property Name="approvalMail" Type="String" MaxLength="50" FixedLength="true" Unicode="true" />
+          <Property Name="approvalDate" Type="DateTime" Precision="3" />
+          <Property Name="rowStatus" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="rowDate" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="emp_master" Relationship="Self.FK_approval_emp_master" FromRole="approval" ToRole="emp_master" />
+          <NavigationProperty Name="leaves" Relationship="Self.FK_leave_approval" FromRole="approval" ToRole="leave" />
+        </EntityType>
+        <EntityType Name="balance">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IDV" Type="Int32" Nullable="false" />
+          <Property Name="LEAVE_TYPE" Type="Int32" Nullable="false" />
+          <Property Name="BALANCE1" Type="Int32" />
+          <NavigationProperty Name="category" Relationship="Self.FK_balance_category" FromRole="balance" ToRole="category" />
+          <NavigationProperty Name="emp_master" Relationship="Self.FK_balance_emp_master" FromRole="balance" ToRole="emp_master" />
+        </EntityType>
+        <EntityType Name="category">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="uidparent" Type="Int32" />
+          <Property Name="uid" Type="String" MaxLength="20" FixedLength="true" Unicode="true" />
+          <Property Name="uidname" Type="String" MaxLength="100" FixedLength="true" Unicode="true" />
+          <NavigationProperty Name="balances" Relationship="Self.FK_balance_category" FromRole="category" ToRole="balance" />
+          <NavigationProperty Name="categoryparent" Relationship="Self.FK_category_categoryparent" FromRole="category" ToRole="categoryparent" />
+          <NavigationProperty Name="leaves" Relationship="Self.FK_leave_category" FromRole="category" ToRole="leave" />
+          <NavigationProperty Name="leave_master" Relationship="Self.FK_leave_master_categoryfile" FromRole="category" ToRole="leave_master" />
+          <NavigationProperty Name="roles" Relationship="Self.FK_role_category" FromRole="category" ToRole="role" />
+        </EntityType>
+        <EntityType Name="categoryfile">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="idv" Type="Int32" />
+          <Property Name="type" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="image" Type="Binary" MaxLength="Max" FixedLength="false" />
+          <Property Name="description" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="categoryparent">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="uid" Type="String" MaxLength="20" FixedLength="true" Unicode="true" />
+          <Property Name="uidparent" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="uidtype" Type="String" MaxLength="20" FixedLength="true" Unicode="true" />
+          <Property Name="uidname" Type="String" MaxLength="50" FixedLength="true" Unicode="true" />
+          <NavigationProperty Name="categories" Relationship="Self.FK_category_categoryparent" FromRole="categoryparent" ToRole="category" />
+        </EntityType>
+        <EntityType Name="emp_address">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IDV" Type="Int32" />
+          <Property Name="UID" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="Address" Type="String" MaxLength="200" FixedLength="true" Unicode="true" />
+          <Property Name="Kelurahan" Type="String" MaxLength="100" FixedLength="true" Unicode="true" />
+          <Property Name="Kecamatan" Type="Int64" />
+          <Property Name="Kabupaten" Type="Int64" />
+          <Property Name="Provinsi" Type="Int64" />
+          <Property Name="Country" Type="Int32" />
+          <Property Name="rowStatus" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+        </EntityType>
+        <EntityType Name="emp_birth">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IDV" Type="Int32" />
+          <Property Name="UID" Type="String" MaxLength="10" FixedLength="true" Unicode="true" Nullable="false" />
+          <Property Name="BIRTH_PLACE" Type="String" MaxLength="20" FixedLength="true" Unicode="true" />
+          <Property Name="BIRTH_DATE" Type="DateTime" Precision="0" />
+          <Property Name="NATIONALITY" Type="Int32" />
+          <Property Name="rowStatus" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="lastUpdate" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+        </EntityType>
+        <EntityType Name="emp_contact">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IDV" Type="Int32" />
+          <Property Name="UID" Type="String" MaxLength="10" FixedLength="true" Unicode="true" Nullable="false" />
+          <Property Name="contact1" Type="String" MaxLength="300" FixedLength="false" Unicode="true" />
+          <Property Name="contact2" Type="String" MaxLength="300" FixedLength="false" Unicode="true" />
+          <Property Name="contact3" Type="String" MaxLength="300" FixedLength="false" Unicode="true" />
+          <Property Name="contact4" Type="String" MaxLength="300" FixedLength="false" Unicode="true" />
+          <Property Name="contact_temp" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="rowStatus" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="lastUpdate" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+        </EntityType>
+        <EntityType Name="emp_edu">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IDV" Type="Int32" Nullable="false" />
+          <Property Name="UID" Type="String" MaxLength="10" FixedLength="true" Unicode="true" Nullable="false" />
+          <Property Name="edu" Type="Int32" />
+          <Property Name="Latest_Edu" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="Latest_Major" Type="String" MaxLength="100" FixedLength="true" Unicode="true" />
+          <Property Name="rowStatus" Type="String" MaxLength="10" FixedLength="true" Unicode="true" Nullable="false" />
+          <Property Name="lastUpdate" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityType Name="emp_image">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IDV" Type="Int32" />
+          <Property Name="IMAGEDATA" Type="Binary" MaxLength="Max" FixedLength="false" />
+          <NavigationProperty Name="emp_master" Relationship="Self.FK_EMP_MASTER" FromRole="emp_image" ToRole="emp_master" />
+        </EntityType>
+        <EntityType Name="emp_job">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IDV" Type="Int32" />
+          <Property Name="UID" Type="String" MaxLength="10" FixedLength="true" Unicode="true" Nullable="false" />
+          <Property Name="empStatus" Type="Int32" />
+          <Property Name="empPosition" Type="Int32" />
+          <Property Name="empJoblevel" Type="Int32" />
+          <Property Name="empDivison" Type="Int32" />
+          <Property Name="empDepartement" Type="Int32" />
+          <Property Name="empCity" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="rowStatus" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="lastUpdate" Type="Time" Precision="7" />
+        </EntityType>
+        <EntityType Name="emp_master">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IDParent" Type="Int32" />
+          <Property Name="IDParentLevel" Type="Int32" />
+          <Property Name="UID" Type="String" MaxLength="10" FixedLength="true" Unicode="true" Nullable="false" />
+          <Property Name="NIP" Type="String" MaxLength="13" FixedLength="false" Unicode="true" annotation:StoreGeneratedPattern="Computed" />
+          <Property Name="UID_ABSENCE" Type="Int32" />
+          <Property Name="Name" Type="String" MaxLength="200" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="NickName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Gender" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Religion" Type="String" MaxLength="20" FixedLength="true" Unicode="true" />
+          <Property Name="Marital" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="Birthplace" Type="String" MaxLength="30" FixedLength="true" Unicode="true" />
+          <Property Name="Birthdate" Type="DateTime" Precision="0" />
+          <Property Name="Nationality" Type="String" MaxLength="100" FixedLength="true" Unicode="true" />
+          <Property Name="Phone1" Type="String" MaxLength="20" FixedLength="true" Unicode="true" />
+          <Property Name="Phone2" Type="String" MaxLength="20" FixedLength="true" Unicode="true" />
+          <Property Name="Address" Type="String" MaxLength="300" FixedLength="false" Unicode="true" />
+          <Property Name="AddressKel" Type="String" MaxLength="100" FixedLength="true" Unicode="true" />
+          <Property Name="AddressKec" Type="Int64" />
+          <Property Name="AddressKab" Type="Int64" />
+          <Property Name="AddressProv" Type="Int64" />
+          <Property Name="AddressCountry" Type="Int64" />
+          <Property Name="empEdu" Type="Int32" />
+          <Property Name="empEduMajor" Type="String" MaxLength="50" FixedLength="true" Unicode="true" />
+          <Property Name="empStatus" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="empPosition" Type="Int32" />
+          <Property Name="empJobLevel" Type="Int32" />
+          <Property Name="empDivision" Type="Int32" />
+          <Property Name="empDepartement" Type="Int32" />
+          <Property Name="empOfficeLocation" Type="String" MaxLength="100" FixedLength="true" Unicode="true" />
+          <Property Name="Contact" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="rowStatus" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="lastUpdate" Type="DateTime" Nullable="false" annotation:StoreGeneratedPattern="Computed" Precision="3" />
+          <NavigationProperty Name="approvals" Relationship="Self.FK_approval_emp_master" FromRole="emp_master" ToRole="approval" />
+          <NavigationProperty Name="balances" Relationship="Self.FK_balance_emp_master" FromRole="emp_master" ToRole="balance" />
+          <NavigationProperty Name="emp_image" Relationship="Self.FK_EMP_MASTER" FromRole="emp_master" ToRole="emp_image" />
+          <NavigationProperty Name="emp_user" Relationship="Self.FK_emp_user_emp_master" FromRole="emp_master" ToRole="emp_user" />
+          <NavigationProperty Name="files" Relationship="Self.FK_FILE_emp_master" FromRole="emp_master" ToRole="file" />
+          <NavigationProperty Name="leaves" Relationship="Self.FK_IDVApproval" FromRole="emp_master" ToRole="leave" />
+          <NavigationProperty Name="leaves1" Relationship="Self.FK_IDVARequest" FromRole="emp_master" ToRole="leave" />
+          <NavigationProperty Name="organizations" Relationship="Self.FK_organization_emp_master" FromRole="emp_master" ToRole="organization" />
+          <NavigationProperty Name="organizations1" Relationship="Self.FK_organization_emp_master1" FromRole="emp_master" ToRole="organization" />
+          <NavigationProperty Name="roles" Relationship="Self.FK_role_emp_master" FromRole="emp_master" ToRole="role" />
+          <NavigationProperty Name="timesheets" Relationship="Self.FK_timesheet_emp_master" FromRole="emp_master" ToRole="timesheet" />
+          <NavigationProperty Name="timesheets1" Relationship="Self.FK_timesheet_emp_master1" FromRole="emp_master" ToRole="timesheet" />
+        </EntityType>
+        <EntityType Name="emp_master_absence">
+          <Key>
+            <PropertyRef Name="DIN" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" />
+          <Property Name="UID" Type="String" MaxLength="10" FixedLength="true" Unicode="true" Nullable="false" />
+          <Property Name="DN" Type="Int16" />
+          <Property Name="DIN" Type="Int64" Nullable="false" />
+          <Property Name="UserName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="FirstName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="LastName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Gender" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+        </EntityType>
+        <EntityType Name="emp_phone">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IDV" Type="Int32" />
+          <Property Name="UID" Type="String" MaxLength="10" FixedLength="true" Unicode="true" Nullable="false" />
+          <Property Name="Phone1" Type="String" MaxLength="20" FixedLength="true" Unicode="true" />
+          <Property Name="Phone2" Type="String" MaxLength="20" FixedLength="true" Unicode="true" />
+          <Property Name="Phone3" Type="String" MaxLength="20" FixedLength="true" Unicode="true" />
+          <Property Name="Phone4" Type="String" MaxLength="20" FixedLength="true" Unicode="true" />
+          <Property Name="phone_temp" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="rowStatus" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="lastUpdate" Type="Time" Precision="7" />
+        </EntityType>
+        <EntityType Name="emp_user">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IDV" Type="Int32" />
+          <Property Name="IDVMAIL" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="IDVMAILPASSWORD" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="IDVROLE" Type="Int32" />
+          <NavigationProperty Name="emp_master" Relationship="Self.FK_emp_user_emp_master" FromRole="emp_user" ToRole="emp_master" />
+        </EntityType>
+        <EntityType Name="file">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IDV" Type="Int32" Nullable="false" />
+          <Property Name="CATTYPE" Type="Int32" />
+          <Property Name="CONTENT" Type="Binary" MaxLength="Max" FixedLength="false" />
+          <Property Name="CONTENTTYPE" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="FILETYPE" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="FILENAME" Type="Binary" MaxLength="100" FixedLength="false" />
+          <NavigationProperty Name="emp_master" Relationship="Self.FK_FILE_emp_master" FromRole="file" ToRole="emp_master" />
+        </EntityType>
+        <EntityType Name="leave">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="leaveCategory" Type="Int32" />
+          <Property Name="idvRequest" Type="Int32" />
+          <Property Name="idvApproval" Type="Int32" />
+          <Property Name="leaveStart" Type="DateTime" Precision="3" />
+          <Property Name="leaveStop" Type="DateTime" Precision="3" />
+          <Property Name="appliedDay" Type="Int32" />
+          <Property Name="appliedTime" Type="Time" Precision="7" />
+          <Property Name="remainDay" Type="Int32" />
+          <Property Name="remainTime" Type="Time" Precision="7" />
+          <Property Name="currBalance" Type="Int32" />
+          <Property Name="approvalID" Type="Int32" />
+          <Property Name="rowStatus" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="rowDate" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="approval" Relationship="Self.FK_leave_approval" FromRole="leave" ToRole="approval" />
+          <NavigationProperty Name="category" Relationship="Self.FK_leave_category" FromRole="leave" ToRole="category" />
+          <NavigationProperty Name="emp_master" Relationship="Self.FK_IDVApproval" FromRole="leave" ToRole="emp_master" />
+          <NavigationProperty Name="emp_master1" Relationship="Self.FK_IDVARequest" FromRole="leave" ToRole="emp_master" />
+        </EntityType>
+        <EntityType Name="leave_master">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="idv" Type="Int32" />
+          <Property Name="categoryType" Type="Int32" />
+          <Property Name="appliedDay" Type="Int32" />
+          <Property Name="appliedTime" Type="Time" Precision="7" />
+          <Property Name="balance" Type="Int32" />
+          <NavigationProperty Name="category" Relationship="Self.FK_leave_master_categoryfile" FromRole="leave_master" ToRole="category" />
+        </EntityType>
+        <EntityType Name="location">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int64" Nullable="false" />
+          <Property Name="uidparent" Type="Int64" />
+          <Property Name="uidtype" Type="Int64" />
+          <Property Name="uidname" Type="String" MaxLength="300" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="medical">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="medicalID" Type="Int32" />
+          <Property Name="idvRequest" Type="Int32" Nullable="false" />
+          <Property Name="idvApproval" Type="Int32" Nullable="false" />
+          <Property Name="typeDoctor" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="typeClaim" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="feeDoctor" Type="Int32" />
+          <Property Name="feeMedicine" Type="Int32" />
+          <Property Name="feeTotal" Type="Int32" />
+          <Property Name="feeClaimable" Type="Int32" />
+          <Property Name="rowStatus" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="rowDate" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityType Name="medical_fee">
+          <Key>
+            <PropertyRef Name="MEDICAL_ID" />
+          </Key>
+          <Property Name="MEDICAL_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="LEAVE_ID" Type="Int32" />
+          <Property Name="FEE_DOCTOR" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="FEE_MEDICINE" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="FEE_TOTAL" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="FEE_CLAIM" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="ROWSTATUS" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="ROWDATE" Type="Binary" MaxLength="8" FixedLength="true" annotation:StoreGeneratedPattern="Computed" />
+        </EntityType>
+        <EntityType Name="notifnew">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="title" Type="String" MaxLength="100" FixedLength="true" Unicode="true" />
+          <Property Name="description" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="cattype" Type="Int32" />
+          <Property Name="filepath" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="filename" Type="Binary" MaxLength="Max" FixedLength="false" />
+          <Property Name="lastupdateby" Type="Int32" />
+          <Property Name="lastupdate" Type="Time" Precision="7" />
+        </EntityType>
+        <EntityType Name="organization">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IDV" Type="Int32" />
+          <Property Name="ParentIDV" Type="Int32" />
+          <NavigationProperty Name="emp_master" Relationship="Self.FK_organization_emp_master" FromRole="organization" ToRole="emp_master" />
+          <NavigationProperty Name="emp_master1" Relationship="Self.FK_organization_emp_master1" FromRole="organization" ToRole="emp_master" />
+        </EntityType>
+        <EntityType Name="ref_dep">
+          <Key>
+            <PropertyRef Name="uid" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="uid" Type="String" MaxLength="10" FixedLength="true" Unicode="true" Nullable="false" />
+          <Property Name="name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ref_div">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="uid" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="UID_CAT" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+        </EntityType>
+        <EntityType Name="ref_edu">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UID" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="ref_empStatus">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="uid" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="ref_joblevel">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="uid" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="ref_personrole">
+          <Key>
+            <PropertyRef Name="PERSONROLE_ID" />
+          </Key>
+          <Property Name="PERSONROLE_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="PERSONROLE_TYPE" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="PERSONROLE_DESC" Type="String" MaxLength="50" FixedLength="true" Unicode="true" />
+        </EntityType>
+        <EntityType Name="ref_pos">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UID" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="UID_CAT" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+        </EntityType>
+        <EntityType Name="ref_typeleave">
+          <Key>
+            <PropertyRef Name="uid" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="uid" Type="String" MaxLength="10" FixedLength="true" Unicode="true" Nullable="false" />
+          <Property Name="name" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="role">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" />
+          <Property Name="IDV" Type="Int32" />
+          <Property Name="IDROLE" Type="Int32" />
+          <Property Name="APPSTATUS" Type="Int32" />
+          <Property Name="rowUpdateDate" Type="DateTime" Precision="0" />
+          <Property Name="rowUpdateBy" Type="Int32" />
+          <Property Name="rowCreatedDate" Type="DateTime" Precision="0" />
+          <NavigationProperty Name="category" Relationship="Self.FK_role_category" FromRole="role" ToRole="category" />
+          <NavigationProperty Name="emp_master" Relationship="Self.FK_role_emp_master" FromRole="role" ToRole="emp_master" />
+        </EntityType>
+        <EntityType Name="timesheet">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IDV" Type="Int32" />
+          <Property Name="IDVAPPROVAL" Type="Int32" />
+          <Property Name="WORKIN" Type="DateTime" Precision="3" />
+          <Property Name="WORKOUT" Type="DateTime" Precision="3" />
+          <Property Name="WORKDURATION" Type="DateTime" Precision="3" />
+          <Property Name="INADJUSTED" Type="DateTime" Precision="3" />
+          <Property Name="OUTADJUSTED" Type="DateTime" Precision="3" />
+          <Property Name="DATEADJUSTED" Type="DateTime" Precision="3" />
+          <Property Name="DATEAPPROVED" Type="DateTime" Precision="3" />
+          <Property Name="REASON" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="emp_master" Relationship="Self.FK_timesheet_emp_master" FromRole="timesheet" ToRole="emp_master" />
+          <NavigationProperty Name="emp_master1" Relationship="Self.FK_timesheet_emp_master1" FromRole="timesheet" ToRole="emp_master" />
+        </EntityType>
+        <EntityType Name="Table_2">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UID" Type="String" MaxLength="13" FixedLength="false" Unicode="true" annotation:StoreGeneratedPattern="Computed" />
+          <Property Name="Name" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+        </EntityType>
+        <Association Name="FK_approval_emp_master">
+          <End Role="emp_master" Type="Self.emp_master" Multiplicity="1" />
+          <End Role="approval" Type="Self.approval" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="emp_master">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="approval">
+              <PropertyRef Name="approvalIdv" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_leave_approval">
+          <End Role="approval" Type="Self.approval" Multiplicity="0..1" />
+          <End Role="leave" Type="Self.leave" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="approval">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="leave">
+              <PropertyRef Name="approvalID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_balance_category">
+          <End Role="category" Type="Self.category" Multiplicity="1" />
+          <End Role="balance" Type="Self.balance" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="category">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="balance">
+              <PropertyRef Name="LEAVE_TYPE" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_balance_emp_master">
+          <End Role="emp_master" Type="Self.emp_master" Multiplicity="1" />
+          <End Role="balance" Type="Self.balance" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="emp_master">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="balance">
+              <PropertyRef Name="IDV" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_category_categoryparent">
+          <End Role="categoryparent" Type="Self.categoryparent" Multiplicity="0..1" />
+          <End Role="category" Type="Self.category" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="categoryparent">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="category">
+              <PropertyRef Name="uidparent" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_leave_category">
+          <End Role="category" Type="Self.category" Multiplicity="0..1" />
+          <End Role="leave" Type="Self.leave" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="category">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="leave">
+              <PropertyRef Name="leaveCategory" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_leave_master_categoryfile">
+          <End Role="category" Type="Self.category" Multiplicity="0..1" />
+          <End Role="leave_master" Type="Self.leave_master" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="category">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="leave_master">
+              <PropertyRef Name="categoryType" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_role_category">
+          <End Role="category" Type="Self.category" Multiplicity="0..1" />
+          <End Role="role" Type="Self.role" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="category">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="role">
+              <PropertyRef Name="IDROLE" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_EMP_MASTER">
+          <End Role="emp_master" Type="Self.emp_master" Multiplicity="0..1" />
+          <End Role="emp_image" Type="Self.emp_image" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="emp_master">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="emp_image">
+              <PropertyRef Name="IDV" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_emp_user_emp_master">
+          <End Role="emp_master" Type="Self.emp_master" Multiplicity="0..1" />
+          <End Role="emp_user" Type="Self.emp_user" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="emp_master">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="emp_user">
+              <PropertyRef Name="IDV" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_FILE_emp_master">
+          <End Role="emp_master" Type="Self.emp_master" Multiplicity="1" />
+          <End Role="file" Type="Self.file" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="emp_master">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="file">
+              <PropertyRef Name="IDV" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_IDVApproval">
+          <End Role="emp_master" Type="Self.emp_master" Multiplicity="0..1" />
+          <End Role="leave" Type="Self.leave" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="emp_master">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="leave">
+              <PropertyRef Name="idvApproval" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_IDVARequest">
+          <End Role="emp_master" Type="Self.emp_master" Multiplicity="0..1" />
+          <End Role="leave" Type="Self.leave" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="emp_master">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="leave">
+              <PropertyRef Name="idvRequest" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_organization_emp_master">
+          <End Role="emp_master" Type="Self.emp_master" Multiplicity="0..1" />
+          <End Role="organization" Type="Self.organization" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="emp_master">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="organization">
+              <PropertyRef Name="IDV" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_organization_emp_master1">
+          <End Role="emp_master" Type="Self.emp_master" Multiplicity="0..1" />
+          <End Role="organization" Type="Self.organization" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="emp_master">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="organization">
+              <PropertyRef Name="ParentIDV" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_role_emp_master">
+          <End Role="emp_master" Type="Self.emp_master" Multiplicity="0..1" />
+          <End Role="role" Type="Self.role" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="emp_master">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="role">
+              <PropertyRef Name="IDV" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_timesheet_emp_master">
+          <End Role="emp_master" Type="Self.emp_master" Multiplicity="0..1" />
+          <End Role="timesheet" Type="Self.timesheet" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="emp_master">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="timesheet">
+              <PropertyRef Name="IDV" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_timesheet_emp_master1">
+          <End Role="emp_master" Type="Self.emp_master" Multiplicity="0..1" />
+          <End Role="timesheet" Type="Self.timesheet" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="emp_master">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="timesheet">
+              <PropertyRef Name="IDVAPPROVAL" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="MasterHRISEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="locationparents" EntityType="Self.locationparent" />
+          <EntitySet Name="approvals" EntityType="Self.approval" />
+          <EntitySet Name="balances" EntityType="Self.balance" />
+          <EntitySet Name="categories" EntityType="Self.category" />
+          <EntitySet Name="categoryfiles" EntityType="Self.categoryfile" />
+          <EntitySet Name="categoryparents" EntityType="Self.categoryparent" />
+          <EntitySet Name="emp_address" EntityType="Self.emp_address" />
+          <EntitySet Name="emp_birth" EntityType="Self.emp_birth" />
+          <EntitySet Name="emp_contact" EntityType="Self.emp_contact" />
+          <EntitySet Name="emp_edu" EntityType="Self.emp_edu" />
+          <EntitySet Name="emp_image" EntityType="Self.emp_image" />
+          <EntitySet Name="emp_job" EntityType="Self.emp_job" />
+          <EntitySet Name="emp_master" EntityType="Self.emp_master" />
+          <EntitySet Name="emp_master_absence" EntityType="Self.emp_master_absence" />
+          <EntitySet Name="emp_phone" EntityType="Self.emp_phone" />
+          <EntitySet Name="emp_user" EntityType="Self.emp_user" />
+          <EntitySet Name="files" EntityType="Self.file" />
+          <EntitySet Name="leaves" EntityType="Self.leave" />
+          <EntitySet Name="leave_master" EntityType="Self.leave_master" />
+          <EntitySet Name="locations" EntityType="Self.location" />
+          <EntitySet Name="medicals" EntityType="Self.medical" />
+          <EntitySet Name="medical_fee" EntityType="Self.medical_fee" />
+          <EntitySet Name="notifnews" EntityType="Self.notifnew" />
+          <EntitySet Name="organizations" EntityType="Self.organization" />
+          <EntitySet Name="ref_dep" EntityType="Self.ref_dep" />
+          <EntitySet Name="ref_div" EntityType="Self.ref_div" />
+          <EntitySet Name="ref_edu" EntityType="Self.ref_edu" />
+          <EntitySet Name="ref_empStatus" EntityType="Self.ref_empStatus" />
+          <EntitySet Name="ref_joblevel" EntityType="Self.ref_joblevel" />
+          <EntitySet Name="ref_personrole" EntityType="Self.ref_personrole" />
+          <EntitySet Name="ref_pos" EntityType="Self.ref_pos" />
+          <EntitySet Name="ref_typeleave" EntityType="Self.ref_typeleave" />
+          <EntitySet Name="roles" EntityType="Self.role" />
+          <EntitySet Name="timesheets" EntityType="Self.timesheet" />
+          <EntitySet Name="Table_2" EntityType="Self.Table_2" />
+          <AssociationSet Name="FK_approval_emp_master" Association="Self.FK_approval_emp_master">
+            <End Role="emp_master" EntitySet="emp_master" />
+            <End Role="approval" EntitySet="approvals" />
+          </AssociationSet>
+          <AssociationSet Name="FK_leave_approval" Association="Self.FK_leave_approval">
+            <End Role="approval" EntitySet="approvals" />
+            <End Role="leave" EntitySet="leaves" />
+          </AssociationSet>
+          <AssociationSet Name="FK_balance_category" Association="Self.FK_balance_category">
+            <End Role="category" EntitySet="categories" />
+            <End Role="balance" EntitySet="balances" />
+          </AssociationSet>
+          <AssociationSet Name="FK_balance_emp_master" Association="Self.FK_balance_emp_master">
+            <End Role="emp_master" EntitySet="emp_master" />
+            <End Role="balance" EntitySet="balances" />
+          </AssociationSet>
+          <AssociationSet Name="FK_category_categoryparent" Association="Self.FK_category_categoryparent">
+            <End Role="categoryparent" EntitySet="categoryparents" />
+            <End Role="category" EntitySet="categories" />
+          </AssociationSet>
+          <AssociationSet Name="FK_leave_category" Association="Self.FK_leave_category">
+            <End Role="category" EntitySet="categories" />
+            <End Role="leave" EntitySet="leaves" />
+          </AssociationSet>
+          <AssociationSet Name="FK_leave_master_categoryfile" Association="Self.FK_leave_master_categoryfile">
+            <End Role="category" EntitySet="categories" />
+            <End Role="leave_master" EntitySet="leave_master" />
+          </AssociationSet>
+          <AssociationSet Name="FK_role_category" Association="Self.FK_role_category">
+            <End Role="category" EntitySet="categories" />
+            <End Role="role" EntitySet="roles" />
+          </AssociationSet>
+          <AssociationSet Name="FK_EMP_MASTER" Association="Self.FK_EMP_MASTER">
+            <End Role="emp_master" EntitySet="emp_master" />
+            <End Role="emp_image" EntitySet="emp_image" />
+          </AssociationSet>
+          <AssociationSet Name="FK_emp_user_emp_master" Association="Self.FK_emp_user_emp_master">
+            <End Role="emp_master" EntitySet="emp_master" />
+            <End Role="emp_user" EntitySet="emp_user" />
+          </AssociationSet>
+          <AssociationSet Name="FK_FILE_emp_master" Association="Self.FK_FILE_emp_master">
+            <End Role="emp_master" EntitySet="emp_master" />
+            <End Role="file" EntitySet="files" />
+          </AssociationSet>
+          <AssociationSet Name="FK_IDVApproval" Association="Self.FK_IDVApproval">
+            <End Role="emp_master" EntitySet="emp_master" />
+            <End Role="leave" EntitySet="leaves" />
+          </AssociationSet>
+          <AssociationSet Name="FK_IDVARequest" Association="Self.FK_IDVARequest">
+            <End Role="emp_master" EntitySet="emp_master" />
+            <End Role="leave" EntitySet="leaves" />
+          </AssociationSet>
+          <AssociationSet Name="FK_organization_emp_master" Association="Self.FK_organization_emp_master">
+            <End Role="emp_master" EntitySet="emp_master" />
+            <End Role="organization" EntitySet="organizations" />
+          </AssociationSet>
+          <AssociationSet Name="FK_organization_emp_master1" Association="Self.FK_organization_emp_master1">
+            <End Role="emp_master" EntitySet="emp_master" />
+            <End Role="organization" EntitySet="organizations" />
+          </AssociationSet>
+          <AssociationSet Name="FK_role_emp_master" Association="Self.FK_role_emp_master">
+            <End Role="emp_master" EntitySet="emp_master" />
+            <End Role="role" EntitySet="roles" />
+          </AssociationSet>
+          <AssociationSet Name="FK_timesheet_emp_master" Association="Self.FK_timesheet_emp_master">
+            <End Role="emp_master" EntitySet="emp_master" />
+            <End Role="timesheet" EntitySet="timesheets" />
+          </AssociationSet>
+          <AssociationSet Name="FK_timesheet_emp_master1" Association="Self.FK_timesheet_emp_master1">
+            <End Role="emp_master" EntitySet="emp_master" />
+            <End Role="timesheet" EntitySet="timesheets" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="HRISMasterModelStoreContainer" CdmEntityContainer="MasterHRISEntities">
+          <EntitySetMapping Name="locationparents">
+            <EntityTypeMapping TypeName="HRISMasterModel.locationparent">
+              <MappingFragment StoreEntitySet="locationparent">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="uidparent" ColumnName="uidparent" />
+                <ScalarProperty Name="uidtype" ColumnName="uidtype" />
+                <ScalarProperty Name="uidname" ColumnName="uidname" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="approvals">
+            <EntityTypeMapping TypeName="HRISMasterModel.approval">
+              <MappingFragment StoreEntitySet="approval">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="approvalType" ColumnName="approvalType" />
+                <ScalarProperty Name="approvalStatus" ColumnName="approvalStatus" />
+                <ScalarProperty Name="approvalIdv" ColumnName="approvalIdv" />
+                <ScalarProperty Name="approvalby" ColumnName="approvalby" />
+                <ScalarProperty Name="approvalQ" ColumnName="approvalQ" />
+                <ScalarProperty Name="approvalMail" ColumnName="approvalMail" />
+                <ScalarProperty Name="approvalDate" ColumnName="approvalDate" />
+                <ScalarProperty Name="rowStatus" ColumnName="rowStatus" />
+                <ScalarProperty Name="rowDate" ColumnName="rowDate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="balances">
+            <EntityTypeMapping TypeName="HRISMasterModel.balance">
+              <MappingFragment StoreEntitySet="balance">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="IDV" ColumnName="IDV" />
+                <ScalarProperty Name="LEAVE_TYPE" ColumnName="LEAVE_TYPE" />
+                <ScalarProperty Name="BALANCE1" ColumnName="BALANCE" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="categories">
+            <EntityTypeMapping TypeName="HRISMasterModel.category">
+              <MappingFragment StoreEntitySet="category">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="uidparent" ColumnName="uidparent" />
+                <ScalarProperty Name="uid" ColumnName="uid" />
+                <ScalarProperty Name="uidname" ColumnName="uidname" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="categoryfiles">
+            <EntityTypeMapping TypeName="HRISMasterModel.categoryfile">
+              <MappingFragment StoreEntitySet="categoryfile">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="idv" ColumnName="idv" />
+                <ScalarProperty Name="type" ColumnName="type" />
+                <ScalarProperty Name="image" ColumnName="image" />
+                <ScalarProperty Name="description" ColumnName="description" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="categoryparents">
+            <EntityTypeMapping TypeName="HRISMasterModel.categoryparent">
+              <MappingFragment StoreEntitySet="categoryparent">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="uid" ColumnName="uid" />
+                <ScalarProperty Name="uidparent" ColumnName="uidparent" />
+                <ScalarProperty Name="uidtype" ColumnName="uidtype" />
+                <ScalarProperty Name="uidname" ColumnName="uidname" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="emp_address">
+            <EntityTypeMapping TypeName="HRISMasterModel.emp_address">
+              <MappingFragment StoreEntitySet="emp_address">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="IDV" ColumnName="IDV" />
+                <ScalarProperty Name="UID" ColumnName="UID" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
+                <ScalarProperty Name="Kelurahan" ColumnName="Kelurahan" />
+                <ScalarProperty Name="Kecamatan" ColumnName="Kecamatan" />
+                <ScalarProperty Name="Kabupaten" ColumnName="Kabupaten" />
+                <ScalarProperty Name="Provinsi" ColumnName="Provinsi" />
+                <ScalarProperty Name="Country" ColumnName="Country" />
+                <ScalarProperty Name="rowStatus" ColumnName="rowStatus" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="emp_birth">
+            <EntityTypeMapping TypeName="HRISMasterModel.emp_birth">
+              <MappingFragment StoreEntitySet="emp_birth">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="IDV" ColumnName="IDV" />
+                <ScalarProperty Name="UID" ColumnName="UID" />
+                <ScalarProperty Name="BIRTH_PLACE" ColumnName="BIRTH_PLACE" />
+                <ScalarProperty Name="BIRTH_DATE" ColumnName="BIRTH_DATE" />
+                <ScalarProperty Name="NATIONALITY" ColumnName="NATIONALITY" />
+                <ScalarProperty Name="rowStatus" ColumnName="rowStatus" />
+                <ScalarProperty Name="lastUpdate" ColumnName="lastUpdate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="emp_contact">
+            <EntityTypeMapping TypeName="HRISMasterModel.emp_contact">
+              <MappingFragment StoreEntitySet="emp_contact">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="IDV" ColumnName="IDV" />
+                <ScalarProperty Name="UID" ColumnName="UID" />
+                <ScalarProperty Name="contact1" ColumnName="contact1" />
+                <ScalarProperty Name="contact2" ColumnName="contact2" />
+                <ScalarProperty Name="contact3" ColumnName="contact3" />
+                <ScalarProperty Name="contact4" ColumnName="contact4" />
+                <ScalarProperty Name="contact_temp" ColumnName="contact_temp" />
+                <ScalarProperty Name="rowStatus" ColumnName="rowStatus" />
+                <ScalarProperty Name="lastUpdate" ColumnName="lastUpdate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="emp_edu">
+            <EntityTypeMapping TypeName="HRISMasterModel.emp_edu">
+              <MappingFragment StoreEntitySet="emp_edu">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="IDV" ColumnName="IDV" />
+                <ScalarProperty Name="UID" ColumnName="UID" />
+                <ScalarProperty Name="edu" ColumnName="edu" />
+                <ScalarProperty Name="Latest_Edu" ColumnName="Latest_Edu" />
+                <ScalarProperty Name="Latest_Major" ColumnName="Latest_Major" />
+                <ScalarProperty Name="rowStatus" ColumnName="rowStatus" />
+                <ScalarProperty Name="lastUpdate" ColumnName="lastUpdate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="emp_image">
+            <EntityTypeMapping TypeName="HRISMasterModel.emp_image">
+              <MappingFragment StoreEntitySet="emp_image">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="IDV" ColumnName="IDV" />
+                <ScalarProperty Name="IMAGEDATA" ColumnName="IMAGEDATA" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="emp_job">
+            <EntityTypeMapping TypeName="HRISMasterModel.emp_job">
+              <MappingFragment StoreEntitySet="emp_job">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="IDV" ColumnName="IDV" />
+                <ScalarProperty Name="UID" ColumnName="UID" />
+                <ScalarProperty Name="empStatus" ColumnName="empStatus" />
+                <ScalarProperty Name="empPosition" ColumnName="empPosition" />
+                <ScalarProperty Name="empJoblevel" ColumnName="empJoblevel" />
+                <ScalarProperty Name="empDivison" ColumnName="empDivison" />
+                <ScalarProperty Name="empDepartement" ColumnName="empDepartement" />
+                <ScalarProperty Name="empCity" ColumnName="empCity" />
+                <ScalarProperty Name="rowStatus" ColumnName="rowStatus" />
+                <ScalarProperty Name="lastUpdate" ColumnName="lastUpdate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="emp_master">
+            <EntityTypeMapping TypeName="HRISMasterModel.emp_master">
+              <MappingFragment StoreEntitySet="emp_master">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="IDParent" ColumnName="IDParent" />
+                <ScalarProperty Name="IDParentLevel" ColumnName="IDParentLevel" />
+                <ScalarProperty Name="UID" ColumnName="UID" />
+                <ScalarProperty Name="NIP" ColumnName="NIP" />
+                <ScalarProperty Name="UID_ABSENCE" ColumnName="UID_ABSENCE" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="NickName" ColumnName="NickName" />
+                <ScalarProperty Name="Gender" ColumnName="Gender" />
+                <ScalarProperty Name="Religion" ColumnName="Religion" />
+                <ScalarProperty Name="Marital" ColumnName="Marital" />
+                <ScalarProperty Name="Birthplace" ColumnName="Birthplace" />
+                <ScalarProperty Name="Birthdate" ColumnName="Birthdate" />
+                <ScalarProperty Name="Nationality" ColumnName="Nationality" />
+                <ScalarProperty Name="Phone1" ColumnName="Phone1" />
+                <ScalarProperty Name="Phone2" ColumnName="Phone2" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
+                <ScalarProperty Name="AddressKel" ColumnName="AddressKel" />
+                <ScalarProperty Name="AddressKec" ColumnName="AddressKec" />
+                <ScalarProperty Name="AddressKab" ColumnName="AddressKab" />
+                <ScalarProperty Name="AddressProv" ColumnName="AddressProv" />
+                <ScalarProperty Name="AddressCountry" ColumnName="AddressCountry" />
+                <ScalarProperty Name="empEdu" ColumnName="empEdu" />
+                <ScalarProperty Name="empEduMajor" ColumnName="empEduMajor" />
+                <ScalarProperty Name="empStatus" ColumnName="empStatus" />
+                <ScalarProperty Name="empPosition" ColumnName="empPosition" />
+                <ScalarProperty Name="empJobLevel" ColumnName="empJobLevel" />
+                <ScalarProperty Name="empDivision" ColumnName="empDivision" />
+                <ScalarProperty Name="empDepartement" ColumnName="empDepartement" />
+                <ScalarProperty Name="empOfficeLocation" ColumnName="empOfficeLocation" />
+                <ScalarProperty Name="Contact" ColumnName="Contact" />
+                <ScalarProperty Name="rowStatus" ColumnName="rowStatus" />
+                <ScalarProperty Name="lastUpdate" ColumnName="lastUpdate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="emp_master_absence">
+            <EntityTypeMapping TypeName="HRISMasterModel.emp_master_absence">
+              <MappingFragment StoreEntitySet="emp_master_absence">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="UID" ColumnName="UID" />
+                <ScalarProperty Name="DN" ColumnName="DN" />
+                <ScalarProperty Name="DIN" ColumnName="DIN" />
+                <ScalarProperty Name="UserName" ColumnName="UserName" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="Gender" ColumnName="Gender" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="emp_phone">
+            <EntityTypeMapping TypeName="HRISMasterModel.emp_phone">
+              <MappingFragment StoreEntitySet="emp_phone">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="IDV" ColumnName="IDV" />
+                <ScalarProperty Name="UID" ColumnName="UID" />
+                <ScalarProperty Name="Phone1" ColumnName="Phone1" />
+                <ScalarProperty Name="Phone2" ColumnName="Phone2" />
+                <ScalarProperty Name="Phone3" ColumnName="Phone3" />
+                <ScalarProperty Name="Phone4" ColumnName="Phone4" />
+                <ScalarProperty Name="phone_temp" ColumnName="phone_temp" />
+                <ScalarProperty Name="rowStatus" ColumnName="rowStatus" />
+                <ScalarProperty Name="lastUpdate" ColumnName="lastUpdate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="emp_user">
+            <EntityTypeMapping TypeName="HRISMasterModel.emp_user">
+              <MappingFragment StoreEntitySet="emp_user">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="IDV" ColumnName="IDV" />
+                <ScalarProperty Name="IDVMAIL" ColumnName="IDVMAIL" />
+                <ScalarProperty Name="IDVMAILPASSWORD" ColumnName="IDVMAILPASSWORD" />
+                <ScalarProperty Name="IDVROLE" ColumnName="IDVROLE" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="files">
+            <EntityTypeMapping TypeName="HRISMasterModel.file">
+              <MappingFragment StoreEntitySet="file">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="IDV" ColumnName="IDV" />
+                <ScalarProperty Name="CATTYPE" ColumnName="CATTYPE" />
+                <ScalarProperty Name="CONTENT" ColumnName="CONTENT" />
+                <ScalarProperty Name="CONTENTTYPE" ColumnName="CONTENTTYPE" />
+                <ScalarProperty Name="FILETYPE" ColumnName="FILETYPE" />
+                <ScalarProperty Name="FILENAME" ColumnName="FILENAME" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="leaves">
+            <EntityTypeMapping TypeName="HRISMasterModel.leave">
+              <MappingFragment StoreEntitySet="leave">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="leaveCategory" ColumnName="leaveCategory" />
+                <ScalarProperty Name="idvRequest" ColumnName="idvRequest" />
+                <ScalarProperty Name="idvApproval" ColumnName="idvApproval" />
+                <ScalarProperty Name="leaveStart" ColumnName="leaveStart" />
+                <ScalarProperty Name="leaveStop" ColumnName="leaveStop" />
+                <ScalarProperty Name="appliedDay" ColumnName="appliedDay" />
+                <ScalarProperty Name="appliedTime" ColumnName="appliedTime" />
+                <ScalarProperty Name="remainDay" ColumnName="remainDay" />
+                <ScalarProperty Name="remainTime" ColumnName="remainTime" />
+                <ScalarProperty Name="currBalance" ColumnName="currBalance" />
+                <ScalarProperty Name="approvalID" ColumnName="approvalID" />
+                <ScalarProperty Name="rowStatus" ColumnName="rowStatus" />
+                <ScalarProperty Name="rowDate" ColumnName="rowDate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="leave_master">
+            <EntityTypeMapping TypeName="HRISMasterModel.leave_master">
+              <MappingFragment StoreEntitySet="leave_master">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="idv" ColumnName="idv" />
+                <ScalarProperty Name="categoryType" ColumnName="categoryType" />
+                <ScalarProperty Name="appliedDay" ColumnName="appliedDay" />
+                <ScalarProperty Name="appliedTime" ColumnName="appliedTime" />
+                <ScalarProperty Name="balance" ColumnName="balance" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="locations">
+            <EntityTypeMapping TypeName="HRISMasterModel.location">
+              <MappingFragment StoreEntitySet="location">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="uidparent" ColumnName="uidparent" />
+                <ScalarProperty Name="uidtype" ColumnName="uidtype" />
+                <ScalarProperty Name="uidname" ColumnName="uidname" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="medicals">
+            <EntityTypeMapping TypeName="HRISMasterModel.medical">
+              <MappingFragment StoreEntitySet="medical">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="medicalID" ColumnName="medicalID" />
+                <ScalarProperty Name="idvRequest" ColumnName="idvRequest" />
+                <ScalarProperty Name="idvApproval" ColumnName="idvApproval" />
+                <ScalarProperty Name="typeDoctor" ColumnName="typeDoctor" />
+                <ScalarProperty Name="typeClaim" ColumnName="typeClaim" />
+                <ScalarProperty Name="feeDoctor" ColumnName="feeDoctor" />
+                <ScalarProperty Name="feeMedicine" ColumnName="feeMedicine" />
+                <ScalarProperty Name="feeTotal" ColumnName="feeTotal" />
+                <ScalarProperty Name="feeClaimable" ColumnName="feeClaimable" />
+                <ScalarProperty Name="rowStatus" ColumnName="rowStatus" />
+                <ScalarProperty Name="rowDate" ColumnName="rowDate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="medical_fee">
+            <EntityTypeMapping TypeName="HRISMasterModel.medical_fee">
+              <MappingFragment StoreEntitySet="medical_fee">
+                <ScalarProperty Name="MEDICAL_ID" ColumnName="MEDICAL_ID" />
+                <ScalarProperty Name="LEAVE_ID" ColumnName="LEAVE_ID" />
+                <ScalarProperty Name="FEE_DOCTOR" ColumnName="FEE_DOCTOR" />
+                <ScalarProperty Name="FEE_MEDICINE" ColumnName="FEE_MEDICINE" />
+                <ScalarProperty Name="FEE_TOTAL" ColumnName="FEE_TOTAL" />
+                <ScalarProperty Name="FEE_CLAIM" ColumnName="FEE_CLAIM" />
+                <ScalarProperty Name="ROWSTATUS" ColumnName="ROWSTATUS" />
+                <ScalarProperty Name="ROWDATE" ColumnName="ROWDATE" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="notifnews">
+            <EntityTypeMapping TypeName="HRISMasterModel.notifnew">
+              <MappingFragment StoreEntitySet="notifnews">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="title" ColumnName="title" />
+                <ScalarProperty Name="description" ColumnName="description" />
+                <ScalarProperty Name="cattype" ColumnName="cattype" />
+                <ScalarProperty Name="filepath" ColumnName="filepath" />
+                <ScalarProperty Name="filename" ColumnName="filename" />
+                <ScalarProperty Name="lastupdateby" ColumnName="lastupdateby" />
+                <ScalarProperty Name="lastupdate" ColumnName="lastupdate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="organizations">
+            <EntityTypeMapping TypeName="HRISMasterModel.organization">
+              <MappingFragment StoreEntitySet="organization">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="IDV" ColumnName="IDV" />
+                <ScalarProperty Name="ParentIDV" ColumnName="ParentIDV" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ref_dep">
+            <EntityTypeMapping TypeName="HRISMasterModel.ref_dep">
+              <MappingFragment StoreEntitySet="ref_dep">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="uid" ColumnName="uid" />
+                <ScalarProperty Name="name" ColumnName="name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ref_div">
+            <EntityTypeMapping TypeName="HRISMasterModel.ref_div">
+              <MappingFragment StoreEntitySet="ref_div">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="uid" ColumnName="uid" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="UID_CAT" ColumnName="UID-CAT" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ref_edu">
+            <EntityTypeMapping TypeName="HRISMasterModel.ref_edu">
+              <MappingFragment StoreEntitySet="ref_edu">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="UID" ColumnName="UID" />
+                <ScalarProperty Name="name" ColumnName="name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ref_empStatus">
+            <EntityTypeMapping TypeName="HRISMasterModel.ref_empStatus">
+              <MappingFragment StoreEntitySet="ref_empStatus">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="uid" ColumnName="uid" />
+                <ScalarProperty Name="name" ColumnName="name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ref_joblevel">
+            <EntityTypeMapping TypeName="HRISMasterModel.ref_joblevel">
+              <MappingFragment StoreEntitySet="ref_joblevel">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="uid" ColumnName="uid" />
+                <ScalarProperty Name="name" ColumnName="name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ref_personrole">
+            <EntityTypeMapping TypeName="HRISMasterModel.ref_personrole">
+              <MappingFragment StoreEntitySet="ref_personrole">
+                <ScalarProperty Name="PERSONROLE_ID" ColumnName="PERSONROLE_ID" />
+                <ScalarProperty Name="PERSONROLE_TYPE" ColumnName="PERSONROLE_TYPE" />
+                <ScalarProperty Name="PERSONROLE_DESC" ColumnName="PERSONROLE_DESC" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ref_pos">
+            <EntityTypeMapping TypeName="HRISMasterModel.ref_pos">
+              <MappingFragment StoreEntitySet="ref_pos">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="UID" ColumnName="UID" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="UID_CAT" ColumnName="UID-CAT" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ref_typeleave">
+            <EntityTypeMapping TypeName="HRISMasterModel.ref_typeleave">
+              <MappingFragment StoreEntitySet="ref_typeleave">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="uid" ColumnName="uid" />
+                <ScalarProperty Name="name" ColumnName="name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="roles">
+            <EntityTypeMapping TypeName="HRISMasterModel.role">
+              <MappingFragment StoreEntitySet="role">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="IDV" ColumnName="IDV" />
+                <ScalarProperty Name="IDROLE" ColumnName="IDROLE" />
+                <ScalarProperty Name="APPSTATUS" ColumnName="APPSTATUS" />
+                <ScalarProperty Name="rowUpdateDate" ColumnName="rowUpdateDate" />
+                <ScalarProperty Name="rowUpdateBy" ColumnName="rowUpdateBy" />
+                <ScalarProperty Name="rowCreatedDate" ColumnName="rowCreatedDate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="timesheets">
+            <EntityTypeMapping TypeName="HRISMasterModel.timesheet">
+              <MappingFragment StoreEntitySet="timesheet">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="IDV" ColumnName="IDV" />
+                <ScalarProperty Name="IDVAPPROVAL" ColumnName="IDVAPPROVAL" />
+                <ScalarProperty Name="WORKIN" ColumnName="WORKIN" />
+                <ScalarProperty Name="WORKOUT" ColumnName="WORKOUT" />
+                <ScalarProperty Name="WORKDURATION" ColumnName="WORKDURATION" />
+                <ScalarProperty Name="INADJUSTED" ColumnName="INADJUSTED" />
+                <ScalarProperty Name="OUTADJUSTED" ColumnName="OUTADJUSTED" />
+                <ScalarProperty Name="DATEADJUSTED" ColumnName="DATEADJUSTED" />
+                <ScalarProperty Name="DATEAPPROVED" ColumnName="DATEAPPROVED" />
+                <ScalarProperty Name="REASON" ColumnName="REASON" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Table_2">
+            <EntityTypeMapping TypeName="HRISMasterModel.Table_2">
+              <MappingFragment StoreEntitySet="Table_2">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="UID" ColumnName="UID" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

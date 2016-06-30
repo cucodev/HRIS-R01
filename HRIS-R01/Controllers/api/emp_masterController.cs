@@ -9,21 +9,25 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web.Http;
 using System.Web.Http.Description;
-using HRIS_R01.Models.Employee;
+using HRIS_R01.Models;
 
 namespace HRIS_R01.Controllers.api
 {
+    [Authorize]
     public class emp_masterController : ApiController
     {
-        private EmployeeEntities db = new EmployeeEntities();
+        //private EmployeeEntities db = new EmployeeEntities();
+        private MasterHRISEntities db = new MasterHRISEntities();
 
         // GET: api/emp_master
+        [AllowAnonymous]
         public IQueryable<emp_master> Getemp_master()
         {
             return db.emp_master;
         }
 
         // GET: api/emp_master/5
+        [AllowAnonymous]
         [ResponseType(typeof(emp_master))]
         public async Task<IHttpActionResult> Getemp_master(int id)
         {

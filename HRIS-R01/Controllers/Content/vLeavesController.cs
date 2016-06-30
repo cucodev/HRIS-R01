@@ -13,8 +13,8 @@ namespace HRIS_R01.Controllers.Content
         // GET: vLeaves
         public ActionResult Index()
         {
-            ViewBag.cUser = GetLogOnSessionModel().UserName;
-            ViewBag.cIDV = GetLogOnSessionModel().IDV;
+            ParentListSession();
+            UserSession();
             return View();
         }
 

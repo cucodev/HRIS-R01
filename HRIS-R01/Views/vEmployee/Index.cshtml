@@ -1,69 +1,112 @@
-﻿
-@{
+﻿@{
     ViewBag.Title = "Employee Profile";
     Layout = "~/Views/Shared/_LayoutNavigation.cshtml";
 }
 
+<script type="text/javascript">
+    //$(document).ready(function () {
+    $(document).ready(function () {
 
-<!DOCTYPE html>
+       
+        var value = $.jStorage.get("idv");
+        var i = 0;
+        var MasterList = [];
 
-<html>
-<head>
-    <meta name="viewport" content="width=device-width" />
-    <title></title>
+        var MasterCategory = JSON.parse('@Html.Raw(Json.Encode(this.ViewData["ParentList"]))');
 
-    @section scripts
-    {
-        <script type="text/javascript" src="@Url.Content("~/Scripts/jsList.js")"></script>
-        <script type="text/javascript" src="@Url.Content("~/Scripts/jsChart.js")"></script>
-    }
-
-
-
-
-    <script type="text/javascript">
-        $(document).ready(function () {
-            var vStatus = true;
-            $('#dataForm').jqxTabs({ theme: 'metro', width: '100%', height: 500 });
-            $("#SubmitButton").jqxButton({ disabled: vStatus, theme: 'orange', width: 120, height: 40 });
-            $('#address').jqxTextArea({ disabled: vStatus, placeHolder: "Address", width: '100%', height: 80 });
-            $("#nationality").jqxDropDownList({ disabled: vStatus, source: countries, width: '100%', height: '25px' });
-            $("#religion").jqxDropDownList({ disabled: vStatus, source: religion, width: '100%', height: '25px', autoDropDownHeight: true });
-            $("#birthDate").jqxDateTimeInput({ disabled: vStatus, width: '100%', height: '35px' });
-            $("#maleGender").jqxRadioButton({ disabled: vStatus, width: '100%' });
-            $("#femaleGender").jqxRadioButton({ disabled: vStatus, width: '100%' });
-            $("#province").jqxDropDownList({ disabled: vStatus, width: '100%', height: '25px', displayMember: "uidname", valueMember: "id" });
-            $("#district").jqxDropDownList({ width: '100%', height: '25px', disabled: true, displayMember: "uidname", valueMember: "id" });
-            $("#districts").jqxDropDownList({ width: '100%', height: '25px', disabled: true, displayMember: "uidname", valueMember: "id" });
-            $("#subDistricts").jqxDropDownList({ width: '100%', height: '25px', disabled: true, displayMember: "uidname", valueMember: "id" });
-            $("#education").jqxDropDownList({ disabled: vStatus, width: '100%', height: '25px', disabled: false, displayMember: "uidname", valueMember: "id" });
-            $("#department").jqxDropDownList({ disabled: vStatus, width: '100%', height: '25px' });
-            $("#division").jqxDropDownList({ disabled: vStatus, width: '100%', height: '25px' });
-            $("#position").jqxDropDownList({ disabled: vStatus, width: '100%', height: '25px' });
-            $("#status").jqxDropDownList({ disabled: vStatus, width: '100%', height: '25px', autoDropDownHeight: true });
-            //$("#SubmitButton").jqxButton({ disabled: vStatus, theme: 'orange', width: 90, height: 30 });
-            //$("#Cancel").jqxButton({ disabled: vStatus, theme: 'orange', width: 90, height: 30 });
-
+        $.each(MasterCategory, function (index, dt) {
+            var name = dt.cID;
+            console.log(i + ' : ', dt.cUID);
+            var name = dt.cUID;
+            //var tname = name.trim();
+            MasterList[name] = dt.cID;
+            $.jStorage.set(name, dt.CID);
+            i++;
         });
 
-    </script>
+
+        if (!value) {
+            // if not - load the data from the server
+            value = '@ViewBag.cIDV';
+            // and save it
+            $.jStorage.set("idv", value);
+
+        };
+
+        
+
+        var index = $.jStorage.index();
+        console.log(index);
+        console.log(MasterList);
+
+       
 
 
-</head>
-<body>
-    <h1 style="text-align:left; letter-spacing:-1px; line-height:1; font-family: Arial, Helvetica, sans-serif; font-size: 25px; font-weight: bold; padding-bottom:0; padding-top:15px;">EMPLOYEE PROFILE</h1>
-    <h2 style="padding-left:30px; font-size:14px; font-family:Calibri">Employee Management</h2>
-    <hr />
+        //console.log('IDV : ', $.jStorage.get('idv'));
+    })
+</script>
 
-    <input type="submit" class="btn btn-default" value="Update" id='SubmitButton' />
-    <hr />
 
-    <div id="dataForm">
+
+
+
+
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        var th = 'ui-redmond';
+       
+        //console.log('ParentList: ', );
+        $('#dataForm').jqxTabs({ theme: th, width: '100%', height: 550 });
+    });
+</script>
+
+@section scripts
+    {
+    <link href="@Url.Content("~/Content/csProfile.css")" rel="stylesheet" />
+    <script type="text/javascript" src="@Url.Content("~/Scripts/List/jsVar.js")"></script>
+    <script type="text/javascript" src="@Url.Content("~/Scripts/List/jsMasterList.js")"></script>
+    <script type="text/javascript" src="@Url.Content("~/Scripts/jsProfile.js")"></script>
+}
+
+
+
+
+
+
+<div class="row">
+    <div class="col-md-1">
+        <div class="imgProfileContainer">
+            <img class="imgProfile" src="~/Content/photo/person.png" />
+        </div>
+    </div>
+    <div class="col-md-5">
+        <h1 style="text-align:left; letter-spacing:-1px; line-height:1; font-family: Arial, Helvetica, sans-serif; font-size: 25px; font-weight: bold; padding-bottom:0; padding-top:15px;">EMPLOYEE PROFILE</h1>
+        <h2 style="padding-left:30px; font-size:14px; font-family:Calibri">Employee Management</h2>
+    </div>
+    <div class="col-md-1" style="vertical-align:bottom;">
+        <br />
+        <input type="submit" class="btn btn-default" value="Update" id='SubmitButton' />
+    </div>
+
+</div>
+
+<div class="row">
+    <div class="col-md12">
+        <hr />
+    </div>
+</div>
+
+
+
+<div class="row">
+    <div class="col-md-9" id="dataForm">
         <ul>
-            <li>Profile</li>
+            <li style="margin-left:30px">Profile</li>
             <li>Address</li>
             <li>Education</li>
             <li>Work</li>
+            <li>Image</li>
         </ul>
         <div style="overflow: hidden; margin-right:20px;margin-top:20px">
             <div class="container-fluid">
@@ -73,7 +116,7 @@
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label for="nip">NIP</label>
-                                <input type="text" class="form-control" id="nip" placeholder="NIP" required>
+                                <input type="text" class="form-control" id="NIP" placeholder="NIP" required>
                             </div>
                         </div>
                     </div>
@@ -83,13 +126,13 @@
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label for="fullname">Fullname</label>
-                                <input type="text" class="form-control" id="fullname" placeholder="Fullname">
+                                <input type="text" class="form-control" id="Name" placeholder="Fullname">
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label for="nickname">Nickname</label>
-                                <input type="text" class="form-control" id="nickname" placeholder="Nickname">
+                                <input type="text" class="form-control" id="NickName" placeholder="Nickname">
                             </div>
                         </div>
                     </div>
@@ -99,13 +142,13 @@
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label for="birthPlace">Birth Place</label>
-                                <input type="text" class="form-control" id="birthPlace" placeholder="Birth Place">
+                                <input type="text" class="form-control" id="Birthplace" placeholder="Birth Place">
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label for="birthDate">Birth Date</label>
-                                <div id='birthDate'></div>
+                                <div id='Birthdate'></div>
                             </div>
                         </div>
                     </div>
@@ -114,56 +157,43 @@
                     <div class="col-md-12">
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label for="gender">Gender</label>
-                                <div class="row">
-                                    <div class="col-md-6">
-                                        <div class="form-group">
-                                            <div id='maleGender'>
-                                                Male
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <div class="form-group">
-                                            <div id='femaleGender'>
-                                                Female
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
+                                <label for="Gender">Gender</label>
+                                <div id="Gender"></div>
                             </div>
                         </div>
+                        <div class="col-md-6">
+                            <label for="Nationality">Nationality</label>
+                            <div id='Nationality'></div>
+                        </div>
+                    </div>
+                </div>
 
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="Religion">Religion</label>
+                                <div id="Religion"></div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <label for="Marital">Marital Status</label>
+                            <div id='Marital'></div>
+                        </div>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-md-12">
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label for="nationality">Nationality</label>
-                                <div id="nationality"></div>
+                                <label for="Phone1">Phone #1</label>
+                                <input type="text" class="form-control" id="Phone1" placeholder="Phone #1">
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label for="religion">Religion</label>
-                                <div id="religion"></div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-12">
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label for="phone1">Phone #1</label>
-                                <input type="text" class="form-control" id="phone1" placeholder="Phone #1">
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label for="phone2">Phone #2</label>
-                                <input type="text" class="form-control" id="phone2" placeholder="Phone #2">
+                                <label for="Phone2">Phone #2</label>
+                                <input type="text" class="form-control" id="Phone2" placeholder="Phone #2">
                             </div>
                         </div>
                     </div>
@@ -174,8 +204,8 @@
                     <div class="col-md-12">
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label for="status">Employee Status</label>
-                                <div id='status'></div>
+                                <label for="empStatus">Employee Status</label>
+                                <div id='empStatus'></div>
                             </div>
                         </div>
 
@@ -190,8 +220,8 @@
                     <div class="col-md-12">
                         <div class="col-md-12">
                             <div class="form-group">
-                                <label for="address">Address</label>
-                                <textarea id="address"></textarea>
+                                <label for="Address">Address</label>
+                                <textarea id="Address"></textarea>
                             </div>
                         </div>
                     </div>
@@ -200,14 +230,14 @@
                     <div class="col-md-12">
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label for="province">Province</label>
-                                <div id='province'></div>
+                                <label for="AddressProv">Province</label>
+                                <div id='AddressProv'></div>
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label for="district">District</label>
-                                <div id="district"></div>
+                                <label for="AddressKab">Kabupaten</label>
+                                <div id="AddressKab"></div>
                             </div>
                         </div>
                     </div>
@@ -216,14 +246,14 @@
                     <div class="col-md-12">
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label for="districts">Districts</label>
-                                <div id="districts"></div>
+                                <label for="AddressKec">Kecamatan</label>
+                                <div id="AddressKec"></div>
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label for="subDistricts">Sub-Districts</label>
-                                <div id="subDistricts"></div>
+                                <label for="AddressKel"></label>
+                                <input type="text" placeholder="Kelurahan" id="AddressKel"></input>
                             </div>
                         </div>
                     </div>
@@ -238,14 +268,14 @@
                     <div class="col-md-12">
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label for="education">Education Level</label>
-                                <div id='education'></div>
+                                <label for="empEdu">Education Level</label>
+                                <div id='empEdu'></div>
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label for="eduMajor">Major</label>
-                                <input type="text" class="form-control" id="eduMajor" placeholder="Major">
+                                <label for="empEduMajor">Major</label>
+                                <input type="text" class="form-control" id="empEduMajor" placeholder="Major">
                             </div>
                         </div>
                     </div>
@@ -259,14 +289,14 @@
                     <div class="col-md-12">
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label for="department">Department</label>
-                                <div id="department"></div>
+                                <label for="empDepartement">Department</label>
+                                <div id="empDepartement"></div>
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label for="division">Division</label>
-                                <div id="division"></div>
+                                <label for="empDivision">Division</label>
+                                <div id="empDivision"></div>
                             </div>
                         </div>
                     </div>
@@ -275,14 +305,25 @@
                     <div class="col-md-12">
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label for="position">Position</label>
-                                <div id="position"></div>
+                                <label for="empPosition">Position</label>
+                                <div id="empPosition"></div>
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label for="officeLocation">Office Location</label>
-                                <input type="text" class="form-control" id="officeLocation" placeholder="Office Location">
+                                <label for="empJobLevel">Job Level</label>
+                                <div id="empJobLevel"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="empOfficeLocation">Office Location</label>
+                                <input type="text" class="form-control" id="empOfficeLocation" placeholder="Office Location">
                             </div>
                         </div>
                     </div>
@@ -290,24 +331,23 @@
 
             </div>
         </div>
-    </div>
-    <div class="container-fluid">
+        <div></div>
         <!--SUBMIT-->
-        <div class="row">
-            <div class="col-md-12">
-                <div class="col-md-1">
+    </div>
+</div>
 
-                </div>
-
-            </div>
-        </div>
+<div class="row">
+    <div class="col-md-9">
+        <label style="font-size:12px; font-family:Calibri; color:indianred; margin-right:30px">
+            Credential Info: @ViewBag.cUser : @ViewBag.cIDV : Parent= @ViewBag.cIDVParent , ParentLevel= @ViewBag.cIDVParentLevel , Name= @ViewBag.cName
+        </label>
 
     </div>
+</div>
 
-    <label style="font-size:12px; font-family:Calibri; color:indianred; margin-right:30px">
-        Credential Info: @ViewBag.cUser : @ViewBag.cIDV : Parent= @ViewBag.cIDVParent , ParentLevel= @ViewBag.cIDVParentLevel , Name= @ViewBag.cName
-    </label>
+<div id="form" style="margin-left: 30px; margin-top: 10px;"></div>
 
-    <div id="form" style="margin-left: 30px; margin-top: 10px;"></div>
-</body>
-</html>
+
+
+@section jsData {
+}

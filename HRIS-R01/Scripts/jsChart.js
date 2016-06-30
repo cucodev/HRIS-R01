@@ -29,8 +29,8 @@ var listEmployee = new $.jqx.dataAdapter(EmployeeSource, {
         //return data;
         dataGender.push({ Tipe: 'F', sumTipe: cF });
         dataGender.push({ Tipe: 'M', sumTipe: cM });
-        console.log('Female = ' + cF);
-        console.log('Male = ' + cM);
+        //console.log('Female = ' + cF);
+        //console.log('Male = ' + cM);
     },
     beforeSend: function () {
         

@@ -18,13 +18,15 @@ namespace HRIS_R01.Controllers.Content
         public ActionResult Index()
         {
             UserSession();
-            return View(Session["UserCred"]);
+            ParentListSession();
+            return View();
         }
 
         public ActionResult HREmployeeManagement()
         {
             //Session User Added
             UserSession();
+            ParentListSession();
             return View();
         }
 

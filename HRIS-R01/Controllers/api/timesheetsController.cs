@@ -15,8 +15,8 @@ namespace HRIS_R01.Controllers.api
 {
     public class timesheetsController : ApiController
     {
-        private TimesheetModel db = new TimesheetModel();
-
+        //private TimesheetModel db = new TimesheetModel();
+        private MasterHRISEntities db = new MasterHRISEntities();
         // GET: api/timesheets
         public IQueryable<timesheet> Gettimesheets()
         {

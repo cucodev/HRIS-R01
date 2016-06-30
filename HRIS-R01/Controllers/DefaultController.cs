@@ -4,16 +4,18 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Security;
-using HRIS_R01.Models.Common;
+//using HRIS_R01.Models.Common;
+using HRIS_R01.Models;
 using HRIS_R01.Models.Session;
 using HRIS_R01.Controllers.Shared;
 using System.Text;
 using System.DirectoryServices;
 using HRIS_R01.Models.Session;
-using HRIS_R01.Models.Employee;
+//using HRIS_R01.Models.Employee;
 using System.Web.Routing;
 using System.Threading.Tasks;
 using System.Data;
+using HRIS_R01.Models;
 using System.Data.Entity;
 
 
@@ -22,12 +24,15 @@ namespace HRIS_R01.Controllers
     public class DefaultController : ApplicationController<LogOnModel>
     {
         string Msg = "Login Initialize...";
-        UserEntities dbUser = new UserEntities();
-        EmployeeEntities dbEmp = new EmployeeEntities();
+        //UserEntities dbUser = new UserEntities();
+        //EmployeeEntities dbEmp = new EmployeeEntities();
+        private MasterHRISEntities db = new MasterHRISEntities();
+
 
         // GET: Default
         public ActionResult Index()
         {
+            // return this.RedirectToAction("LogOn", "Default");
             return View();
         }
 
@@ -47,7 +52,9 @@ namespace HRIS_R01.Controllers
             
             if (ModelState.IsValid)
             {
-                emp_user user = await dbUser.emp_user.Where(b => b.IDVMAIL == model.UserName).FirstOrDefaultAsync();
+                emp_user user = await db.emp_user.Where(b => b.IDVMAIL == model.UserName).FirstOrDefaultAsync();
+
+                //db.emp_user user = await db.emp_user.Where(b => b.IDVMAIL == model.UserName).FirstOrDefaultAsync();
                 //leave leave = await db.leaves.FindAsync(id);
                 if (user == null)
                 {
@@ -87,13 +94,14 @@ namespace HRIS_R01.Controllers
                         //this.ModelState.AddModelError(string.Empty, "The user name or password provided is incorrect.");
                         Msg = "error.";
                         ViewBag.Msg = Msg;
+                        //return this.RedirectToAction("Logon", "Default");
                         return View(model);
                     }
                 }
 
                 
             }
-            
+           //return this.RedirectToAction("Logon", "Default");
             return View(model);
         }
 
@@ -107,18 +115,15 @@ namespace HRIS_R01.Controllers
 
         public async Task<bool> AuthenticateLocal(LogOnModel model)
         {
-            emp_user user = await dbUser.emp_user
-                             .Where(b => b.IDVMAILPASSWORD == model.Password)
-                             .Where(b => b.IDVMAILPASSWORD == model.UserName) 
-                             .FirstOrDefaultAsync();
-            //leave leave = await db.leaves.FindAsync(id);
-            if (user == null)
+            var getUser = await db.emp_user.FirstOrDefaultAsync(b => b.IDVMAIL == model.UserName || b.IDVMAILPASSWORD == model.Password);
+            
+            if (getUser == null)
             {
                 ViewBag.Msg = "The password provided is incorrect";
                 return false;
             } else
             {
-                model.IDV = user.IDV.HasValue ? user.IDV.Value: 0;
+                model.IDV = getUser.IDV.HasValue ? getUser.IDV.Value: 0;
                 return true;
             }
         }

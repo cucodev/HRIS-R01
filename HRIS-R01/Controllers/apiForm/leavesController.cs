@@ -10,16 +10,18 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web.Http;
 using System.Web.Http.Description;
-using HRIS_R01.Models.Form;
-
+//using HRIS_R01.Models.Form;
+using HRIS_R01.Models;
 using HRIS_R01.Controllers.Shared;
 
 namespace HRIS_R01.Controllers.apiForm
 {
     public class leavesController : ApiController
     {
-        private LeaveEntities db = new LeaveEntities();
-        private ApprovalEntities dbApp = new ApprovalEntities();
+        //private LeaveEntities db = new LeaveEntities();
+        //private ApprovalEntities dbApp = new ApprovalEntities();
+        private MasterHRISEntities db = new MasterHRISEntities();
+
 
         approvalCommonController approve = new approvalCommonController();
         categoriesSharedController categoryType = new categoriesSharedController();
@@ -141,8 +143,8 @@ namespace HRIS_R01.Controllers.apiForm
                 //app.rowDate = localDate.ToString();
 
                 //Save New Approval to DB
-                dbApp.approvals.Add(app);
-                dbApp.SaveChanges();
+                db.approvals.Add(app);
+                db.SaveChanges();
 
                 //Assign last inserted Approval ID to Leave
                 leave.approvalID = app.id;

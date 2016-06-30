@@ -9,14 +9,15 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web.Http;
 using System.Web.Http.Description;
-using HRIS_R01.Models.Form;
+//using HRIS_R01.Models.Form;
+using HRIS_R01.Models;
 
 namespace HRIS_R01.Controllers.apiForm
 {
     public class notifnewsController : ApiController
     {
-        private newsModel db = new newsModel();
-
+        //private newsModel db = new newsModel();
+        private MasterHRISEntities db = new MasterHRISEntities();
         // GET: api/notifnews
         public IQueryable<notifnew> Getnotifnews()
         {
